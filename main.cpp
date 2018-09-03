@@ -6,7 +6,6 @@
 #include "options.h"
 #include <QApplication>
 #include <QCommandLineParser>
-#include <QDebug>
 
 // Helper method to use a Qt command line parser.
 Options parseCommandLine(QApplication& app)
@@ -40,14 +39,6 @@ Options parseCommandLine(QApplication& app)
     return Options(loadValue, memValue, testValue);
 }
 
-// Helper method for diagnostic options logging.
-void logOptions(Options &options)
-{
-    qDebug() << "Loader:" << "filename:" << options.getFilename();
-    qDebug() << "Loader:" << "bytes of memory:" << options.getMemory();
-    qDebug() << "Loader:" << "unit tests:" << options.isTest();
-}
-
 // Entry method into the program.
 int main(int argc, char *argv[])
 {
@@ -56,7 +47,9 @@ int main(int argc, char *argv[])
     QApplication::setApplicationVersion("1.0");
 
     Options options = parseCommandLine(app);
-    logOptions(options);
+    if (options.isTestFlagSet()) {
+        // TODO: Run unit tests.
+    }
 
     MainWindow window(options);
     window.show();

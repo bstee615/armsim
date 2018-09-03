@@ -24,6 +24,7 @@ public:
 
 private:
     Options &_options;
+
     Ui::MainWindow *ui;
 };
 

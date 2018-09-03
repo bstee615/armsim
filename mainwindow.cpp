@@ -7,10 +7,8 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    ui->filenameValue->setText("\"" + _options.getFilename() + "\"");
-    ui->memoryKbValue->setText(QString::number(_options.getMemory()));
-    ui->testsValue->setText(_options.isTest() ? "true" : "false");
+    ui->loaderWidget->setFilePath(_options.getFilename());
+    ui->loaderWidget->setAmtMemory(_options.getMemory());
 }
 
 MainWindow::~MainWindow()

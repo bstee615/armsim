@@ -24,14 +24,19 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+    ram.cpp \
+    mainwindow.cpp \
+    loaderwidget.cpp
 
 HEADERS += \
-        mainwindow.h \
-    options.h
+        ram.h \
+    mainwindow.h \
+    options.h \
+    loaderwidget.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    loaderwidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -7,7 +7,7 @@
 
 #include <QString>
 #include <QDebug>
-typedef unsigned numbytes;
+typedef unsigned long int numbytes;
 
 // Options class to encapsulate command line arguments.
 class Options
@@ -20,7 +20,7 @@ public:
 
     QString getFilename() { return _filename; }
     numbytes getMemory() { return _memory; }
-    bool isTest() { return _test; }
+    bool isTestFlagSet() { return _test; }
 };
 
 #endif // OPTIONS_H
