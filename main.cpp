@@ -1,8 +1,14 @@
+/* main.cpp
+ * Contains the entry method into the program and command line parsing.
+**/
+
 #include "mainwindow.h"
 #include "options.h"
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QDebug>
 
+// Helper method to use a Qt command line parser.
 Options parseCommandLine(QApplication& app)
 {
     QCommandLineParser parser;
@@ -27,13 +33,22 @@ Options parseCommandLine(QApplication& app)
 
     parser.process(app);
 
-    const char* loadValue = parser.value(loadOption).toStdString().c_str();
+    QString loadValue = parser.value(loadOption);
     unsigned memValue = parser.value(memOption).toUInt();
     bool testValue = parser.isSet(testOption);
 
     return Options(loadValue, memValue, testValue);
 }
 
+// Helper method for diagnostic options logging.
+void logOptions(Options &options)
+{
+    qDebug() << "Loader:" << "filename:" << options.getFilename();
+    qDebug() << "Loader:" << "bytes of memory:" << options.getMemory();
+    qDebug() << "Loader:" << "unit tests:" << options.isTest();
+}
+
+// Entry method into the program.
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -41,6 +56,7 @@ int main(int argc, char *argv[])
     QApplication::setApplicationVersion("1.0");
 
     Options options = parseCommandLine(app);
+    logOptions(options);
 
     MainWindow window(options);
     window.show();
