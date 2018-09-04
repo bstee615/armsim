@@ -52,11 +52,12 @@ RAM::~RAM()
 word RAM::ReadWord(address addr)
 {
     word w = 0;
-    if (!isValidWordAddress(addr)) {
+    if (addr >= size) {
+        throw OutOfBoundsException();
         return w;
     }
-    if (addr > size) {
-        throw OutOfBoundsException();
+    if (!isValidWordAddress(addr)) {
+        return w;
     }
 
     for (address i = addr+3; i >= addr; i --) {
@@ -70,11 +71,12 @@ word RAM::ReadWord(address addr)
 halfword RAM::ReadHalfWord(address addr)
 {
     halfword w = 0;
-    if (!isValidHalfWordAddress(addr)) {
+    if (addr >= size) {
+        throw OutOfBoundsException();
         return w;
     }
-    if (addr > size) {
-        throw OutOfBoundsException();
+    if (!isValidHalfWordAddress(addr)) {
+        return w;
     }
 
     for (address i = addr+1; i >= addr; i --) {
@@ -87,9 +89,61 @@ halfword RAM::ReadHalfWord(address addr)
 
 byte  RAM::ReadByte(address addr)
 {
-    if (addr > size) {
+    if (addr >= size) {
+        throw OutOfBoundsException();
         return 0;
     }
 
     return memory[addr];
+}
+
+void RAM::WriteWord(address addr, word data)
+{
+    if (addr >= size) {
+        throw OutOfBoundsException();
+        return;
+    }
+    if (!isValidWordAddress(addr)) {
+        return;
+    }
+
+    memory[addr] = (byte)(data >> 24);
+    memory[addr+1] = (byte)(data >> 16);
+    memory[addr+2] = (byte)(data >> 8);
+    memory[addr+3] = (byte)data;
+}
+
+void RAM::WriteHalfWord(address addr, halfword data)
+{
+    if (addr >= size) {
+        throw OutOfBoundsException();
+        return;
+    }
+    if (!isValidHalfWordAddress(addr)) {
+        return;
+    }
+
+    memory[addr] = (byte)(data >> 8);
+    memory[addr+1] = (byte)data;
+}
+
+void RAM::WriteByte(address addr, byte data)
+{
+    if (addr >= size) {
+        throw OutOfBoundsException();
+        return;
+    }
+
+    memory[addr] = data;
+}
+
+int RAM::Checksum()
+{
+    word cksum = 0;
+
+    for (address i = 0; i < size; i ++) {
+        cksum += memory[i] ^ i;
+    }
+
+    return cksum;
 }
