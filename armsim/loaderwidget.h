@@ -21,9 +21,8 @@ public:
     {
         return ram;
     }
-    void setFilePath(QString path);
-    void setAmtMemory(unsigned amt);
-    void setTestMode(bool testMode);
+    void loadFile(QString path);
+    void initializeRAM(unsigned amt);
 
 private slots:
     void on_initRAMButton_clicked();

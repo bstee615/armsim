@@ -4,7 +4,6 @@
 
 #include "mainwindow.h"
 #include "options.h"
-#include "ramtests.cpp"
 #include <QApplication>
 #include <QCommandLineParser>
 
@@ -27,17 +26,12 @@ Options parseCommandLine(QApplication& app)
             QString("32768"));
     parser.addOption(memOption);
 
-    QCommandLineOption testOption(QStringList() << "test",
-            QString("Run tests and quit."));
-    parser.addOption(testOption);
-
     parser.process(app);
 
     QString loadValue = parser.value(loadOption);
     unsigned memValue = parser.value(memOption).toUInt();
-    bool testValue = parser.isSet(testOption);
 
-    return Options(loadValue, memValue, testValue);
+    return Options(loadValue, memValue);
 }
 
 // Entry method into the program.
@@ -48,10 +42,6 @@ int main(int argc, char *argv[])
     QApplication::setApplicationVersion("1.0");
 
     Options options = parseCommandLine(app);
-    if (options.isTestFlagSet()) {
-        RAMTests::RunAllTests();
-        qDebug() << "=====RAM unit tests passed.=====";
-    }
 
     MainWindow window(options);
     window.show();

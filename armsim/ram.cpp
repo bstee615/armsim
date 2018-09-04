@@ -1,4 +1,10 @@
 #include "ram.h"
+#include <QtMath>
+
+QString toBits(word number)
+{
+    return QString("%1").arg(number, 32, 2, QChar('0'));
+}
 
 RAM::RAM()
 {
@@ -10,9 +16,7 @@ RAM::RAM(address size)
 {
     memory = new byte[size];
     this->size = size;
-    for (address i  = 0; i < size; i ++) {
-        memory[i] = 0;
-    }
+    clearMemory();
 }
 
 // Creates a deep clone of the other RAM object.
@@ -61,7 +65,7 @@ word RAM::ReadWord(address addr)
     }
 
     for (address i = addr+3; i >= addr; i --) {
-        w = w | (static_cast<word>(memory[i]) << 4*(i-addr));
+        w = w | ((word)memory[i] << 8*(i-addr));
         if (i == 0) break;
     }
 
@@ -80,7 +84,7 @@ halfword RAM::ReadHalfWord(address addr)
     }
 
     for (address i = addr+1; i >= addr; i --) {
-        w = w | (halfword)((halfword)memory[i] << (halfword)4*(i-addr));
+        w = w | (halfword)(memory[i] << 8*(i-addr));
         if (i == 0) break;
     }
 
@@ -107,10 +111,10 @@ void RAM::WriteWord(address addr, word data)
         return;
     }
 
-    memory[addr] = (byte)(data >> 24);
-    memory[addr+1] = (byte)(data >> 16);
-    memory[addr+2] = (byte)(data >> 8);
-    memory[addr+3] = (byte)data;
+    memory[addr+3] = (byte)(data >> 24);
+    memory[addr+2] = (byte)(data >> 16);
+    memory[addr+1] = (byte)(data >> 8);
+    memory[addr] = (byte)(data);
 }
 
 void RAM::WriteHalfWord(address addr, halfword data)
@@ -123,8 +127,8 @@ void RAM::WriteHalfWord(address addr, halfword data)
         return;
     }
 
-    memory[addr] = (byte)(data >> 8);
-    memory[addr+1] = (byte)data;
+    memory[addr+1] = (byte)(data >> 8);
+    memory[addr] = (byte)data;
 }
 
 void RAM::WriteByte(address addr, byte data)
@@ -146,4 +150,26 @@ int RAM::Checksum()
     }
 
     return cksum;
+}
+
+bool RAM::TestFlag(address addr, unsigned int bit)
+{
+    word w = ReadWord(addr);
+    word mask = (word)(qPow(2, bit));
+    return ((w & mask) != 0);
+}
+
+void RAM::SetFlag(address addr, unsigned int bit, bool flag)
+{
+    word w = ReadWord(addr);
+    word mask = flag ? (word)(qPow(2, bit)) : 0;
+
+    if (flag) {
+        w = w | mask;
+    }
+    else {
+        w = w & (~mask);
+    }
+
+    WriteWord(addr, w);
 }

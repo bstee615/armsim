@@ -69,6 +69,13 @@ public:
     address getSize() { return size; }
     // Method so that tests can get the array representing memory.
     byte *getMemory() { return memory; }
+
+    void clearMemory()
+    {
+        for (address i  = 0; i < size; i ++) {
+            memory[i] = 0;
+        }
+    }
 };
 
 #endif // RAM_H

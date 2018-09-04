@@ -7,8 +7,9 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     _options(options)
 {
     ui->setupUi(this);
-    ui->loaderWidget->setFilePath(_options.getFilename());
-    ui->loaderWidget->setAmtMemory(_options.getMemory());
+
+    ui->loaderWidget->initializeRAM(_options.getMemory());
+    ui->loaderWidget->loadFile(_options.getFilename());
 }
 
 MainWindow::~MainWindow()
