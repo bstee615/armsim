@@ -26,7 +26,8 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     loaderwidget.cpp \
-    ram.cpp
+    ram.cpp \
+    ramtests.cpp
 
 HEADERS += \
         mainwindow.h \

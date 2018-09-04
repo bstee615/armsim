@@ -11,11 +11,21 @@ typedef unsigned long int word;
 typedef unsigned long int address;
 
 #include <QDebug>
+#include <exception>
+
+struct OutOfBoundsException : public std::exception
+{
+    const char * what () const noexcept
+    {
+        return "Out of Bounds";
+    }
+};
 
 // Class that represents simulated RAM as an array.
 class RAM
 {
     byte* memory;
+    address size;
 
     // Helper methods to ensure that addresses are aligned when reading/writing.
     bool isValidWordAddress(address addr)
@@ -28,8 +38,11 @@ class RAM
     }
 
 public:
-    RAM() {}
+    RAM();
     RAM(address size);
+    RAM(const RAM& other);
+    RAM& operator=(const RAM& other);
+    ~RAM();
 
     // Reads a data value of the appropriate size (word/halfword/byte) at the 32-bit address.
     word ReadWord(address addr);
@@ -52,6 +65,10 @@ public:
 
     // Returns the bits in the range [startBit, endBit] from word, where startBit and endBit are in the range [0..31].
     void ExtractBits(word word, unsigned int startBit, unsigned int endBit);
+
+    address getSize() { return size; }
+    // Method so that tests can get the array representing memory.
+    byte *getMemory() { return memory; }
 };
 
 #endif // RAM_H

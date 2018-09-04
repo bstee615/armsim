@@ -20,15 +20,14 @@ LoaderWidget::~LoaderWidget()
 
 void LoaderWidget::setFilePath(QString path)
 {
-    qDebug() << "Loader:" << "File path:" << path;
+    qDebug() << "Loader:" << "Setting file path to" << path;
     ui->filepathLineEdit->setText(path);
 }
 
 void LoaderWidget::setAmtMemory(unsigned amt)
 {
-    qDebug() << "Loader:" << "Amount memory:" << amt;
+    qDebug() << "Loader:" << "Setting number of bytes to" << amt;
     ui->memorySpinBox->setValue(static_cast<int>(amt));
-
     ram = RAM(amt);
 }
 

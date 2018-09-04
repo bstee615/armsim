@@ -4,6 +4,7 @@
 
 #include "mainwindow.h"
 #include "options.h"
+#include "ramtests.cpp"
 #include <QApplication>
 #include <QCommandLineParser>
 
@@ -48,7 +49,8 @@ int main(int argc, char *argv[])
 
     Options options = parseCommandLine(app);
     if (options.isTestFlagSet()) {
-        // TODO: Run unit tests.
+        RAMTests::RunAllTests();
+        qDebug() << "=====RAM unit tests passed.=====";
     }
 
     MainWindow window(options);
