@@ -5,10 +5,11 @@
 #ifndef RAM_H
 #define RAM_H
 
-typedef unsigned char byte;
-typedef unsigned short halfword;
-typedef unsigned long int word;
-typedef unsigned long int address;
+#include <cstdint>
+typedef uint8_t byte;
+typedef uint16_t halfword;
+typedef uint32_t word;
+typedef uint32_t address;
 
 #include <QDebug>
 #include <exception>

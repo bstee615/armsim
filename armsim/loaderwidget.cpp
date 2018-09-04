@@ -30,7 +30,6 @@ void LoaderWidget::loadFile(QString path)
     if (path.isEmpty()) {
         return;
     }
-    qDebug() << "Loader:" << "Loading file" << path;
 
     ui->filepathLineEdit->setText(path);
     loadELFFile(path, ram);

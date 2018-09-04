@@ -143,7 +143,7 @@ void RAM::WriteByte(address addr, byte data)
 
 int RAM::Checksum()
 {
-    word cksum = 0;
+    int32_t cksum = 0;
 
     for (address i = 0; i < size; i ++) {
         cksum += memory[i] ^ i;
