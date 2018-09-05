@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("armsim");
     QApplication::setApplicationVersion("1.0");
 
-    qInstallMessageHandler(errorHandler);
+//    qInstallMessageHandler(errorHandler);
 
     Options options = parseCommandLine(app);
 

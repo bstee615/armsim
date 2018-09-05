@@ -29,9 +29,9 @@ void writeBytesToRAM(ifstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr
 {
     for (size_t ph_i = 0; ph_i < elfHeader.e_phnum; ph_i ++) {
         Elf32_Phdr &progHeader = programHeaders[ph_i];
-        char *data = new char[progHeader.p_filesz];
+        byte *data = new byte[progHeader.p_filesz];
         strm.seekg(progHeader.p_offset);
-        strm.read(data, progHeader.p_filesz);
+        strm.read((char *)data, progHeader.p_filesz * 1);
 
         for (address i = 0; i < progHeader.p_filesz; i ++) {
 //            qDebug() << "Loader:" << "Writing" << toBits(data[i]) << "from byte" << progHeader.p_offset + i << "to address" << (progHeader.p_paddr + i);
@@ -39,6 +39,30 @@ void writeBytesToRAM(ifstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr
         }
         delete[] data;
     }
+}
+
+void fetchELFHeader(ifstream &strm, Elf32_Ehdr &elfHeader)
+{
+    if (!strm) {
+        qDebug() << "Loader:" << "Unable to open input file.";
+        return;
+    }
+
+    // read ELF header
+    strm.read((char *)&elfHeader, sizeof(elfHeader));
+
+    if (!strm) {
+        qDebug() << "Loader:"  << "Error reading ELF header.";
+        return;
+    }
+
+    if (!containsELFSignature(elfHeader.e_ident)) {
+        qDebug() << "Loader:"  << "Input file is not an ELF file.";
+        return;
+    }
+
+    qDebug() << "Loader:" << "Entry point:" << elfHeader.e_entry;
+    qDebug() << "Loader:" << "Found" << elfHeader.e_phnum << "segments";
 }
 
 Elf32_Phdr* fetchProgramHeaders(ifstream &strm, Elf32_Ehdr elfHeader)
@@ -64,39 +88,18 @@ Elf32_Phdr* fetchProgramHeaders(ifstream &strm, Elf32_Ehdr elfHeader)
     return headers;
 }
 
-void fetchELFHeader(ifstream &strm, Elf32_Ehdr &elfHeader)
-{
-    if (!strm) {
-        qDebug() << "Loader:" << "Unable to open input file.";
-        return;
-    }
-
-    // read ELF header
-    strm.read((char *)&elfHeader, sizeof(elfHeader));
-
-    if (!strm) {
-        qDebug() << "Loader:"  << "Error reading ELF header.";
-        return;
-    }
-
-    if (!containsELFSignature(elfHeader.e_ident)) {
-        qDebug() << "Loader:"  << "Input file is not an ELF file.";
-        return;
-    }
-}
-
 void loadELF(QString filename, RAM &ram)
 {
+    ram.clearMemory();
+
     ifstream strm;
     Elf32_Ehdr elfHeader;
 
-    qDebug() << "Loader:" << "Opening file" << filename.split("/").last();
+    // Converted to std C string for better formatting
+    qDebug() << "Loader:" << "Opening file" << filename.toStdString().c_str();
     strm.open(filename.toStdString().c_str());
 
     fetchELFHeader(strm, elfHeader);
-
-    qDebug() << "Loader:" << "Entry point:" << elfHeader.e_entry;
-    qDebug() << "Loader:" << "Found" << elfHeader.e_phnum << "segments";
 
     Elf32_Phdr* programHeaders = fetchProgramHeaders(strm, elfHeader);
     writeBytesToRAM(strm, ram, elfHeader, programHeaders);
