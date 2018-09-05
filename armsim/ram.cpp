@@ -1,11 +1,6 @@
 #include "ram.h"
 #include <QtMath>
 
-QString toBits(word number)
-{
-    return QString("%1").arg(number, 32, 2, QChar('0'));
-}
-
 RAM::RAM()
 {
     memory = nullptr;

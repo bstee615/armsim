@@ -20,7 +20,28 @@ bool containsELFSignature (unsigned char* e_ident)
             e_ident[3] == 'F');
 }
 
-Elf32_Phdr* readProgramHeaders(ifstream &strm, Elf32_Ehdr elfHeader)
+QString toBits(word number)
+{
+    return QString("%1").arg(number, 32, 2, QChar('0'));
+}
+
+void writeBytesToRAM(ifstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
+{
+    for (size_t ph_i = 0; ph_i < elfHeader.e_phnum; ph_i ++) {
+        Elf32_Phdr &progHeader = programHeaders[ph_i];
+        char *data = new char[progHeader.p_filesz];
+        strm.seekg(progHeader.p_offset);
+        strm.read(data, progHeader.p_filesz);
+
+        for (address i = 0; i < progHeader.p_filesz; i ++) {
+//            qDebug() << "Loader:" << "Writing" << toBits(data[i]) << "from byte" << progHeader.p_offset + i << "to address" << (progHeader.p_paddr + i);
+            ram.WriteByte(progHeader.p_paddr + i, data[i]);
+        }
+        delete[] data;
+    }
+}
+
+Elf32_Phdr* fetchProgramHeaders(ifstream &strm, Elf32_Ehdr elfHeader)
 {
     Elf32_Phdr *headers = new Elf32_Phdr[elfHeader.e_phnum];
 
@@ -41,20 +62,6 @@ Elf32_Phdr* readProgramHeaders(ifstream &strm, Elf32_Ehdr elfHeader)
     }
 
     return headers;
-}
-
-void writeBytesToRAM(ifstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
-{
-    for (size_t ph_i = 0; ph_i < elfHeader.e_phnum; ph_i ++) {
-        Elf32_Phdr &progHeader = programHeaders[ph_i];
-        char *data = new char[progHeader.p_filesz];
-        strm.read(data, progHeader.p_filesz);
-
-        for (address i = 0; i < progHeader.p_filesz; i ++) {
-            ram.WriteByte(progHeader.p_paddr + i, data[i]);
-        }
-        delete[] data;
-    }
 }
 
 void fetchELFHeader(ifstream &strm, Elf32_Ehdr &elfHeader)
@@ -78,7 +85,7 @@ void fetchELFHeader(ifstream &strm, Elf32_Ehdr &elfHeader)
     }
 }
 
-void loadELFFile(QString filename, RAM &ram)
+void loadELF(QString filename, RAM &ram)
 {
     ifstream strm;
     Elf32_Ehdr elfHeader;
@@ -91,13 +98,13 @@ void loadELFFile(QString filename, RAM &ram)
     qDebug() << "Loader:" << "Entry point:" << elfHeader.e_entry;
     qDebug() << "Loader:" << "Found" << elfHeader.e_phnum << "segments";
 
-    Elf32_Phdr* programHeaders = readProgramHeaders(strm, elfHeader);
+    Elf32_Phdr* programHeaders = fetchProgramHeaders(strm, elfHeader);
     writeBytesToRAM(strm, ram, elfHeader, programHeaders);
 
     delete[] programHeaders;
     strm.close();
 
-    qDebug() << ram.Checksum();
+    qDebug() << "Loader:" << "RAM checksum after loading:" << ram.Checksum();
 
     return;
 }

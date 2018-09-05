@@ -32,7 +32,7 @@ void LoaderWidget::loadFile(QString path)
     }
 
     ui->filepathLineEdit->setText(path);
-    loadELFFile(path, ram);
+    loadELF(path, ram);
 }
 
 void LoaderWidget::initializeRAM(unsigned amt)

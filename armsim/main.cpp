@@ -4,8 +4,10 @@
 
 #include "mainwindow.h"
 #include "options.h"
+#include "errorhandler.h"
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QtGlobal>
 
 // Helper method to use a Qt command line parser.
 Options parseCommandLine(QApplication& app)
@@ -27,6 +29,15 @@ Options parseCommandLine(QApplication& app)
     parser.addOption(memOption);
 
     parser.process(app);
+    if (parser.positionalArguments().length() > 0) {
+        QStringList invalidOptionsFormatted = QStringList();
+        for (int i = 0; i < parser.positionalArguments().length(); i ++) {
+            invalidOptionsFormatted.insert(i, "'" + parser.positionalArguments().at(i) + "'");
+        }
+        qCritical(QString("Unknown options " + invalidOptionsFormatted.join(", ")).toStdString().c_str());
+        app.exit();
+        exit(1);
+    }
 
     QString loadValue = parser.value(loadOption);
     unsigned memValue = parser.value(memOption).toUInt();
@@ -40,6 +51,8 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QApplication::setApplicationName("armsim");
     QApplication::setApplicationVersion("1.0");
+
+    qInstallMessageHandler(errorHandler);
 
     Options options = parseCommandLine(app);
 

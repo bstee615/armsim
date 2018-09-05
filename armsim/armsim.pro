@@ -35,7 +35,8 @@ HEADERS += \
     options.h \
     ram.h \
     loader.h \
-    elf.h
+    elf.h \
+    errorhandler.h
 
 FORMS += \
         mainwindow.ui \
