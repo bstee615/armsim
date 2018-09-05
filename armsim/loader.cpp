@@ -22,16 +22,23 @@ bool containsELFSignature (unsigned char* e_ident)
 
 QString toBits(word number)
 {
-    return QString("%1").arg(number, 32, 2, QChar('0'));
+    return QString("%1").arg(number, 8, 2, QChar('0'));
 }
 
-void writeBytesToRAM(ifstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
+void writeBytesToRAM(fstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
 {
     for (size_t ph_i = 0; ph_i < elfHeader.e_phnum; ph_i ++) {
         Elf32_Phdr &progHeader = programHeaders[ph_i];
-        byte *data = new byte[progHeader.p_filesz];
         strm.seekg(progHeader.p_offset);
-        strm.read((char *)data, progHeader.p_filesz * 1);
+        byte *data = new byte[progHeader.p_filesz];
+        for (address i = 0; i < progHeader.p_filesz; i ++) {
+            data[i] = 0;
+        }
+        strm.read((char*)data, progHeader.p_filesz * sizeof(byte));
+        if (!strm) {
+            qCritical() << "Loader:"  << "Error reading program bytes from segment" << QString::number(ph_i) + ":" << strerror(errno);
+            return;
+        }
 
         for (address i = 0; i < progHeader.p_filesz; i ++) {
 //            qDebug() << "Loader:" << "Writing" << toBits(data[i]) << "from byte" << progHeader.p_offset + i << "to address" << (progHeader.p_paddr + i);
@@ -41,7 +48,7 @@ void writeBytesToRAM(ifstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr
     }
 }
 
-void fetchELFHeader(ifstream &strm, Elf32_Ehdr &elfHeader)
+void fetchELFHeader(fstream &strm, Elf32_Ehdr &elfHeader)
 {
     if (!strm) {
         qDebug() << "Loader:" << "Unable to open input file.";
@@ -65,7 +72,7 @@ void fetchELFHeader(ifstream &strm, Elf32_Ehdr &elfHeader)
     qDebug() << "Loader:" << "Found" << elfHeader.e_phnum << "segments";
 }
 
-Elf32_Phdr* fetchProgramHeaders(ifstream &strm, Elf32_Ehdr elfHeader)
+Elf32_Phdr* fetchProgramHeaders(fstream &strm, Elf32_Ehdr elfHeader)
 {
     Elf32_Phdr *headers = new Elf32_Phdr[elfHeader.e_phnum];
 
@@ -92,12 +99,11 @@ void loadELF(QString filename, RAM &ram)
 {
     ram.clearMemory();
 
-    ifstream strm;
+    std::fstream strm(filename.toStdString().c_str(), std::ios::binary | std::ios::in);
     Elf32_Ehdr elfHeader;
 
     // Converted to std C string for better formatting
     qDebug() << "Loader:" << "Opening file" << filename.toStdString().c_str();
-    strm.open(filename.toStdString().c_str());
 
     fetchELFHeader(strm, elfHeader);
 

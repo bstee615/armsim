@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
     Options options = parseCommandLine(app);
 
     MainWindow window(options);
+
     window.show();
 
     return app.exec();
