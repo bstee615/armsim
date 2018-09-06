@@ -22,6 +22,14 @@ struct OutOfBoundsException : public std::exception
     }
 };
 
+struct InvalidBitException : public std::exception
+{
+    const char * what () const noexcept
+    {
+        return "Invalid bit";
+    }
+};
+
 // Class that represents simulated RAM as an array.
 class RAM
 {

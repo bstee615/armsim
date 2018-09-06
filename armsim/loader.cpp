@@ -1,5 +1,4 @@
 #include "loader.h"
-#include "elf.h"
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -24,11 +23,6 @@ bool containsELFSignature (unsigned char* e_ident)
             e_ident[1] == 'E' &&
             e_ident[2] == 'L' &&
             e_ident[3] == 'F');
-}
-
-QString toBits(word number)
-{
-    return QString("%1").arg(number, 8, 2, QChar('0'));
 }
 
 bool isThereEnoughMemory(RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
@@ -75,7 +69,7 @@ bool writeBytesToRAM(fstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr*
     return true;
 }
 
-int fetchELFHeader(fstream &strm, Elf32_Ehdr &elfHeader)
+bool fetchELFHeader(fstream &strm, Elf32_Ehdr &elfHeader)
 {
     if (!strm) {
         qCritical() << "Loader:" << "Unable to open input file.";

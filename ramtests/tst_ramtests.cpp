@@ -14,7 +14,7 @@ public:
 
 private slots:
     void initTestCase();
-    void cleanupTestCase();
+    void init();
 
     void ReadWord_Success();
     void ReadWord_FailsInvalidAddress();
@@ -36,8 +36,12 @@ private slots:
     void WriteByte_Success();
 
     void TestFlag_Success();
+    void TestFlag_FailsOutOfBounds();
+    void TestFlag_FailsInvalidBit();
 
     void SetFlag_Success();
+    void SetFlag_FailsOutOfBounds();
+    void SetFlag_FailsInvalidBit();
 };
 
 void RAMTests::initTestCase()
@@ -45,14 +49,13 @@ void RAMTests::initTestCase()
     ram = RAM(bytes);
 }
 
-void RAMTests::cleanupTestCase()
+void RAMTests::init()
 {
-
+    ram.clearMemory();
 }
 
 void RAMTests::ReadWord_Success()
 {
-    ram.clearMemory();
     byte *memory = ram.getMemory();
     memory[12] = 0x00;
     memory[13] = 0xFF;
@@ -65,7 +68,6 @@ void RAMTests::ReadWord_Success()
 }
 void RAMTests::ReadWord_FailsInvalidAddress()
 {
-    ram.clearMemory();
     byte *memory = ram.getMemory();
     memory[0] = 96;
     memory[1] = 96;
@@ -75,7 +77,6 @@ void RAMTests::ReadWord_FailsInvalidAddress()
 }
 void RAMTests::ReadWord_FailsOutOfBounds()
 {
-    ram.clearMemory();
     try {
         ram.ReadWord(bytes);
     }
@@ -87,7 +88,6 @@ void RAMTests::ReadWord_FailsOutOfBounds()
 
 void RAMTests::ReadHalfWord_Success()
 {
-    ram.clearMemory();
     byte *memory = ram.getMemory();
     memory[12] = 0xFF;
     memory[13] = 0x00;
@@ -98,7 +98,6 @@ void RAMTests::ReadHalfWord_Success()
 }
 void RAMTests::ReadHalfWord_FailsInvalidAddress()
 {
-    ram.clearMemory();
     byte *memory = ram.getMemory();
     memory[0] = 83;
     memory[1] = 83;
@@ -106,7 +105,6 @@ void RAMTests::ReadHalfWord_FailsInvalidAddress()
 }
 void RAMTests::ReadHalfWord_FailsOutOfBounds()
 {
-    ram.clearMemory();
     try {
         ram.ReadHalfWord(bytes);
     }
@@ -118,7 +116,6 @@ void RAMTests::ReadHalfWord_FailsOutOfBounds()
 
 void RAMTests::ReadByte_Success()
 {
-    ram.clearMemory();
     byte *memory = ram.getMemory();
     memory[12] = 01;
 
@@ -129,7 +126,6 @@ void RAMTests::ReadByte_Success()
 
 void RAMTests::Checksum_Success()
 {
-    ram.clearMemory();
     RAM ram = RAM(2);
     byte *memory = ram.getMemory();
     memory[0] = 1;
@@ -142,14 +138,12 @@ void RAMTests::Checksum_Success()
 
 void RAMTests::Checksum_SuccessAfterInitialization()
 {
-    ram.clearMemory();
     RAM ram = RAM(10);
     Q_ASSERT(ram.Checksum() == 1+2+3+4+5+6+7+8+9);
 }
 
 void RAMTests::WriteHalfWord_Success()
 {
-    ram.clearMemory();
     ram.WriteHalfWord(10, 0xFF01); // binary 1111111100000001
     byte *memory = ram.getMemory();
     Q_ASSERT(memory[10] == 0x01);
@@ -157,7 +151,6 @@ void RAMTests::WriteHalfWord_Success()
 }
 void RAMTests::WriteHalfWord_FailsInvalidAddress()
 {
-    ram.clearMemory();
     ram.WriteHalfWord(11, 0xFFFF); // binary all 1's
     byte *memory = ram.getMemory();
     Q_ASSERT(memory[10] == 0);
@@ -165,7 +158,6 @@ void RAMTests::WriteHalfWord_FailsInvalidAddress()
 }
 void RAMTests::WriteHalfWord_FailsOutOfBounds()
 {
-    ram.clearMemory();
     try {
         ram.ReadHalfWord(bytes);
     }
@@ -177,7 +169,6 @@ void RAMTests::WriteHalfWord_FailsOutOfBounds()
 
 void RAMTests::WriteWord_Success()
 {
-    ram.clearMemory();
     ram.WriteWord(8, (word)0x0000FF01); // binary 00000000000000001111111100000001
     byte *memory = ram.getMemory();
     Q_ASSERT(memory[8] == (word)0x01);
@@ -187,7 +178,6 @@ void RAMTests::WriteWord_Success()
 }
 void RAMTests::WriteWord_FailsInvalidAddress()
 {
-    ram.clearMemory();
     ram.WriteWord(10, (word)4294967295); // binary all 1's
     ram.WriteWord(9, (word)4294967295); // binary all 1's
     byte *memory = ram.getMemory();
@@ -198,7 +188,6 @@ void RAMTests::WriteWord_FailsInvalidAddress()
 }
 void RAMTests::WriteWord_FailsOutOfBounds()
 {
-    ram.clearMemory();
     try {
         ram.ReadWord(bytes);
     }
@@ -210,7 +199,6 @@ void RAMTests::WriteWord_FailsOutOfBounds()
 
 void RAMTests::WriteByte_Success()
 {
-    ram.clearMemory();
     ram.WriteByte(10, 123);
     byte *memory = ram.getMemory();
     Q_ASSERT(memory[10] == 123);
@@ -218,7 +206,6 @@ void RAMTests::WriteByte_Success()
 
 void RAMTests::TestFlag_Success()
 {
-    ram.clearMemory();
     const address addr = 12;
     ram.WriteWord(addr, 0x000F0000);
     Q_ASSERT(ram.TestFlag(addr, 15) == false);
@@ -229,11 +216,58 @@ void RAMTests::TestFlag_Success()
     Q_ASSERT(ram.TestFlag(addr, 20) == false);
 }
 
+void RAMTests::TestFlag_FailsOutOfBounds()
+{
+    try {
+        ram.SetFlag(bytes+1, 0, true);
+    }
+    catch (OutOfBoundsException ex) {
+        return;
+    }
+    Q_ASSERT(false);
+}
+
+void RAMTests::TestFlag_FailsInvalidBit()
+{
+    try {
+        ram.SetFlag(0, 32, true);
+    }
+    catch (InvalidBitException ex) {
+        return;
+    }
+    Q_ASSERT(false);
+}
+
 void RAMTests::SetFlag_Success()
 {
-    ram.clearMemory();
+    ram.SetFlag(12, 0, true);
     ram.SetFlag(12, 19, true);
+    ram.SetFlag(12, 31, true);
+    Q_ASSERT(ram.getMemory()[12] == 1);
     Q_ASSERT(ram.getMemory()[14] == 0b1000);
+    Q_ASSERT(ram.getMemory()[15] == 0b10000000);
+}
+
+void RAMTests::SetFlag_FailsOutOfBounds()
+{
+    try {
+        ram.SetFlag(bytes+1, 0, true);
+    }
+    catch (OutOfBoundsException ex) {
+        return;
+    }
+    Q_ASSERT(false);
+}
+
+void RAMTests::SetFlag_FailsInvalidBit()
+{
+    try {
+        ram.SetFlag(0, 32, true);
+    }
+    catch (InvalidBitException ex) {
+        return;
+    }
+    Q_ASSERT(false);
 }
 
 QTEST_APPLESS_MAIN(RAMTests)

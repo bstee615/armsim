@@ -6,4 +6,7 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES +=  tst_loadertests.cpp
+INCLUDEPATH += ../armsim/
+SOURCES +=  tst_loadertests.cpp \
+    ../armsim/loader.cpp \
+    ../armsim/ram.cpp

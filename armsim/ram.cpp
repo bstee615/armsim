@@ -149,6 +149,16 @@ int RAM::Checksum()
 
 bool RAM::TestFlag(address addr, unsigned int bit)
 {
+    if (addr > size) {
+        throw OutOfBoundsException();
+        return false;
+    }
+    if (bit > sizeof(word)*8-1) {
+        qDebug() << "hey";
+        throw InvalidBitException();
+        return false;
+    }
+
     word w = ReadWord(addr);
     word mask = (word)(qPow(2, bit));
     return ((w & mask) != 0);
@@ -156,6 +166,15 @@ bool RAM::TestFlag(address addr, unsigned int bit)
 
 void RAM::SetFlag(address addr, unsigned int bit, bool flag)
 {
+    if (addr > size) {
+        throw OutOfBoundsException();
+        return;
+    }
+    if (bit > sizeof(word)*8-1) {
+        throw InvalidBitException();
+        return;
+    }
+
     word w = ReadWord(addr);
     word mask = flag ? (word)(qPow(2, bit)) : 0;
 
