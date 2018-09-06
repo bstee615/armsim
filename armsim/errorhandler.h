@@ -9,6 +9,7 @@ void errorHandler(QtMsgType type, const QMessageLogContext &context, const QStri
     switch (type) {
         case QtDebugMsg:
             fprintf(stdout, "%s\n", msg.toStdString().c_str());
+            fflush(stdout);
             break;
         case QtWarningMsg:
             fprintf(stderr, "\033[31mWarning\033[0m %s line %d: %s\n", context.file, context.line, msg.toStdString().c_str());

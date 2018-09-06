@@ -31,7 +31,10 @@ void LoaderWidget::loadFile(QString path)
         return;
     }
 
-    loadELF(path, ram);
+    if (!loadELF(path, ram)) {
+        QCoreApplication::exit(1);
+        exit(1);
+    }
 
     ui->filepathLineEdit->setText(path);
 }

@@ -4,6 +4,6 @@
 #include <QString>
 #include "ram.h"
 
-void loadELF(QString filename, RAM& ram);
+bool loadELF(QString filename, RAM& ram);
 
 #endif // LOADER_H
