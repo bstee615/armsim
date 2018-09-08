@@ -1,3 +1,7 @@
+/* tst_ramtests.cpp
+ * Unit tests for the RAM class.
+ */
+
 #include <QtTest>
 #include "ram.h"
 
@@ -42,6 +46,10 @@ private slots:
     void SetFlag_Success();
     void SetFlag_FailsOutOfBounds();
     void SetFlag_FailsInvalidBit();
+
+    void ExtractBits_Success();
+    void ExtractBits_FromAll1s();
+    void ExtractBits_FromAll0s();
 };
 
 void RAMTests::initTestCase()
@@ -126,14 +134,20 @@ void RAMTests::ReadByte_Success()
 
 void RAMTests::Checksum_Success()
 {
-    RAM ram = RAM(2);
+    RAM ram = RAM(4);
     byte *memory = ram.getMemory();
-    memory[0] = 1;
-    memory[1] = 1;
-    Q_ASSERT(ram.Checksum() == 1);
-    memory[0] = 1;
-    memory[1] = 0;
-    Q_ASSERT(ram.Checksum() == 2);
+    memory[0] = 0x01;
+    memory[1] = 0x82;
+    memory[2] = 0x03;
+    memory[3] = 0x84;
+    Q_ASSERT(ram.Checksum() == 268);
+    ram = RAM(32768);
+    memory = ram.getMemory();
+    memory[0] = 0x01;
+    memory[1] = 0x82;
+    memory[2] = 0x03;
+    memory[3] = 0x84;
+    Q_ASSERT(ram.Checksum() == 536854790);
 }
 
 void RAMTests::Checksum_SuccessAfterInitialization()
@@ -268,6 +282,21 @@ void RAMTests::SetFlag_FailsInvalidBit()
         return;
     }
     Q_ASSERT(false);
+}
+
+void RAMTests::ExtractBits_Success()
+{
+    Q_ASSERT(RAM::ExtractBits(0x05, 1, 3) == 4);
+}
+
+void RAMTests::ExtractBits_FromAll1s()
+{
+    Q_ASSERT(RAM::ExtractBits(0xFFFFFFFF, 0, 15) == 0x0000FFFF);
+}
+
+void RAMTests::ExtractBits_FromAll0s()
+{
+    Q_ASSERT(RAM::ExtractBits(0, 0, 16) == 0);
 }
 
 QTEST_APPLESS_MAIN(RAMTests)

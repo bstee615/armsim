@@ -14,6 +14,7 @@ typedef uint32_t address;
 #include <QDebug>
 #include <exception>
 
+// To be thrown when the memory array would have been indexed out of bounds.
 struct OutOfBoundsException : public std::exception
 {
     const char * what () const noexcept
@@ -22,11 +23,21 @@ struct OutOfBoundsException : public std::exception
     }
 };
 
+// To be thrown when a function recieves a bit index that's out of the correct range (e.g. [0..31] for a word).
 struct InvalidBitException : public std::exception
 {
     const char * what () const noexcept
     {
-        return "Invalid bit";
+        return "Invalid bit index";
+    }
+};
+
+// To be thrown when a function recieves bitmask parameters that are invalid (startBit is greater than endBit, startBit is negative, etc.)
+struct InvalidBitmaskException : public std::exception
+{
+    const char * what () const noexcept
+    {
+        return "Invalid bitmask";
     }
 };
 
@@ -73,12 +84,13 @@ public:
     void SetFlag(address addr, unsigned int bit, bool flag);
 
     // Returns the bits in the range [startBit, endBit] from word, where startBit and endBit are in the range [0..31].
-    void ExtractBits(word word, unsigned int startBit, unsigned int endBit);
+    static word ExtractBits(word word, unsigned int startBit, unsigned int endBit);
 
     address getSize() { return size; }
     // Method so that tests can get the array representing memory.
     byte *getMemory() { return memory; }
 
+    // Sets all bytes in RAM to 0.
     void clearMemory()
     {
         for (address i  = 0; i < size; i ++) {

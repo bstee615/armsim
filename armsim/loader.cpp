@@ -6,17 +6,6 @@
 
 using namespace std;
 
-int min(int a, int b)
-{
-    return (a < b) ? b : a;
-}
-
-std::ifstream::pos_type filesize(const char* filename)
-{
-    std::ifstream in(filename, std::ifstream::ate | std::ifstream::binary);
-    return in.tellg();
-}
-
 bool containsELFSignature (unsigned char* e_ident)
 {
     return (e_ident[0] == '\x7f' &&
@@ -41,6 +30,7 @@ bool isThereEnoughMemory(RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHea
     return true;
 }
 
+// Writes the data specified by programHeaders from the file to ram.
 bool writeBytesToRAM(fstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
 {
     if (!isThereEnoughMemory(ram, elfHeader, programHeaders)) {
@@ -69,6 +59,7 @@ bool writeBytesToRAM(fstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr*
     return true;
 }
 
+// Readers an ELF header and returns it by reference through the parameter elfHeader.
 bool fetchELFHeader(fstream &strm, Elf32_Ehdr &elfHeader)
 {
     if (!strm) {
@@ -93,6 +84,13 @@ bool fetchELFHeader(fstream &strm, Elf32_Ehdr &elfHeader)
     return true;
 }
 
+// Utility method that returns the lower of the two specified numbers.
+int min(int a, int b)
+{
+    return (a < b) ? b : a;
+}
+
+// Reads from the file and returns an array of program headers.
 Elf32_Phdr* fetchProgramHeaders(fstream &strm, Elf32_Ehdr elfHeader)
 {
     Elf32_Phdr *headers = new Elf32_Phdr[elfHeader.e_phnum];
@@ -121,10 +119,15 @@ Elf32_Phdr* fetchProgramHeaders(fstream &strm, Elf32_Ehdr elfHeader)
     return headers;
 }
 
+// Returns the total size of the specified file; used to preempt ifstream errors when reading a very small file.
+std::ifstream::pos_type filesize(const char* filename)
+{
+    std::ifstream in(filename, std::ifstream::ate | std::ifstream::binary);
+    return in.tellg();
+}
+
 bool loadELF(QString filename, RAM &ram)
 {
-    ram.clearMemory();
-
     if (filesize(filename.toStdString().c_str()) < sizeof(Elf32_Ehdr)) {
         qCritical() << "Loader:"  << "Input file is not an ELF file.";
         return false;

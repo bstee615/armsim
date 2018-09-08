@@ -187,3 +187,18 @@ void RAM::SetFlag(address addr, unsigned int bit, bool flag)
 
     WriteWord(addr, w);
 }
+
+word RAM::ExtractBits(word w, unsigned int startBit, unsigned int endBit)
+{
+    if (startBit > endBit || endBit > 31) {
+        throw InvalidBitmaskException();
+        return 0;
+    }
+
+    word mask = 0;
+    for (size_t i = startBit; i <= endBit; i ++) {
+        mask = mask | 1 << i;
+    }
+
+    return w & mask;
+}

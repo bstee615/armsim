@@ -1,9 +1,14 @@
+/* errorhandler.h
+ * Contains an error handler to hook into the Qt debugging output.
+ */
+
 #ifndef ERRORHANDLER_H
 #define ERRORHANDLER_H
 
 #include <QtGlobal>
 #include <stdio.h>
 
+// An error handler to redirect Qt debugging output to the desired location.
 void errorHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     switch (type) {

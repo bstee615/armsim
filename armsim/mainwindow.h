@@ -18,13 +18,13 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    MainWindow(Options &options, QWidget *parent = nullptr);
-    ~MainWindow();
-
-private:
     Ui::MainWindow *ui;
     Options &_options;
+
+public:
+    // Initializes GUI elements with the specified Options.
+    MainWindow(Options &options, QWidget *parent = nullptr);
+    ~MainWindow();
 };
 
 #endif // MAINWINDOW_H
