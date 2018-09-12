@@ -9,4 +9,4 @@ TEMPLATE = app
 INCLUDEPATH += ../armsim/
 SOURCES +=  tst_loadertests.cpp \
     ../armsim/loader.cpp \
-    ../armsim/ram.cpp
+    ../armsim/memory.cpp

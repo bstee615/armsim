@@ -3,14 +3,14 @@
  */
 
 #include <QtTest>
-#include "ram.h"
+#include "memory.h"
 
 class RAMTests : public QObject
 {
     Q_OBJECT
 
     const unsigned int bytes = 100;
-    RAM ram;
+    Memory ram;
 
 public:
     RAMTests(){}
@@ -54,7 +54,7 @@ private slots:
 
 void RAMTests::initTestCase()
 {
-    ram = RAM(bytes);
+    ram = Memory(bytes);
 }
 
 void RAMTests::init()
@@ -134,14 +134,14 @@ void RAMTests::ReadByte_Success()
 
 void RAMTests::Checksum_Success()
 {
-    RAM ram = RAM(4);
+    Memory ram = Memory(4);
     byte *memory = ram.getMemory();
     memory[0] = 0x01;
     memory[1] = 0x82;
     memory[2] = 0x03;
     memory[3] = 0x84;
     Q_ASSERT(ram.Checksum() == 268);
-    ram = RAM(32768);
+    ram = Memory(32768);
     memory = ram.getMemory();
     memory[0] = 0x01;
     memory[1] = 0x82;
@@ -152,7 +152,7 @@ void RAMTests::Checksum_Success()
 
 void RAMTests::Checksum_SuccessAfterInitialization()
 {
-    RAM ram = RAM(10);
+    Memory ram = Memory(10);
     Q_ASSERT(ram.Checksum() == 1+2+3+4+5+6+7+8+9);
 }
 
@@ -286,17 +286,17 @@ void RAMTests::SetFlag_FailsInvalidBit()
 
 void RAMTests::ExtractBits_Success()
 {
-    Q_ASSERT(RAM::ExtractBits(0x05, 1, 3) == 4);
+    Q_ASSERT(Memory::ExtractBits(0x05, 1, 3) == 4);
 }
 
 void RAMTests::ExtractBits_FromAll1s()
 {
-    Q_ASSERT(RAM::ExtractBits(0xFFFFFFFF, 0, 15) == 0x0000FFFF);
+    Q_ASSERT(Memory::ExtractBits(0xFFFFFFFF, 0, 15) == 0x0000FFFF);
 }
 
 void RAMTests::ExtractBits_FromAll0s()
 {
-    Q_ASSERT(RAM::ExtractBits(0, 0, 16) == 0);
+    Q_ASSERT(Memory::ExtractBits(0, 0, 16) == 0);
 }
 
 QTEST_APPLESS_MAIN(RAMTests)

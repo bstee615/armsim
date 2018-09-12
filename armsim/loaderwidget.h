@@ -5,7 +5,7 @@
 #ifndef LOADERWIDGET_H
 #define LOADERWIDGET_H
 
-#include "ram.h"
+#include "memory.h"
 #include <QWidget>
 #include <QDebug>
 
@@ -19,13 +19,13 @@ class LoaderWidget : public QWidget
     Q_OBJECT
 
     Ui::LoaderWidget *ui;
-    RAM ram;
+    Memory ram;
 
 public:
     explicit LoaderWidget(QWidget *parent = nullptr);
     ~LoaderWidget();
 
-    RAM &getRAM()
+    Memory &getRAM()
     {
         return ram;
     }

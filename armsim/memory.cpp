@@ -1,13 +1,13 @@
-#include "ram.h"
+#include "memory.h"
 #include <QtMath>
 
-RAM::RAM()
+Memory::Memory()
 {
     memory = nullptr;
     size = 0;
 }
 
-RAM::RAM(address size)
+Memory::Memory(address size)
 {
     memory = new byte[size];
     this->size = size;
@@ -15,9 +15,9 @@ RAM::RAM(address size)
 }
 
 // Creates a deep clone of the other RAM object.
-RAM::RAM(const RAM& other)
+Memory::Memory(const Memory& other)
 {
-    RAM& otherNotConst = const_cast<RAM&>(other);
+    Memory& otherNotConst = const_cast<Memory&>(other);
     size = otherNotConst.getSize();
     memory = new byte[size];
     byte *otherMemory = otherNotConst.getMemory();
@@ -27,9 +27,9 @@ RAM::RAM(const RAM& other)
 }
 
 // Creates a deep clone of the other RAM object.
-RAM &RAM::operator=(const RAM &other)
+Memory &Memory::operator=(const Memory &other)
 {
-    RAM& otherNotConst = const_cast<RAM&>(other);
+    Memory& otherNotConst = const_cast<Memory&>(other);
     size = otherNotConst.getSize();
     memory = new byte[size];
     byte *otherMemory = otherNotConst.getMemory();
@@ -40,7 +40,7 @@ RAM &RAM::operator=(const RAM &other)
     return *this;
 }
 
-RAM::~RAM()
+Memory::~Memory()
 {
     if (memory) {
         delete []memory;
@@ -48,7 +48,7 @@ RAM::~RAM()
     }
 }
 
-word RAM::ReadWord(address addr)
+word Memory::ReadWord(address addr)
 {
     word w = 0;
     if (addr >= size) {
@@ -67,7 +67,7 @@ word RAM::ReadWord(address addr)
     return w;
 }
 
-halfword RAM::ReadHalfWord(address addr)
+halfword Memory::ReadHalfWord(address addr)
 {
     halfword w = 0;
     if (addr >= size) {
@@ -86,7 +86,7 @@ halfword RAM::ReadHalfWord(address addr)
     return w;
 }
 
-byte  RAM::ReadByte(address addr)
+byte  Memory::ReadByte(address addr)
 {
     if (addr >= size) {
         throw OutOfBoundsException();
@@ -96,7 +96,7 @@ byte  RAM::ReadByte(address addr)
     return memory[addr];
 }
 
-void RAM::WriteWord(address addr, word data)
+void Memory::WriteWord(address addr, word data)
 {
     if (addr >= size) {
         throw OutOfBoundsException();
@@ -112,7 +112,7 @@ void RAM::WriteWord(address addr, word data)
     memory[addr] = (byte)(data);
 }
 
-void RAM::WriteHalfWord(address addr, halfword data)
+void Memory::WriteHalfWord(address addr, halfword data)
 {
     if (addr >= size) {
         throw OutOfBoundsException();
@@ -126,7 +126,7 @@ void RAM::WriteHalfWord(address addr, halfword data)
     memory[addr] = (byte)data;
 }
 
-void RAM::WriteByte(address addr, byte data)
+void Memory::WriteByte(address addr, byte data)
 {
     if (addr >= size) {
         throw OutOfBoundsException();
@@ -136,7 +136,7 @@ void RAM::WriteByte(address addr, byte data)
     memory[addr] = data;
 }
 
-int RAM::Checksum()
+int Memory::Checksum()
 {
     int32_t cksum = 0;
 
@@ -147,7 +147,7 @@ int RAM::Checksum()
     return cksum;
 }
 
-bool RAM::TestFlag(address addr, unsigned int bit)
+bool Memory::TestFlag(address addr, unsigned int bit)
 {
     if (addr > size) {
         throw OutOfBoundsException();
@@ -164,7 +164,7 @@ bool RAM::TestFlag(address addr, unsigned int bit)
     return ((w & mask) != 0);
 }
 
-void RAM::SetFlag(address addr, unsigned int bit, bool flag)
+void Memory::SetFlag(address addr, unsigned int bit, bool flag)
 {
     if (addr > size) {
         throw OutOfBoundsException();
@@ -188,7 +188,7 @@ void RAM::SetFlag(address addr, unsigned int bit, bool flag)
     WriteWord(addr, w);
 }
 
-word RAM::ExtractBits(word w, unsigned int startBit, unsigned int endBit)
+word Memory::ExtractBits(word w, unsigned int startBit, unsigned int endBit)
 {
     if (startBit > endBit || endBit > 31) {
         throw InvalidBitmaskException();

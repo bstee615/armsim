@@ -43,7 +43,7 @@ void LoaderWidget::initializeRAM(unsigned amt)
 {
     qDebug() << "Loader:" << "Initializing RAM to" << amt << "bytes";
     ui->memorySpinBox->setValue(static_cast<int>(amt));
-    ram = RAM(amt);
+    ram = Memory(amt);
 }
 
 void LoaderWidget::on_initRAMButton_clicked()

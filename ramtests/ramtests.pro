@@ -8,4 +8,4 @@ TEMPLATE = app
 
 INCLUDEPATH += ../armsim/
 SOURCES +=  tst_ramtests.cpp \
-    ../armsim/ram.cpp
+    ../armsim/memory.cpp

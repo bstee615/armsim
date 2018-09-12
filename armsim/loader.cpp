@@ -14,7 +14,7 @@ bool containsELFSignature (unsigned char* e_ident)
             e_ident[3] == 'F');
 }
 
-bool isThereEnoughMemory(RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
+bool isThereEnoughMemory(Memory &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
 {
     size_t sizeOfAllSegments = 0;
     for (int ph_i = 0; ph_i < elfHeader.e_phnum; ph_i ++) {
@@ -31,7 +31,7 @@ bool isThereEnoughMemory(RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHea
 }
 
 // Writes the data specified by programHeaders from the file to ram.
-bool writeBytesToRAM(fstream &strm, RAM &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
+bool writeBytesToRAM(fstream &strm, Memory &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
 {
     if (!isThereEnoughMemory(ram, elfHeader, programHeaders)) {
         return false;
@@ -123,10 +123,12 @@ Elf32_Phdr* fetchProgramHeaders(fstream &strm, Elf32_Ehdr elfHeader)
 std::ifstream::pos_type filesize(const char* filename)
 {
     std::ifstream in(filename, std::ifstream::ate | std::ifstream::binary);
-    return in.tellg();
+    std::ifstream::pos_type size = in.tellg();
+    in.close();
+    return size;
 }
 
-bool loadELF(QString filename, RAM &ram)
+bool loadELF(QString filename, Memory &ram)
 {
     if (filesize(filename.toStdString().c_str()) < sizeof(Elf32_Ehdr)) {
         qCritical() << "Loader:"  << "Input file is not an ELF file.";

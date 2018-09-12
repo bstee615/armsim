@@ -2,8 +2,8 @@
  * Contains logic for simulated RAM.
  */
 
-#ifndef RAM_H
-#define RAM_H
+#ifndef MEMORY_H
+#define MEMORY_H
 
 #include <cstdint>
 typedef uint8_t byte;
@@ -42,7 +42,7 @@ struct InvalidBitmaskException : public std::exception
 };
 
 // Class that represents simulated RAM as an array.
-class RAM
+class Memory
 {
     byte* memory;
     address size;
@@ -58,11 +58,11 @@ class RAM
     }
 
 public:
-    RAM();
-    RAM(address size);
-    RAM(const RAM& other);
-    RAM& operator=(const RAM& other);
-    ~RAM();
+    Memory();
+    Memory(address size);
+    Memory(const Memory& other);
+    Memory& operator=(const Memory& other);
+    ~Memory();
 
     // Reads a data value of the appropriate size (word/halfword/byte) at the 32-bit address.
     word ReadWord(address addr);
@@ -99,4 +99,4 @@ public:
     }
 };
 
-#endif // RAM_H
+#endif // MEMORY_H
