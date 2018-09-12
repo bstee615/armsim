@@ -27,7 +27,9 @@ SOURCES += \
         mainwindow.cpp \
     loaderwidget.cpp \
     loader.cpp \
-    memory.cpp
+    memory.cpp \
+    cpu.cpp \
+    computer.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -36,7 +38,9 @@ HEADERS += \
     loader.h \
     elf.h \
     errorhandler.h \
-    memory.h
+    memory.h \
+    cpu.h \
+    computer.h
 
 FORMS += \
         mainwindow.ui \
