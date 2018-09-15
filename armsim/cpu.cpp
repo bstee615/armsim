@@ -10,6 +10,7 @@ CPU::CPU(Memory *ram): _ram(ram), registers(Memory(32)) // TODO: Calculate the c
 word CPU::fetch()
 {
     auto addressToFetch = registers.ReadWord(PC_OFFSET);
+    registers.WriteWord(PC_OFFSET, addressToFetch + 4);
     return _ram->ReadWord(addressToFetch);
 }
 

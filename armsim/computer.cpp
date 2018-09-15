@@ -13,7 +13,7 @@ void Computer::loadFile(QString path)
         return;
     }
 
-    if (!loadELF(path, this)) {
+    if (!loadELF(path, &cpu)) {
         QCoreApplication::exit(1);
         exit(1);
     }

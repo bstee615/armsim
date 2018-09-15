@@ -6,6 +6,7 @@
 
 #include "loader.h"
 #include "elf.h"
+#include "cpu.h"
 
 class LoaderTests : public QObject
 {
@@ -71,21 +72,21 @@ void LoaderTests::containsELFSignature_Success()
 void LoaderTests::loadELF_SuccessTest1()
 {
     Memory ram = Memory(32768);
-    loadELF("testfiles\\loader\\test1.exe", ram);
+    loadELF("testfiles\\loader\\test1.exe", new CPU(&ram));
     Q_ASSERT(ram.Checksum() == 536861081);
 }
 
 void LoaderTests::loadELF_SuccessTest2()
 {
     Memory ram = Memory(32768);
-    loadELF("testfiles\\loader\\test2.exe", ram);
+    loadELF("testfiles\\loader\\test2.exe", new CPU(&ram));
     Q_ASSERT(ram.Checksum() == 536864433);
 }
 
 void LoaderTests::loadELF_SuccessTest3()
 {
     Memory ram = Memory(32768);
-    loadELF("testfiles\\loader\\test3.exe", ram);
+    loadELF("testfiles\\loader\\test3.exe", new CPU(&ram));
     Q_ASSERT(ram.Checksum() == 536861199);
 }
 

@@ -2,7 +2,6 @@
 #define CPU_H
 
 #include "memory.h"
-#include "loader.h"
 
 #define PC_OFFSET 0
 

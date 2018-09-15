@@ -2,6 +2,7 @@
 #define COMPUTER_H
 
 #include "cpu.h"
+#include "loader.h"
 #include <QCoreApplication>
 
 class Computer
