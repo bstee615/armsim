@@ -8,11 +8,12 @@
 
 class CPU
 {
-    Memory &_ram;
+    Memory *_ram;
     Memory registers;
 
 public:
-    CPU(Memory &ram);
+    CPU() {}
+    CPU(Memory *ram);
 
     // Reads a word from the RAM address specified by the value of the simulated Program Counter register.
     word fetch();
@@ -20,6 +21,9 @@ public:
     void decode(word w);
     // Waits for 0.25sec.
     void execute();
+
+    Memory *getRAM() { return _ram; }
+    void setProgramCounter(address addr) { registers.WriteWord(PC_OFFSET, addr); }
 };
 
 #endif // CPU_H

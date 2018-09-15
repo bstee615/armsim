@@ -36,7 +36,8 @@ SOURCES += \
     registerswidget.cpp \
     disassemblywidget.cpp \
     stackwidget.cpp \
-    computerwidget.cpp
+    computerwidget.cpp \
+    runcontrolswidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -54,7 +55,8 @@ HEADERS += \
     registerswidget.h \
     disassemblywidget.h \
     stackwidget.h \
-    computerwidget.h
+    computerwidget.h \
+    runcontrolswidget.h
 
 FORMS += \
         mainwindow.ui \
@@ -64,7 +66,8 @@ FORMS += \
     flagswidget.ui \
     registerswidget.ui \
     disassemblywidget.ui \
-    stackwidget.ui
+    stackwidget.ui \
+    runcontrolswidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

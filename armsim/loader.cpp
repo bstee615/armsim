@@ -31,9 +31,9 @@ bool isThereEnoughMemory(Memory &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* program
 }
 
 // Writes the data specified by programHeaders from the file to ram.
-bool writeBytesToRAM(fstream &strm, Memory &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
+bool writeBytesToRAM(fstream &strm, Memory *ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* programHeaders)
 {
-    if (!isThereEnoughMemory(ram, elfHeader, programHeaders)) {
+    if (!isThereEnoughMemory(*ram, elfHeader, programHeaders)) {
         return false;
     }
 
@@ -51,7 +51,7 @@ bool writeBytesToRAM(fstream &strm, Memory &ram, Elf32_Ehdr &elfHeader, Elf32_Ph
         }
 
         for (address i = 0; i < progHeader.p_filesz; i ++) {
-            ram.WriteByte(progHeader.p_paddr + i, data[i]);
+            ram->WriteByte(progHeader.p_paddr + i, data[i]);
         }
         delete[] data;
     }
@@ -128,7 +128,7 @@ std::ifstream::pos_type filesize(const char* filename)
     return size;
 }
 
-bool loadELF(QString filename, Memory &ram)
+bool loadELF(QString filename, CPU *cpu)
 {
     if (filesize(filename.toStdString().c_str()) < sizeof(Elf32_Ehdr)) {
         qCritical() << "Loader:"  << "Input file is not an ELF file.";
@@ -149,13 +149,15 @@ bool loadELF(QString filename, Memory &ram)
     if (fetchProgramHeaders == nullptr) {
         return false;
     }
-    if (!writeBytesToRAM(strm, ram, elfHeader, programHeaders)) {
+    if (!writeBytesToRAM(strm, cpu->getRAM(), elfHeader, programHeaders)) {
         return false;
     }
+    cpu->setProgramCounter(elfHeader.e_entry);
+
     delete[] programHeaders;
     strm.close();
 
-    qDebug() << "Loader:" << "RAM checksum after loading:" << ram.Checksum();
+    qDebug() << "Loader:" << "RAM checksum after loading:" << cpu->getRAM()->Checksum();
 
     return true;
 }

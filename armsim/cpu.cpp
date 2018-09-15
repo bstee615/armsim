@@ -2,14 +2,15 @@
 #include <chrono>
 #include <thread>
 
-CPU::CPU(Memory &ram): _ram(ram), registers(Memory()) // TODO: Calculate the correct number of bytes.
+CPU::CPU(Memory *ram): _ram(ram), registers(Memory(32)) // TODO: Calculate the correct number of bytes.
 {
+    qDebug() << "Initialized" << _ram->getSize() << registers.getSize();
 }
 
 word CPU::fetch()
 {
     auto addressToFetch = registers.ReadWord(PC_OFFSET);
-    return _ram.ReadWord(addressToFetch);
+    return _ram->ReadWord(addressToFetch);
 }
 
 void CPU::decode(word w)

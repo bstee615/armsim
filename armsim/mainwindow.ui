@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>736</width>
-    <height>604</height>
+    <width>926</width>
+    <height>742</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -71,17 +71,11 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="MemoryWidget" name="memoryWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+       <widget class="DisassemblyWidget" name="disassemblyWidget" native="true">
         <property name="minimumSize">
          <size>
-          <width>400</width>
-          <height>250</height>
+          <width>0</width>
+          <height>150</height>
          </size>
         </property>
        </widget>
@@ -105,11 +99,17 @@
      </layout>
     </item>
     <item>
-     <widget class="DisassemblyWidget" name="disassemblyWidget" native="true">
+     <widget class="MemoryWidget" name="memoryWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
-        <width>0</width>
-        <height>150</height>
+        <width>400</width>
+        <height>250</height>
        </size>
       </property>
      </widget>
@@ -120,6 +120,9 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
+    </item>
+    <item>
+     <widget class="RunControlsWidget" name="runControlsWidget" native="true"/>
     </item>
     <item>
      <widget class="TerminalWidget" name="terminalWidget" native="true">
@@ -176,6 +179,12 @@
    <class>DisassemblyWidget</class>
    <extends>QWidget</extends>
    <header>disassemblywidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RunControlsWidget</class>
+   <extends>QWidget</extends>
+   <header>runcontrolswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
