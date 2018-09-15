@@ -15,20 +15,14 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="loaderLabel">
+    <widget class="QLabel" name="lblLoader">
      <property name="font">
       <font>
-       <pointsize>24</pointsize>
+       <pointsize>11</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>Loader</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="margin">
-      <number>16</number>
+      <string>Load File</string>
      </property>
     </widget>
    </item>

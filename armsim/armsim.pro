@@ -29,7 +29,13 @@ SOURCES += \
     loader.cpp \
     memory.cpp \
     cpu.cpp \
-    computer.cpp
+    computer.cpp \
+    terminalwidget.cpp \
+    memorywidget.cpp \
+    flagswidget.cpp \
+    registerswidget.cpp \
+    disassemblywidget.cpp \
+    stackwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,11 +46,23 @@ HEADERS += \
     errorhandler.h \
     memory.h \
     cpu.h \
-    computer.h
+    computer.h \
+    terminalwidget.h \
+    memorywidget.h \
+    flagswidget.h \
+    registerswidget.h \
+    disassemblywidget.h \
+    stackwidget.h
 
 FORMS += \
         mainwindow.ui \
-    loaderwidget.ui
+    loaderwidget.ui \
+    terminalwidget.ui \
+    memorywidget.ui \
+    flagswidget.ui \
+    registerswidget.ui \
+    disassemblywidget.ui \
+    stackwidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
