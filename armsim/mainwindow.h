@@ -6,6 +6,7 @@
 #define MAINWINDOW_H
 
 #include "options.h"
+#include "computer.h"
 #include <QMainWindow>
 
 // Qt magic "header" for the Widgets app.
@@ -25,6 +26,8 @@ public:
     // Initializes GUI elements with the specified Options.
     MainWindow(Options &options, QWidget *parent = nullptr);
     ~MainWindow();
+
+    Computer computer;
 };
 
 #endif // MAINWINDOW_H

@@ -1,8 +1,20 @@
 #include "computer.h"
 
-Computer::Computer()
+Computer::Computer(address numBytes, QString path): ram(Memory(numBytes)), cpu(CPU(ram))
 {
-    cpu = CPU();
+    loadFile(path);
+}
+
+void Computer::loadFile(QString path)
+{
+    if (path.isEmpty()) {
+        return;
+    }
+
+    if (!loadELF(path, ram)) {
+        QCoreApplication::exit(1);
+        exit(1);
+    }
 }
 
 void Computer::run()

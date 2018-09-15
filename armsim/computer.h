@@ -2,12 +2,16 @@
 #define COMPUTER_H
 
 #include "cpu.h"
+#include <QCoreApplication>
 
 class Computer
 {
     CPU cpu;
+    Memory ram;
+
 public:
-    Computer();
+    Computer(address numBytes, QString path);
+    void loadFile(QString path);
 
     // Calls the CPU's fetch(), decode(), and execute() in a loop, until fetch() returns a 0.
     void run();

@@ -2,12 +2,13 @@
 #define FLAGSWIDGET_H
 
 #include <QWidget>
+#include "computerwidget.h"
 
 namespace Ui {
 class FlagsWidget;
 }
 
-class FlagsWidget : public QWidget
+class FlagsWidget : public QWidget, public ComputerWidget
 {
     Q_OBJECT
 

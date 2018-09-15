@@ -4,12 +4,12 @@
 MainWindow::MainWindow(Options &options, QWidget *parent):
     QMainWindow (parent),
     ui(new Ui::MainWindow),
-    _options(options)
+    _options(options),
+    computer(Computer(_options.getMemory(), _options.getFilename()))
 {
     ui->setupUi(this);
-
-    ui->loaderWidget->initializeRAM(_options.getMemory());
-    ui->loaderWidget->loadFile(_options.getFilename());
+    ui->loaderWidget->init(&computer);
+    ui->loaderWidget->setFileDialogText(_options.getFilename());
 }
 
 MainWindow::~MainWindow()

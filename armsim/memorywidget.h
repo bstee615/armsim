@@ -2,12 +2,13 @@
 #define MEMORYWIDGET_H
 
 #include <QWidget>
+#include "computerwidget.h"
 
 namespace Ui {
 class MemoryWidget;
 }
 
-class MemoryWidget : public QWidget
+class MemoryWidget : public QWidget, public ComputerWidget
 {
     Q_OBJECT
 

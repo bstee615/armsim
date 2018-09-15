@@ -25,30 +25,15 @@ LoaderWidget::~LoaderWidget()
     delete ui;
 }
 
-void LoaderWidget::loadFile(QString path)
+void LoaderWidget::loadFile(QString filepath)
 {
-    if (path.isEmpty()) {
-        return;
-    }
+    _computer->loadFile(filepath);
+    setFileDialogText(filepath);
+}
 
-    if (!loadELF(path, ram)) {
-        QCoreApplication::exit(1);
-        exit(1);
-    }
-
+void LoaderWidget::setFileDialogText(QString path)
+{
     ui->filepathLineEdit->setText(path);
-}
-
-void LoaderWidget::initializeRAM(unsigned amt)
-{
-    qDebug() << "Loader:" << "Initializing RAM to" << amt << "bytes";
-    ui->memorySpinBox->setValue(static_cast<int>(amt));
-    ram = Memory(amt);
-}
-
-void LoaderWidget::on_initRAMButton_clicked()
-{
-    initializeRAM(static_cast<unsigned long>(ui->memorySpinBox->value()));
 }
 
 void LoaderWidget::on_loadFileButton_clicked()

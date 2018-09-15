@@ -2,12 +2,13 @@
 #define REGISTERSWIDGET_H
 
 #include <QWidget>
+#include "computerwidget.h"
 
 namespace Ui {
 class RegistersWidget;
 }
 
-class RegistersWidget : public QWidget
+class RegistersWidget : public QWidget, public ComputerWidget
 {
     Q_OBJECT
 

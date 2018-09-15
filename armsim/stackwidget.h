@@ -2,12 +2,13 @@
 #define STACKWIDGET_H
 
 #include <QWidget>
+#include "computerwidget.h"
 
 namespace Ui {
 class StackWidget;
 }
 
-class StackWidget : public QWidget
+class StackWidget : public QWidget, public ComputerWidget
 {
     Q_OBJECT
 

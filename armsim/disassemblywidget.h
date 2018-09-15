@@ -2,12 +2,13 @@
 #define DISASSEMBLYWIDGET_H
 
 #include <QWidget>
+#include "computerwidget.h"
 
 namespace Ui {
 class DisassemblyWidget;
 }
 
-class DisassemblyWidget : public QWidget
+class DisassemblyWidget : public QWidget, public ComputerWidget
 {
     Q_OBJECT
 

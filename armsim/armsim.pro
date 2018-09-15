@@ -35,7 +35,8 @@ SOURCES += \
     flagswidget.cpp \
     registerswidget.cpp \
     disassemblywidget.cpp \
-    stackwidget.cpp
+    stackwidget.cpp \
+    computerwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -52,7 +53,8 @@ HEADERS += \
     flagswidget.h \
     registerswidget.h \
     disassemblywidget.h \
-    stackwidget.h
+    stackwidget.h \
+    computerwidget.h
 
 FORMS += \
         mainwindow.ui \

@@ -2,14 +2,17 @@
 #define CPU_H
 
 #include "memory.h"
+#include "loader.h"
+
+#define PC_OFFSET 0
 
 class CPU
 {
-    Memory ram;
-    Memory programCounter;
+    Memory &_ram;
+    Memory registers;
 
 public:
-    CPU();
+    CPU(Memory &ram);
 
     // Reads a word from the RAM address specified by the value of the simulated Program Counter register.
     word fetch();

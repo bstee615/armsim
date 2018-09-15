@@ -2,15 +2,14 @@
 #include <chrono>
 #include <thread>
 
-CPU::CPU()
+CPU::CPU(Memory &ram): _ram(ram), registers(Memory()) // TODO: Calculate the correct number of bytes.
 {
-
 }
 
 word CPU::fetch()
 {
-    auto addressToFetch = programCounter.ReadWord(0);
-    return ram.ReadWord(addressToFetch);
+    auto addressToFetch = registers.ReadWord(PC_OFFSET);
+    return _ram.ReadWord(addressToFetch);
 }
 
 void CPU::decode(word w)
