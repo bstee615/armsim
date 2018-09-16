@@ -20,10 +20,10 @@ void Computer::loadFile(QString path)
     }
 }
 
-void Computer::run()
+void Computer::run(bool *shouldStop)
 {
     const word halt = 0;
-    while (step() != halt)
+    while (step() != halt && !(*shouldStop))
     {
         // Do nothing for now.
     }
@@ -36,6 +36,7 @@ word Computer::step()
     word w = cpu.fetch();
     cpu.decode(w);
     cpu.execute();
+    qDebug() << "Computer:" << "Executed word" << w;
 
     notifyObservers();
     return w;

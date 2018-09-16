@@ -2,7 +2,7 @@
 #define RUNCONTROLSWIDGET_H
 
 #include <QWidget>
-#include <QThread>
+#include "computerthreads.h"
 #include "computerwidget.h"
 
 namespace Ui {
@@ -21,13 +21,17 @@ public:
 
 private slots:
     void on_btnRun_clicked();
-
     void on_btnStep_clicked();
+    void on_btnStop_clicked();
+
     void updateUIToRunningState();
+    void deleteRunningComputerThread();
+    void startComputerThread(ComputerThread *computerThread);
+    void stopComputerThread(ComputerThread *computerThread);
 
 private:
     Ui::RunControlsWidget *ui;
-    QThread *runningThread = nullptr;
+    ComputerThread *runningThread = nullptr;
     bool isRunning;
     void setRunningState(bool running);
 };

@@ -59,7 +59,8 @@ HEADERS += \
     computerwidget.h \
     runcontrolswidget.h \
     ocomputer.h \
-    observer.h
+    observer.h \
+    computerthreads.h
 
 FORMS += \
         mainwindow.ui \

@@ -6,6 +6,9 @@ RunControlsWidget::RunControlsWidget(QWidget *parent) :
     ui(new Ui::RunControlsWidget)
 {
     ui->setupUi(this);
+
+    setRunningState(false);
+    updateUIToRunningState();
 }
 
 RunControlsWidget::~RunControlsWidget()
@@ -16,20 +19,17 @@ RunControlsWidget::~RunControlsWidget()
 
 void RunControlsWidget::on_btnRun_clicked()
 {
-    // TODO: Run loaded program.
+    startComputerThread(new ComputerRunThread(_computer));
 }
 
 void RunControlsWidget::on_btnStep_clicked()
 {
-    setRunningState(true);
-    updateUIToRunningState();
+    startComputerThread(new ComputerStepThread(_computer));
+}
 
-    if (runningThread != nullptr) {
-        delete runningThread;
-    }
-    runningThread = new ComputerStepThread(_computer);
-    runningThread->start();
-    connect(runningThread, SIGNAL(finished()), this, SLOT(updateUIToRunningState()));
+void RunControlsWidget::on_btnStop_clicked()
+{
+    stopComputerThread(runningThread);
 }
 
 void RunControlsWidget::update()
@@ -46,4 +46,32 @@ void RunControlsWidget::updateUIToRunningState()
 {
     ui->btnRun->setEnabled(!isRunning);
     ui->btnStep->setEnabled(!isRunning);
+    ui->btnStop->setEnabled(isRunning);
+}
+
+void RunControlsWidget::deleteRunningComputerThread()
+{
+    delete runningThread;
+    runningThread = nullptr;
+    setRunningState(false);
+    updateUIToRunningState();
+}
+
+void RunControlsWidget::startComputerThread(ComputerThread *computerThread)
+{
+    setRunningState(true);
+    updateUIToRunningState();
+
+    if (runningThread != nullptr) {
+        delete runningThread;
+    }
+    runningThread = computerThread;
+    runningThread->start();
+    connect(runningThread, SIGNAL(finished()), this, SLOT(updateUIToRunningState()));
+}
+
+void RunControlsWidget::stopComputerThread(ComputerThread *computerThread)
+{
+    runningThread->stopRunning();
+    connect(runningThread, SIGNAL(finished()), this, SLOT(deleteRunningComputerThread()));
 }

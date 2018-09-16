@@ -16,7 +16,7 @@ class MainWindow;
 }
 
 // Main class to implement Qt Widgets.
-class MainWindow : public QMainWindow, public Observer
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -29,8 +29,6 @@ public:
     ~MainWindow();
 
     Computer computer;
-
-    void update();
 };
 
 #endif // MAINWINDOW_H

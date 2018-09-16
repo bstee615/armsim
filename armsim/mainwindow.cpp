@@ -12,13 +12,6 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     ui->loaderWidget->setFileDialogText(_options.getFilename());
 
     ui->runControlsWidget->init(&computer);
-
-    computer.registerObserver(this);
-}
-
-void MainWindow::update()
-{
-    qDebug() << "Computer:" << "Finished op.";
 }
 
 MainWindow::~MainWindow()
