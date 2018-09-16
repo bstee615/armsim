@@ -7,6 +7,7 @@
 
 #include "options.h"
 #include "computer.h"
+#include "observer.h"
 #include <QMainWindow>
 
 // Qt magic "header" for the Widgets app.
@@ -15,7 +16,7 @@ class MainWindow;
 }
 
 // Main class to implement Qt Widgets.
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public Observer
 {
     Q_OBJECT
 
@@ -28,6 +29,8 @@ public:
     ~MainWindow();
 
     Computer computer;
+
+    void update();
 };
 
 #endif // MAINWINDOW_H

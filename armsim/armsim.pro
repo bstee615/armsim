@@ -37,7 +37,8 @@ SOURCES += \
     disassemblywidget.cpp \
     stackwidget.cpp \
     computerwidget.cpp \
-    runcontrolswidget.cpp
+    runcontrolswidget.cpp \
+    ocomputer.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -56,7 +57,9 @@ HEADERS += \
     disassemblywidget.h \
     stackwidget.h \
     computerwidget.h \
-    runcontrolswidget.h
+    runcontrolswidget.h \
+    ocomputer.h \
+    observer.h
 
 FORMS += \
         mainwindow.ui \

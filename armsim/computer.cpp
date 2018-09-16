@@ -14,6 +14,7 @@ void Computer::loadFile(QString path)
     }
 
     if (!loadELF(path, &cpu)) {
+        qCritical() << "Error:" << "Exiting application.";
         QCoreApplication::exit(1);
         exit(1);
     }
@@ -26,6 +27,8 @@ void Computer::run()
     {
         // Do nothing for now.
     }
+
+    notifyObservers();
 }
 
 word Computer::step()
@@ -34,5 +37,6 @@ word Computer::step()
     cpu.decode(w);
     cpu.execute();
 
+    notifyObservers();
     return w;
 }
