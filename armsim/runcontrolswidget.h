@@ -19,6 +19,9 @@ public:
 
     void update();
 
+signals:
+    void updatedUI();
+
 private slots:
     void on_btnRun_clicked();
     void on_btnStep_clicked();

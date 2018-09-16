@@ -47,6 +47,8 @@ void RunControlsWidget::updateUIToRunningState()
     ui->btnRun->setEnabled(!isRunning);
     ui->btnStep->setEnabled(!isRunning);
     ui->btnStop->setEnabled(isRunning);
+
+    emit updatedUI();
 }
 
 void RunControlsWidget::deleteRunningComputerThread()

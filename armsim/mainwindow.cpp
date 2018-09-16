@@ -12,9 +12,15 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     ui->loaderWidget->setFileDialogText(_options.getFilename());
 
     ui->runControlsWidget->init(&computer);
+    connect(ui->runControlsWidget, SIGNAL(updatedUI()), this, SLOT(onUpdatedUI()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::onUpdatedUI()
+{
+    // TODO: Update other sub-widgets that are needed and thank past Benji for this gracious gift.
 }

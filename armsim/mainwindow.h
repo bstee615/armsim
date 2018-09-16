@@ -29,6 +29,9 @@ public:
     ~MainWindow();
 
     Computer computer;
+
+private slots:
+    void onUpdatedUI();
 };
 
 #endif // MAINWINDOW_H
