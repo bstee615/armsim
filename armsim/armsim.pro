@@ -37,7 +37,9 @@ SOURCES += \
     disassemblywidget.cpp \
     stackwidget.cpp \
     computerwidget.cpp \
-    runcontrolswidget.cpp
+    runcontrolswidget.cpp \
+    addbreakpointpopup.cpp \
+    hexspinbox.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -57,7 +59,9 @@ HEADERS += \
     stackwidget.h \
     computerwidget.h \
     runcontrolswidget.h \
-    computerthreads.h
+    computerthreads.h \
+    addbreakpointpopup.h \
+    hexspinbox.h
 
 FORMS += \
         mainwindow.ui \
@@ -68,7 +72,8 @@ FORMS += \
     registerswidget.ui \
     disassemblywidget.ui \
     stackwidget.ui \
-    runcontrolswidget.ui
+    runcontrolswidget.ui \
+    addbreakpointpopup.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

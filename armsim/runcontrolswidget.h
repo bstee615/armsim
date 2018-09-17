@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include "computerthreads.h"
 #include "computerwidget.h"
+#include "addbreakpointpopup.h"
 
 namespace Ui {
 class RunControlsWidget;
@@ -22,6 +23,9 @@ public:
     QPushButton *btnRun;
     QPushButton *btnStep;
     QPushButton *btnStop;
+    AddBreakpointPopup *popup;
+
+    void init(Computer *computer);
 
 public slots:
     void setRunningState(bool running);
@@ -34,6 +38,11 @@ private slots:
     void on_btnStop_clicked();
 
     void on_btnAddBreakpoint_clicked();
+
+    void onAddedBreakpoint();
+
+signals:
+    void addedBreakpoint();
 
 private:
     Ui::RunControlsWidget *ui;

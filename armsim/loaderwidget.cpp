@@ -29,6 +29,8 @@ void LoaderWidget::loadFile(QString filepath)
 {
     _computer->loadFile(filepath);
     setFileDialogText(filepath);
+
+    emit loadedFile();
 }
 
 void LoaderWidget::setFileDialogText(QString path)
@@ -40,4 +42,9 @@ void LoaderWidget::on_loadFileButton_clicked()
 {
     QString filePath = QFileDialog::getOpenFileName(this, "Open ELF executable", ".", "ELF Files (*)");
     loadFile(filePath);
+}
+
+void LoaderWidget::on_initRAMButton_clicked()
+{
+    loadFile(ui->filepathLineEdit->text());
 }

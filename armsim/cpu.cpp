@@ -4,7 +4,7 @@
 
 CPU::CPU(Memory *ram): _ram(ram), registers(Memory(32)) // TODO: Calculate the correct number of bytes.
 {
-    qDebug() << "Initialized" << _ram->getSize() << registers.getSize();
+    qDebug() << "CPU:" << "Initialized with" << _ram->getSize() << "bytes of RAM and" << registers.getSize() << "bytes of register memory.";
 }
 
 word CPU::fetch()

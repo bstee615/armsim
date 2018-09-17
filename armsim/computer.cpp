@@ -1,10 +1,9 @@
 #include "computer.h"
 
-Computer::Computer(address numBytes, QString path)
+Computer::Computer(address numBytes)
 {
     ram = Memory(numBytes);
     cpu = CPU(&ram);
-    loadFile(path);
 }
 
 void Computer::loadFile(QString path)
@@ -23,7 +22,7 @@ void Computer::loadFile(QString path)
 void Computer::run(bool *shouldStop)
 {
     const word halt = 0;
-    while (step() != halt && !(*shouldStop))
+    while (!(*shouldStop) && step() != halt && !breakpoints.contains(cpu.getProgramCounter()))
     {
         // Do nothing for now.
     }
@@ -34,7 +33,7 @@ word Computer::step()
     word w = cpu.fetch();
     cpu.decode(w);
     cpu.execute();
-    qDebug() << "Computer:" << "Executed word" << w;
+    qDebug() << "Computer:" << "Executed word" << QString("%1").arg(w, 8, 16, QChar('0')).toUpper().prepend(QString("0x"));
 
     return w;
 }

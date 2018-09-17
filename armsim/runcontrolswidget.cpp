@@ -10,11 +10,21 @@ RunControlsWidget::RunControlsWidget(QWidget *parent) :
     btnRun = ui->btnRun;
     btnStep = ui->btnStep;
     btnStop = ui->btnStop;
+
+    popup = new AddBreakpointPopup(this);
+    connect(popup, SIGNAL(addedBreakpoint()), this, SLOT(onAddedBreakpoint()));
 }
 
 RunControlsWidget::~RunControlsWidget()
 {
+    delete popup;
     delete ui;
+}
+
+void RunControlsWidget::init(Computer *computer)
+{
+    ComputerWidget::init(computer);
+    popup->init(_computer);
 }
 
 void RunControlsWidget::setRunningState(bool running)
@@ -41,5 +51,10 @@ void RunControlsWidget::on_btnStop_clicked()
 
 void RunControlsWidget::on_btnAddBreakpoint_clicked()
 {
-    // TODO: Add breakpoint dialog.
+    popup->show();
+}
+
+void RunControlsWidget::onAddedBreakpoint()
+{
+    emit addedBreakpoint();
 }

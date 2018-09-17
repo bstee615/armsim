@@ -96,7 +96,7 @@
    <item>
     <widget class="QPushButton" name="initRAMButton">
      <property name="text">
-      <string>Reset RAM to settings</string>
+      <string>Reset</string>
      </property>
     </widget>
    </item>

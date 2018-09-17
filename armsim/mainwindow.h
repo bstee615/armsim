@@ -40,6 +40,8 @@ private slots:
     void startComputerStepThread();
     void stopComputerThread();
     void deleteComputerThread();
+
+    void updateAllUI();
 };
 
 #endif // MAINWINDOW_H

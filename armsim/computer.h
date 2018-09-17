@@ -13,7 +13,7 @@ public:
     Memory ram;
     QSet<address> breakpoints;
 
-    Computer(address numBytes, QString path);
+    Computer(address numBytes);
     void loadFile(QString path);
 
     // Calls the CPU's fetch(), decode(), and execute() in a loop, until fetch() returns a 0.

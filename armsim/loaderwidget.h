@@ -29,9 +29,13 @@ public:
     void loadFile(QString path);
     void setFileDialogText(QString path);
 
+signals:
+    void loadedFile();
+
 private slots:
     // Event handler for the Load File button.
     void on_loadFileButton_clicked();
+    void on_initRAMButton_clicked();
 };
 
 #endif // LOADERWIDGET_H

@@ -9,7 +9,7 @@ protected:
     Computer *_computer;
 
 public:
-    void init(Computer *computer);
+    virtual void init(Computer *computer);
 };
 
 #endif // COMPUTERWIDGET_H
