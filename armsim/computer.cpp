@@ -38,3 +38,13 @@ word Computer::step()
 
     return w;
 }
+
+bool Computer::isBreakpoint(address addr)
+{
+    return breakpoints.contains(addr);
+}
+
+void Computer::addBreakpoint(address addr)
+{
+    breakpoints.insert(addr);
+}

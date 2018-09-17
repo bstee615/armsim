@@ -27,7 +27,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTextBrowser" name="textareaDissasembly"/>
+    <widget class="QListWidget" name="listDisassembly"/>
    </item>
   </layout>
  </widget>

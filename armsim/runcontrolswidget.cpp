@@ -38,3 +38,8 @@ void RunControlsWidget::on_btnStop_clicked()
 {
     setRunningState(false);
 }
+
+void RunControlsWidget::on_btnAddBreakpoint_clicked()
+{
+    // TODO: Add breakpoint dialog.
+}

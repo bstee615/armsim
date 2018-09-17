@@ -22,6 +22,7 @@ public:
     void execute();
 
     Memory *getRAM() { return _ram; }
+    address getProgramCounter() { return registers.ReadWord(PC_OFFSET); }
     void setProgramCounter(address addr) { registers.WriteWord(PC_OFFSET, addr); }
 };
 

@@ -33,6 +33,8 @@ private slots:
 
     void on_btnStop_clicked();
 
+    void on_btnAddBreakpoint_clicked();
+
 private:
     Ui::RunControlsWidget *ui;
 };

@@ -4,13 +4,15 @@
 #include "cpu.h"
 #include "loader.h"
 #include <QCoreApplication>
+#include <QSet>
 
 class Computer
 {
+public:
     CPU cpu;
     Memory ram;
+    QSet<address> breakpoints;
 
-public:
     Computer(address numBytes, QString path);
     void loadFile(QString path);
 
@@ -18,6 +20,9 @@ public:
     void run(bool *shouldStop);
     // Call the CPU's fetch(), decode(), and execute() methods once.
     word step();
+
+    bool isBreakpoint(address addr);
+    void addBreakpoint(address addr);
 };
 
 #endif // COMPUTER_H

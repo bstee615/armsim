@@ -10,6 +10,7 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     ui->setupUi(this);
     ui->runControlsWidget->init(&computer);
     ui->loaderWidget->init(&computer);
+    ui->disassemblyWidget->init(&computer);
     ui->loaderWidget->setFileDialogText(_options.getFilename());
 
     ui->runControlsWidget->setRunningState(false);
@@ -42,6 +43,7 @@ void MainWindow::setComputerThread(ComputerThread *computerThread)
     }
     runningThread = computerThread;
     connect(runningThread, SIGNAL(finished()), this, SLOT(deleteComputerThread()));
+    connect(runningThread, SIGNAL(finished()), ui->disassemblyWidget, SLOT(updateDisassemblyText()));
     runningThread->start();
 }
 

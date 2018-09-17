@@ -18,6 +18,9 @@ public:
 
 private:
     Ui::DisassemblyWidget *ui;
+
+private slots:
+    void updateDisassemblyText();
 };
 
 #endif // DISASSEMBLYWIDGET_H
