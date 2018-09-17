@@ -3,10 +3,9 @@
 
 #include "cpu.h"
 #include "loader.h"
-#include "ocomputer.h"
 #include <QCoreApplication>
 
-class Computer: public OComputer
+class Computer
 {
     CPU cpu;
     Memory ram;

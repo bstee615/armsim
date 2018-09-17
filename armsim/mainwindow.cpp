@@ -8,11 +8,14 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     computer(Computer(_options.getMemory(), _options.getFilename()))
 {
     ui->setupUi(this);
+    ui->runControlsWidget->init(&computer);
     ui->loaderWidget->init(&computer);
     ui->loaderWidget->setFileDialogText(_options.getFilename());
 
-    ui->runControlsWidget->init(&computer);
-    connect(ui->runControlsWidget, SIGNAL(updatedUI()), this, SLOT(onUpdatedUI()));
+    ui->runControlsWidget->setRunningState(false);
+    connect(ui->runControlsWidget->btnRun, SIGNAL(clicked(bool)), this, SLOT(startComputerRunThread()));
+    connect(ui->runControlsWidget->btnStep, SIGNAL(clicked(bool)), this, SLOT(startComputerStepThread()));
+    connect(ui->runControlsWidget->btnStop, SIGNAL(clicked(bool)), this, SLOT(stopComputerThread()));
 }
 
 MainWindow::~MainWindow()
@@ -20,7 +23,37 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onUpdatedUI()
+void MainWindow::startComputerRunThread()
 {
-    // TODO: Update other sub-widgets that are needed and thank past Benji for this gracious gift.
+    setComputerThread(new ComputerRunThread(&computer));
+}
+
+void MainWindow::startComputerStepThread()
+{
+    setComputerThread(new ComputerStepThread(&computer));
+}
+
+void MainWindow::setComputerThread(ComputerThread *computerThread)
+{
+    ui->runControlsWidget->setRunningState(true);
+
+    if (runningThread != nullptr) {
+        delete runningThread;
+    }
+    runningThread = computerThread;
+    connect(runningThread, SIGNAL(finished()), this, SLOT(deleteComputerThread()));
+    runningThread->start();
+}
+
+void MainWindow::stopComputerThread()
+{
+    runningThread->stopRunning();
+}
+
+void MainWindow::deleteComputerThread()
+{
+    delete runningThread;
+    runningThread = nullptr;
+
+    ui->runControlsWidget->setRunningState(false);
 }

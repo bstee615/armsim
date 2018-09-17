@@ -7,7 +7,8 @@
 
 #include "options.h"
 #include "computer.h"
-#include "observer.h"
+#include "computerthreads.h"
+#include "computerwidget.h"
 #include <QMainWindow>
 
 // Qt magic "header" for the Widgets app.
@@ -23,6 +24,10 @@ class MainWindow : public QMainWindow
     Ui::MainWindow *ui;
     Options &_options;
 
+    ComputerThread *runningThread = nullptr;
+
+    void setComputerThread(ComputerThread *computerThread);
+
 public:
     // Initializes GUI elements with the specified Options.
     MainWindow(Options &options, QWidget *parent = nullptr);
@@ -31,7 +36,10 @@ public:
     Computer computer;
 
 private slots:
-    void onUpdatedUI();
+    void startComputerRunThread();
+    void startComputerStepThread();
+    void stopComputerThread();
+    void deleteComputerThread();
 };
 
 #endif // MAINWINDOW_H

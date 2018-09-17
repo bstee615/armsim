@@ -27,8 +27,6 @@ void Computer::run(bool *shouldStop)
     {
         // Do nothing for now.
     }
-
-    notifyObservers();
 }
 
 word Computer::step()
@@ -38,6 +36,5 @@ word Computer::step()
     cpu.execute();
     qDebug() << "Computer:" << "Executed word" << w;
 
-    notifyObservers();
     return w;
 }

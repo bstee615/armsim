@@ -7,73 +7,34 @@ RunControlsWidget::RunControlsWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setRunningState(false);
-    updateUIToRunningState();
+    btnRun = ui->btnRun;
+    btnStep = ui->btnStep;
+    btnStop = ui->btnStop;
 }
 
 RunControlsWidget::~RunControlsWidget()
 {
-    delete runningThread;
     delete ui;
-}
-
-void RunControlsWidget::on_btnRun_clicked()
-{
-    startComputerThread(new ComputerRunThread(_computer));
-}
-
-void RunControlsWidget::on_btnStep_clicked()
-{
-    startComputerThread(new ComputerStepThread(_computer));
-}
-
-void RunControlsWidget::on_btnStop_clicked()
-{
-    stopComputerThread(runningThread);
-}
-
-void RunControlsWidget::update()
-{
-    setRunningState(false);
 }
 
 void RunControlsWidget::setRunningState(bool running)
 {
-    isRunning = running;
+    ui->btnRun->setEnabled(!running);
+    ui->btnStep->setEnabled(!running);
+    ui->btnStop->setEnabled(running);
 }
 
-void RunControlsWidget::updateUIToRunningState()
-{
-    ui->btnRun->setEnabled(!isRunning);
-    ui->btnStep->setEnabled(!isRunning);
-    ui->btnStop->setEnabled(isRunning);
-
-    emit updatedUI();
-}
-
-void RunControlsWidget::deleteRunningComputerThread()
-{
-    delete runningThread;
-    runningThread = nullptr;
-    setRunningState(false);
-    updateUIToRunningState();
-}
-
-void RunControlsWidget::startComputerThread(ComputerThread *computerThread)
+void RunControlsWidget::on_btnRun_clicked()
 {
     setRunningState(true);
-    updateUIToRunningState();
-
-    if (runningThread != nullptr) {
-        delete runningThread;
-    }
-    runningThread = computerThread;
-    runningThread->start();
-    connect(runningThread, SIGNAL(finished()), this, SLOT(updateUIToRunningState()));
 }
 
-void RunControlsWidget::stopComputerThread(ComputerThread *computerThread)
+void RunControlsWidget::on_btnStep_clicked()
 {
-    runningThread->stopRunning();
-    connect(runningThread, SIGNAL(finished()), this, SLOT(deleteRunningComputerThread()));
+    setRunningState(true);
+}
+
+void RunControlsWidget::on_btnStop_clicked()
+{
+    setRunningState(false);
 }

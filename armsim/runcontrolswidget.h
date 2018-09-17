@@ -2,6 +2,7 @@
 #define RUNCONTROLSWIDGET_H
 
 #include <QWidget>
+#include <QPushButton>
 #include "computerthreads.h"
 #include "computerwidget.h"
 
@@ -17,26 +18,23 @@ public:
     explicit RunControlsWidget(QWidget *parent = nullptr);
     ~RunControlsWidget();
 
-    void update();
+    void update() {}
+    QPushButton *btnRun;
+    QPushButton *btnStep;
+    QPushButton *btnStop;
 
-signals:
-    void updatedUI();
+public slots:
+    void setRunningState(bool running);
 
 private slots:
     void on_btnRun_clicked();
-    void on_btnStep_clicked();
-    void on_btnStop_clicked();
 
-    void updateUIToRunningState();
-    void deleteRunningComputerThread();
-    void startComputerThread(ComputerThread *computerThread);
-    void stopComputerThread(ComputerThread *computerThread);
+    void on_btnStep_clicked();
+
+    void on_btnStop_clicked();
 
 private:
     Ui::RunControlsWidget *ui;
-    ComputerThread *runningThread = nullptr;
-    bool isRunning;
-    void setRunningState(bool running);
 };
 
 #endif // RUNCONTROLSWIDGET_H
