@@ -4,6 +4,7 @@ Computer::Computer(address numBytes)
 {
     ram = Memory(numBytes);
     cpu = CPU(&ram);
+    instructionCounter = 0;
 }
 
 void Computer::loadFile(QString path)
@@ -17,6 +18,8 @@ void Computer::loadFile(QString path)
         QCoreApplication::exit(1);
         exit(1);
     }
+
+    instructionCounter = 0;
 }
 
 void Computer::run(bool *shouldStop)
@@ -33,7 +36,9 @@ word Computer::step()
     word w = cpu.fetch();
     cpu.decode(w);
     cpu.execute();
-    qDebug() << "Computer:" << "Executed word" << QString("%1").arg(w, 8, 16, QChar('0')).toUpper().prepend(QString("0x"));
+    qDebug() << "Computer:" << "Instruction count" << instructionCounter << "Executed word" << QString("%1").arg(w, 8, 16, QChar('0')).toUpper().prepend(QString("0x"));
+
+    instructionCounter ++;
 
     return w;
 }

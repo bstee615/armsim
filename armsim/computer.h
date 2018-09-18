@@ -12,6 +12,7 @@ public:
     CPU cpu;
     Memory ram;
     QSet<address> breakpoints;
+    unsigned long long instructionCounter;
 
     Computer(address numBytes);
     void loadFile(QString path);

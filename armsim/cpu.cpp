@@ -2,7 +2,7 @@
 #include <chrono>
 #include <thread>
 
-CPU::CPU(Memory *ram): _ram(ram), registers(Memory(32)) // TODO: Calculate the correct number of bytes.
+CPU::CPU(Memory *ram): _ram(ram), registers(Memory(NUM_REGISTER_BYTES))
 {
     qDebug() << "CPU:" << "Initialized with" << _ram->getSize() << "bytes of RAM and" << registers.getSize() << "bytes of register memory.";
 }
