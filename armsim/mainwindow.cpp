@@ -11,6 +11,7 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     ui->runControlsWidget->init(computer);
     ui->loaderWidget->init(computer);
     ui->disassemblyWidget->init(computer);
+    ui->flagsWidget->init(computer);
 
     ui->runControlsWidget->setRunningState(false);
 
@@ -71,4 +72,5 @@ void MainWindow::deleteComputerThread()
 void MainWindow::updateAllUI()
 {
     ui->disassemblyWidget->updateDisassemblyText();
+    ui->flagsWidget->updateFlags();
 }

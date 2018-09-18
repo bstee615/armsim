@@ -154,7 +154,6 @@ bool Memory::TestFlag(address addr, unsigned int bit)
         return false;
     }
     if (bit > sizeof(word)*8-1) {
-        qDebug() << "hey";
         throw InvalidBitException();
         return false;
     }
@@ -176,7 +175,7 @@ void Memory::SetFlag(address addr, unsigned int bit, bool flag)
     }
 
     word w = ReadWord(addr);
-    word mask = flag ? (word)(qPow(2, bit)) : 0;
+    word mask = (word)(1 << bit);
 
     if (flag) {
         w = w | mask;

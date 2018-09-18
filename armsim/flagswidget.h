@@ -16,6 +16,9 @@ public:
     explicit FlagsWidget(QWidget *parent = nullptr);
     ~FlagsWidget();
 
+    void updateFlags();
+    void init(Computer *computer);
+
 private:
     Ui::FlagsWidget *ui;
 };

@@ -58,11 +58,11 @@ void Computer::logTrace()
     writer << formattedNumber(instructionCounter, "%1", 6)
            << formattedNumber(cpu.getProgramCounter())
            << formattedNumber(cpu.getChecksum())
-           << formattedNumber(cpu.getNZSF(), "%1", 4)
+           << formattedNumber(cpu.getNZCF(), "%1", 4)
            << "SYS "; // TODO: Replace this when implementing CPU mode.
 
-    for (unsigned int i = 0; i <= 11; i ++) {
-        QString fmt("r%1=~"); // This will end up in as "r<i>=<contents of ri>"
+    for (unsigned int i = 0; i <= 14; i ++) {
+        QString fmt("%1=~"); // This will end up in as "r<i>=<contents of ri>"
         fmt = fmt.arg(i).replace("~", "%1");
 
         writer << formattedNumber(cpu.getGeneralRegister(i), fmt.toStdString().c_str());

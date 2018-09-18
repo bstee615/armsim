@@ -50,6 +50,8 @@ private slots:
     void ExtractBits_Success();
     void ExtractBits_FromAll1s();
     void ExtractBits_FromAll0s();
+
+    void ClearMemory_Success();
 };
 
 void RAMTests::initTestCase()
@@ -260,6 +262,9 @@ void RAMTests::SetFlag_Success()
     Q_ASSERT(ram.getMemory()[12] == 1);
     Q_ASSERT(ram.getMemory()[14] == 0b1000);
     Q_ASSERT(ram.getMemory()[15] == 0b10000000);
+
+    ram.SetFlag(12, 19, false);
+    Q_ASSERT(ram.getMemory()[14] == 0);
 }
 
 void RAMTests::SetFlag_FailsOutOfBounds()
@@ -297,6 +302,15 @@ void RAMTests::ExtractBits_FromAll1s()
 void RAMTests::ExtractBits_FromAll0s()
 {
     Q_ASSERT(Memory::ExtractBits(0, 0, 16) == 0);
+}
+
+void RAMTests::ClearMemory_Success()
+{
+    int cksum = ram.Checksum();
+    ram.WriteByte(bytes/2, 0xFADE);
+    Q_ASSERT(cksum != ram.Checksum());
+    ram.clearMemory();
+    Q_ASSERT(cksum == ram.Checksum());
 }
 
 QTEST_APPLESS_MAIN(RAMTests)
