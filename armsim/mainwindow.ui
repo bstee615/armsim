@@ -34,19 +34,9 @@
        </widget>
       </item>
       <item>
-       <widget class="RegistersWidget" name="registersWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-          <horstretch>2</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="FlagsWidget" name="flagsWidget" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -55,27 +45,6 @@
          <size>
           <width>150</width>
           <height>0</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="Line" name="line">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="DisassemblyWidget" name="disassemblyWidget" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>150</height>
          </size>
         </property>
        </widget>
@@ -99,20 +68,63 @@
      </layout>
     </item>
     <item>
-     <widget class="MemoryWidget" name="memoryWidget" native="true">
+     <widget class="DisassemblyWidget" name="disassemblyWidget" native="true">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="minimumSize">
        <size>
-        <width>400</width>
-        <height>250</height>
+        <width>0</width>
+        <height>150</height>
        </size>
       </property>
      </widget>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="MemoryWidget" name="memoryWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>700</width>
+          <height>250</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="RegistersWidget" name="registersWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>2</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="Line" name="line_2">
@@ -122,17 +134,28 @@
      </widget>
     </item>
     <item>
-     <widget class="RunControlsWidget" name="runControlsWidget" native="true"/>
-    </item>
-    <item>
-     <widget class="TerminalWidget" name="terminalWidget" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>125</height>
-       </size>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="RunControlsWidget" name="runControlsWidget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="TerminalWidget" name="terminalWidget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>125</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

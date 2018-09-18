@@ -6,6 +6,7 @@ MemoryWidget::MemoryWidget(QWidget *parent) :
     ui(new Ui::MemoryWidget)
 {
     ui->setupUi(this);
+    connect(ui->hexspinStartingAddress, SIGNAL(returnPressed()), this, SLOT(on_btnEnterStartingAddress_clicked()));
 }
 
 MemoryWidget::~MemoryWidget()
@@ -15,11 +16,17 @@ MemoryWidget::~MemoryWidget()
 
 void MemoryWidget::updateMemoryDisplay()
 {
+    updateMemoryDisplay(ui->hexspinStartingAddress->hexValue());
+}
+
+void MemoryWidget::updateMemoryDisplay(address startingAddress)
+{
+    const address numRows = 16;
     const address rowLength = 16;
 
     QStringList addressedBytes;
-    address pc = _computer->cpu.getProgramCounter();
-    for (address row_i = 0; row_i < 10; row_i ++) {
+    address pc = startingAddress;
+    for (address row_i = 0; row_i < numRows; row_i ++) {
         address rowAddress = pc + (row_i * rowLength);
         addressedBytes << QString("%1").arg(rowAddress, 8, 16, QChar('0')).prepend("0x") << " ";
 
@@ -27,10 +34,29 @@ void MemoryWidget::updateMemoryDisplay()
         for (address address_i = 0; address_i < rowLength; address_i ++) {
             byte b = _computer->cpu.getRAM()->ReadByte(rowAddress + address_i);
             addressedBytes << QString("%1").arg(b, 2, 16, QChar('0')) << " ";
-            endOfLine << QChar((char)b);
+
+            QChar toChar = QChar((char)b);
+            if (b == 0) toChar = QChar('.');
+            endOfLine << toChar;
         }
-        addressedBytes << "\t" << endOfLine << "\r\n";
+        QString endOfLineString = endOfLine.join("");
+        endOfLineString.replace(' ', '.');
+        endOfLineString.replace('\r', '.');
+        endOfLineString.replace('\n', '.');
+        endOfLineString.replace('\t', '.');
+        addressedBytes << "\t" << endOfLineString << "\r\n";
     }
 
     ui->textareaMemory->setText(addressedBytes.join(""));
+}
+
+void MemoryWidget::setStartingAddress(address startingAddress)
+{
+    ui->hexspinStartingAddress->setHexValue(startingAddress);
+    updateMemoryDisplay();
+}
+
+void MemoryWidget::on_btnEnterStartingAddress_clicked()
+{
+    updateMemoryDisplay();
 }

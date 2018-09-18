@@ -16,6 +16,8 @@ public:
     explicit StackWidget(QWidget *parent = nullptr);
     ~StackWidget();
 
+    void updateStackDisplay();
+
 private:
     Ui::StackWidget *ui;
 };

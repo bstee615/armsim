@@ -17,6 +17,11 @@ public:
     ~MemoryWidget();
 
     void updateMemoryDisplay();
+    void updateMemoryDisplay(address startingAddress);
+    void setStartingAddress(address startingAddress);
+
+private slots:
+    void on_btnEnterStartingAddress_clicked();
 
 private:
     Ui::MemoryWidget *ui;

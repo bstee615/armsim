@@ -39,7 +39,7 @@ void DisassemblyWidget::updateDisassemblyText()
 
     Memory &ram = _computer->ram;
     address pc = _computer->cpu.getProgramCounter();
-    const int rowPadding = 3;
+    const int rowPadding = 6;
     for (int offset = -rowPadding; offset <= rowPadding; offset ++) {
         address addr = pc + (offset*4);
         word instruction = ram.ReadWord(addr);

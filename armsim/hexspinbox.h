@@ -6,9 +6,12 @@
 #define HEXSPINBOX_H
 
 #include <QSpinBox>
+#include <QKeyEvent>
 
 class HexSpinBox : public QSpinBox
 {
+    Q_OBJECT
+
 public:
     HexSpinBox(bool only16Bits, QWidget *parent = 0);
     unsigned int hexValue() const
@@ -19,6 +22,9 @@ public:
     {
         setValue(i(value));
     }
+
+    void keyPressEvent(QKeyEvent *event);
+
 protected:
     QString textFromValue(int value) const
     {
@@ -40,6 +46,9 @@ private:
     {
         return *reinterpret_cast<int *>(&u);
     }
+
+signals:
+    void returnPressed();
 
 };
 

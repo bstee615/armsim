@@ -16,6 +16,8 @@ public:
     explicit RegistersWidget(QWidget *parent = nullptr);
     ~RegistersWidget();
 
+    void updateRegisters();
+
 private:
     Ui::RegistersWidget *ui;
 };

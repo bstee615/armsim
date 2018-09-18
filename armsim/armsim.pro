@@ -25,6 +25,7 @@ CONFIG += c++11 console
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
+    hexspinbox.cpp \
     loaderwidget.cpp \
     loader.cpp \
     memory.cpp \
@@ -39,11 +40,11 @@ SOURCES += \
     computerwidget.cpp \
     runcontrolswidget.cpp \
     addbreakpointpopup.cpp \
-    hexspinbox.cpp \
     filewriter.cpp
 
 HEADERS += \
         mainwindow.h \
+    hexspinbox.h \
     loaderwidget.h \
     options.h \
     loader.h \
@@ -62,7 +63,6 @@ HEADERS += \
     runcontrolswidget.h \
     computerthreads.h \
     addbreakpointpopup.h \
-    hexspinbox.h \
     filewriter.h
 
 FORMS += \

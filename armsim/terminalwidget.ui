@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>418</width>
-    <height>110</height>
+    <height>115</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPlainTextEdit" name="textinputTerminal"/>
+      <widget class="QLineEdit" name="leTerminalText"/>
      </item>
      <item>
       <widget class="QWidget" name="widget" native="true">
@@ -40,19 +40,6 @@
            <string>Enter</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>16</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </widget>

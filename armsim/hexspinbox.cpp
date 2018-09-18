@@ -1,4 +1,5 @@
 #include "hexspinbox.h"
+#include <QDebug>
 
 HexSpinBox::HexSpinBox(bool only16Bits, QWidget *parent) : QSpinBox(parent), m_only16Bits(only16Bits)
 {
@@ -8,6 +9,16 @@ HexSpinBox::HexSpinBox(bool only16Bits, QWidget *parent) : QSpinBox(parent), m_o
         setRange(0, 0xFFFF);
     else
         setRange(INT_MIN, INT_MAX);
+}
+
+void HexSpinBox::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Return) {
+        emit returnPressed();
+    }
+    else {
+        QSpinBox::keyPressEvent(event);
+    }
 }
 
 QValidator::State HexSpinBox::validate(QString &input, int &pos) const

@@ -16,6 +16,11 @@ public:
     explicit TerminalWidget(QWidget *parent = nullptr);
     ~TerminalWidget();
 
+    void runCommand(QString command);
+
+private slots:
+    void on_btnEnterCommand_clicked();
+
 private:
     Ui::TerminalWidget *ui;
 };

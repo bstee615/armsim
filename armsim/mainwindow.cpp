@@ -13,6 +13,8 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     ui->disassemblyWidget->init(computer);
     ui->flagsWidget->init(computer);
     ui->memoryWidget->init(computer);
+    ui->registersWidget->init(computer);
+    ui->stackWidget->init(computer);
 
     ui->runControlsWidget->setRunningState(false);
 
@@ -23,6 +25,7 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     connect(ui->loaderWidget, SIGNAL(loadedFile()), this, SLOT(updateAllUI()));
 
     ui->loaderWidget->loadFile(_options.getFilename());
+    ui->memoryWidget->setStartingAddress(computer->cpu.getProgramCounter());
 }
 
 MainWindow::~MainWindow()
@@ -75,4 +78,6 @@ void MainWindow::updateAllUI()
     ui->disassemblyWidget->updateDisassemblyText();
     ui->flagsWidget->updateFlags();
     ui->memoryWidget->updateMemoryDisplay();
+    ui->registersWidget->updateRegisters();
+    ui->stackWidget->updateStackDisplay();
 }
