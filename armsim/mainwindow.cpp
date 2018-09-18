@@ -5,12 +5,12 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     QMainWindow (parent),
     ui(new Ui::MainWindow),
     _options(options),
-    computer(Computer(_options.getMemory()))
+    computer(new Computer(_options.getMemory()))
 {
     ui->setupUi(this);
-    ui->runControlsWidget->init(&computer);
-    ui->loaderWidget->init(&computer);
-    ui->disassemblyWidget->init(&computer);
+    ui->runControlsWidget->init(computer);
+    ui->loaderWidget->init(computer);
+    ui->disassemblyWidget->init(computer);
 
     ui->runControlsWidget->setRunningState(false);
 
@@ -25,17 +25,19 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
 
 MainWindow::~MainWindow()
 {
+    computer->stopTrace();
+    delete computer;
     delete ui;
 }
 
 void MainWindow::startComputerRunThread()
 {
-    setComputerThread(new ComputerRunThread(&computer));
+    setComputerThread(new ComputerRunThread(computer));
 }
 
 void MainWindow::startComputerStepThread()
 {
-    setComputerThread(new ComputerStepThread(&computer));
+    setComputerThread(new ComputerStepThread(computer));
 }
 
 void MainWindow::setComputerThread(ComputerThread *computerThread)

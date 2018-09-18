@@ -3,10 +3,11 @@
 
 #include "cpu.h"
 #include "loader.h"
+#include "filewriter.h"
 #include <QCoreApplication>
 #include <QSet>
 
-class Computer
+class Computer: public FileWriter
 {
 public:
     CPU cpu;
@@ -21,6 +22,8 @@ public:
     void run(bool *shouldStop);
     // Call the CPU's fetch(), decode(), and execute() methods once.
     word step();
+
+    void logTrace();
 
     bool isBreakpoint(address addr);
     void addBreakpoint(address addr);

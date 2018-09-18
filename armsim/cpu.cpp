@@ -23,3 +23,14 @@ void CPU::execute()
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(250));
 }
+
+byte CPU::getNZSF()
+{
+    return registers.ReadByte(NZCF_OFFSET) & 0x0F; // Mask it just to make sure
+}
+
+word CPU::getGeneralRegister(unsigned int index)
+{
+    if (index > 11) throw InvalidRegisterIndexException();
+    return registers.ReadWord(R0_OFFSET + index*4);
+}

@@ -37,6 +37,8 @@ bool writeBytesToRAM(fstream &strm, Memory *ram, Elf32_Ehdr &elfHeader, Elf32_Ph
         return false;
     }
 
+    ram->clearMemory();
+
     for (size_t ph_i = 0; ph_i < elfHeader.e_phnum; ph_i ++) {
         Elf32_Phdr &progHeader = programHeaders[ph_i];
         strm.seekg(progHeader.p_offset);
@@ -75,6 +77,7 @@ bool fetchELFHeader(fstream &strm, Elf32_Ehdr &elfHeader)
     }
 
     if (!containsELFSignature(elfHeader.e_ident)) {
+        // TODO: Produce a better error message on the GUI?
         qCritical() << "Loader:"  << "Input file is not an ELF file.";
         return false;
     }

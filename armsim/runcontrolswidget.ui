@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>263</width>
+    <width>350</width>
     <height>82</height>
    </rect>
   </property>
@@ -83,6 +83,19 @@
        </property>
        <property name="text">
         <string>Add Breakpoint</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkTrace">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Trace</string>
        </property>
       </widget>
      </item>

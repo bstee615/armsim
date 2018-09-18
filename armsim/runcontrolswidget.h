@@ -41,6 +41,8 @@ private slots:
 
     void onAddedBreakpoint();
 
+    void on_checkTrace_stateChanged(int state);
+
 signals:
     void addedBreakpoint();
 

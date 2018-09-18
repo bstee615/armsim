@@ -39,7 +39,8 @@ SOURCES += \
     computerwidget.cpp \
     runcontrolswidget.cpp \
     addbreakpointpopup.cpp \
-    hexspinbox.cpp
+    hexspinbox.cpp \
+    filewriter.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -61,7 +62,8 @@ HEADERS += \
     runcontrolswidget.h \
     computerthreads.h \
     addbreakpointpopup.h \
-    hexspinbox.h
+    hexspinbox.h \
+    filewriter.h
 
 FORMS += \
         mainwindow.ui \

@@ -33,7 +33,7 @@ public:
     MainWindow(Options &options, QWidget *parent = nullptr);
     ~MainWindow();
 
-    Computer computer;
+    Computer *computer;
 
 private slots:
     void startComputerRunThread();

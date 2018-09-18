@@ -58,3 +58,12 @@ void RunControlsWidget::onAddedBreakpoint()
 {
     emit addedBreakpoint();
 }
+
+void RunControlsWidget::on_checkTrace_stateChanged(int state)
+{
+    if (state == Qt::Checked) {
+        _computer->startTrace("trace.log");
+    } else {
+        _computer->stopTrace();
+    }
+}

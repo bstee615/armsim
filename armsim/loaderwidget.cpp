@@ -29,6 +29,7 @@ void LoaderWidget::loadFile(QString filepath)
 {
     _computer->loadFile(filepath);
     setFileDialogText(filepath);
+    ui->lblChecksum->setText(QString("%1").arg(_computer->cpu.getChecksum(), 8, 10, QChar('0')));
 
     emit loadedFile();
 }
