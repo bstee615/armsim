@@ -69,6 +69,7 @@ void Computer::logTrace()
     }
 
     writer << "\r\n";
+    writer.flush();
 }
 
 bool Computer::isBreakpoint(address addr)
@@ -76,7 +77,12 @@ bool Computer::isBreakpoint(address addr)
     return breakpoints.contains(addr);
 }
 
-void Computer::addBreakpoint(address addr)
+void Computer::toggleBreakpoint(address addr)
 {
-    breakpoints.insert(addr);
+    if (isBreakpoint(addr)) {
+        breakpoints.remove(addr);
+    }
+    else {
+        breakpoints.insert(addr);
+    }
 }

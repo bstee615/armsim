@@ -26,7 +26,7 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
 
 MainWindow::~MainWindow()
 {
-    computer->stopTrace();
+//    computer->stopTrace();
     delete computer;
     delete ui;
 }

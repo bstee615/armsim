@@ -20,8 +20,6 @@ void errorHandler(QtMsgType type, const QMessageLogContext &context, const QStri
             break;
         case QtCriticalMsg:
             fprintf(stderr, "Critical error: %s\n", msg.toStdString().c_str());
-            fprintf(stderr, "Press enter to continue.");
-            std::cin.ignore();
             QCoreApplication::exit(1);
             exit(1);
     }

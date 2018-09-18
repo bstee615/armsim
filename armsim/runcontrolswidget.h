@@ -43,6 +43,8 @@ private slots:
 
     void on_checkTrace_stateChanged(int state);
 
+    void toggleTrace();
+
 signals:
     void addedBreakpoint();
 

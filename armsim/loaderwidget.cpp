@@ -6,6 +6,7 @@
 #include "ui_loaderwidget.h"
 #include "loader.h"
 #include <QFileDialog>
+#include <QShortcut>
 
 // Qt Widget class to encapsulate Loader UI.
 LoaderWidget::LoaderWidget(QWidget *parent) :
@@ -18,6 +19,9 @@ LoaderWidget::LoaderWidget(QWidget *parent) :
     palette->setColor(QPalette::Base,Qt::lightGray);
     palette->setColor(QPalette::Text,Qt::black);
     ui->filepathLineEdit->setPalette(*palette);
+
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_O), this, SLOT(on_loadFileButton_clicked()));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R), this, SLOT(on_initRAMButton_clicked()));
 }
 
 LoaderWidget::~LoaderWidget()
@@ -42,6 +46,7 @@ void LoaderWidget::setFileDialogText(QString path)
 void LoaderWidget::on_loadFileButton_clicked()
 {
     QString filePath = QFileDialog::getOpenFileName(this, "Open ELF executable", ".", "ELF Files (*)");
+    if (filePath.isEmpty()) return;
     loadFile(filePath);
 }
 

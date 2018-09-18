@@ -11,7 +11,7 @@ FileWriter::~FileWriter()
 
 void FileWriter::startTrace(QString filename)
 {
-    qDebug() << "Trace:" << "Starting trace";
+    qDebug() << "Trace:" << "Starting trace on" << filename;
 
     file = new QFile(filename);
     if (file->open(QIODevice::WriteOnly)) {
@@ -24,9 +24,8 @@ void FileWriter::startTrace(QString filename)
 
 void FileWriter::stopTrace()
 {
-    qDebug() << "Trace:" << "Stopping trace and writing to" << file->fileName();
+    qDebug() << "Trace:" << "Stopping trace.";
 
-    stream->flush();
     file->close();
 
     delete stream;

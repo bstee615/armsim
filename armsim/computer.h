@@ -26,7 +26,7 @@ public:
     void logTrace();
 
     bool isBreakpoint(address addr);
-    void addBreakpoint(address addr);
+    void toggleBreakpoint(address addr);
 };
 
 #endif // COMPUTER_H

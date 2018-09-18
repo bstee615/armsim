@@ -1,5 +1,6 @@
 #include "runcontrolswidget.h"
 #include "ui_runcontrolswidget.h"
+#include <QShortcut>
 
 RunControlsWidget::RunControlsWidget(QWidget *parent) :
     QWidget(parent),
@@ -25,6 +26,13 @@ void RunControlsWidget::init(Computer *computer)
 {
     ComputerWidget::init(computer);
     popup->init(_computer);
+
+    new QShortcut(QKeySequence(Qt::Key_F5), ui->btnRun, SLOT(click()));
+    new QShortcut(QKeySequence(Qt::Key_F10), ui->btnStep, SLOT(click()));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), ui->btnStop, SLOT(click()));
+
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_T), this, SLOT(toggleTrace()));
+    new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_B), this, SLOT(on_btnAddBreakpoint_clicked()));
 }
 
 void RunControlsWidget::setRunningState(bool running)
@@ -66,4 +74,9 @@ void RunControlsWidget::on_checkTrace_stateChanged(int state)
     } else {
         _computer->stopTrace();
     }
+}
+
+void RunControlsWidget::toggleTrace()
+{
+    ui->checkTrace->toggle();
 }

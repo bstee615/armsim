@@ -17,7 +17,7 @@ AddBreakpointPopup::~AddBreakpointPopup()
 void AddBreakpointPopup::on_buttonBox_accepted()
 {
     lastValue = ui->spinBox->hexValue();
-    _computer->addBreakpoint((address)lastValue);
+    _computer->toggleBreakpoint((address)lastValue);
     this->hide();
 
     emit addedBreakpoint();
