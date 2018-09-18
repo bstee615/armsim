@@ -12,6 +12,7 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     ui->loaderWidget->init(computer);
     ui->disassemblyWidget->init(computer);
     ui->flagsWidget->init(computer);
+    ui->memoryWidget->init(computer);
 
     ui->runControlsWidget->setRunningState(false);
 
@@ -73,4 +74,5 @@ void MainWindow::updateAllUI()
 {
     ui->disassemblyWidget->updateDisassemblyText();
     ui->flagsWidget->updateFlags();
+    ui->memoryWidget->updateMemoryDisplay();
 }

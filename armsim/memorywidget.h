@@ -16,6 +16,8 @@ public:
     explicit MemoryWidget(QWidget *parent = nullptr);
     ~MemoryWidget();
 
+    void updateMemoryDisplay();
+
 private:
     Ui::MemoryWidget *ui;
 };
