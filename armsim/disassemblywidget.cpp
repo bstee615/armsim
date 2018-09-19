@@ -1,5 +1,6 @@
 #include "disassemblywidget.h"
 #include "ui_disassemblywidget.h"
+#include <QtMath>
 
 DisassemblyWidget::DisassemblyWidget(QWidget *parent) :
     QWidget(parent),
@@ -26,6 +27,7 @@ QString listItemText(address address, word instruction, QString instructionText,
                                      (bp ? QString("+") : QString("")));
 }
 
+// These instructions came from disassembling test1.exe with objdump.
 const QString dummyASMInstructions[] = { "add fp, sp, #0","sub sp, sp, #12","str r0, [fp, #-8]","add sp, fp, #0","ldmfd sp!, {fp}","bx lr","push {fp}","add fp, sp, #0",
                                      "sub sp, sp, #12","str r0, [fp, #-8]","add sp, fp, #0","ldmfd sp!, {fp}","bx lr","push {fp, lr}","add fp, sp, #4","sub sp, sp, #8","mov r3, #10",
                                      "str r3, [fp, #-8]","mov r3, #0","str r3, [fp, #-12]","b 174 <mystart+0x3c>","ldr r2, [fp, #-12]","ldr r3, [fp, #-8]",
@@ -41,7 +43,10 @@ void DisassemblyWidget::updateDisassemblyText()
     address pc = _computer->cpu.getProgramCounter();
     const int rowPadding = 6;
     for (int offset = -rowPadding; offset <= rowPadding; offset ++) {
-        address addr = pc + (offset*4);
+        int signedAddress = pc + (offset*4);
+        if (signedAddress < 0) continue;
+
+        address addr = signedAddress;
         word instruction = ram.ReadWord(addr);
         bool bp = _computer->isBreakpoint(addr);
         auto item = new QListWidgetItem(listItemText(addr, instruction, dummyASMInstructions[offset+rowPadding], bp), ui->listDisassembly);

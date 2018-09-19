@@ -4,7 +4,7 @@ Computer::Computer(address numBytes)
 {
     ram = Memory(numBytes);
     cpu = CPU(&ram);
-    instructionCounter = 0;
+    instructionCounter = 1;
 }
 
 void Computer::loadFile(QString path)
@@ -14,12 +14,11 @@ void Computer::loadFile(QString path)
     }
 
     if (!loadELF(path, &cpu)) {
-        qCritical() << "Error:" << "Exiting application.";
-        QCoreApplication::exit(1);
-        exit(1);
+        throw ErrorLoadingFile();
+        return;
     }
 
-    instructionCounter = 0;
+    instructionCounter = 1;
 }
 
 void Computer::run(bool *shouldStop)
@@ -85,4 +84,9 @@ void Computer::toggleBreakpoint(address addr)
     else {
         breakpoints.insert(addr);
     }
+}
+
+void Computer::toggleBreakpointAtCurrentInstruction()
+{
+    toggleBreakpoint(cpu.getProgramCounter());
 }

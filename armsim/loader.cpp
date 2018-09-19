@@ -23,7 +23,7 @@ bool isThereEnoughMemory(Memory &ram, Elf32_Ehdr &elfHeader, Elf32_Phdr* program
 
     size_t spaceItsGonnaTake = programHeaders[0].p_offset + sizeOfAllSegments;
     if (ram.getSize() < spaceItsGonnaTake) {
-        qCritical() << "Loader:" << "Error writing bytes to RAM; not enough memory.";
+        qDebug() << "Loader:" << "Error writing bytes to RAM; not enough memory.";
         return false;
     }
 
@@ -48,7 +48,7 @@ bool writeBytesToRAM(fstream &strm, Memory *ram, Elf32_Ehdr &elfHeader, Elf32_Ph
         }
         strm.read((char*)data, progHeader.p_filesz * sizeof(byte));
         if (!strm) {
-            qCritical() << "Loader:"  << "Error reading program bytes from segment" << QString::number(ph_i) + ":" << strerror(errno);
+            qDebug() << "Loader:"  << "Error reading program bytes from segment" << QString::number(ph_i) + ":" << strerror(errno);
             return false;
         }
 
@@ -65,20 +65,20 @@ bool writeBytesToRAM(fstream &strm, Memory *ram, Elf32_Ehdr &elfHeader, Elf32_Ph
 bool fetchELFHeader(fstream &strm, Elf32_Ehdr &elfHeader)
 {
     if (!strm) {
-        qCritical() << "Loader:" << "Unable to open input file.";
+        qDebug() << "Loader:" << "Unable to open input file.";
         return false;
     }
 
     strm.read((char *)&elfHeader, sizeof(elfHeader));
 
     if (!strm) {
-        qCritical() << "Loader:"  << "Error reading ELF header:" << strerror(errno);
+        qDebug() << "Loader:"  << "Error reading ELF header:" << strerror(errno);
         return false;
     }
 
     if (!containsELFSignature(elfHeader.e_ident)) {
         // TODO: Produce a better error message on the GUI?
-        qCritical() << "Loader:"  << "Input file is not an ELF file.";
+        qDebug() << "Loader:"  << "Input file is not an ELF file.";
         return false;
     }
 
@@ -105,7 +105,7 @@ Elf32_Phdr* fetchProgramHeaders(fstream &strm, Elf32_Ehdr elfHeader)
 
         strm.read(data, elfHeader.e_phentsize);
         if (!strm) {
-            qCritical() << "Loader:"  << "Error reading program header table:" << strerror(errno);
+            qDebug() << "Loader:"  << "Error reading program header table:" << strerror(errno);
             return nullptr;
         }
 
@@ -134,7 +134,7 @@ std::ifstream::pos_type filesize(const char* filename)
 bool loadELF(QString filename, CPU *cpu)
 {
     if (filesize(filename.toStdString().c_str()) < sizeof(Elf32_Ehdr)) {
-        qCritical() << "Loader:"  << "Input file is not an ELF file.";
+        qDebug() << "Loader:"  << "Input file is not an ELF file.";
         return false;
     }
 

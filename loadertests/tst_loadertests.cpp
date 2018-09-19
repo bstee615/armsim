@@ -32,6 +32,8 @@ private slots:
     void loadELF_SuccessTest1();
     void loadELF_SuccessTest2();
     void loadELF_SuccessTest3();
+
+    void cleanupTestCase();
 };
 
 void LoaderTests::initTestCase()
@@ -88,6 +90,11 @@ void LoaderTests::loadELF_SuccessTest3()
     Memory ram = Memory(32768);
     loadELF("testfiles\\loader\\test3.exe", new CPU(&ram));
     Q_ASSERT(ram.Checksum() == 536861199);
+}
+
+void LoaderTests::cleanupTestCase()
+{
+    delete[] programHeaders;
 }
 
 QTEST_APPLESS_MAIN(LoaderTests)

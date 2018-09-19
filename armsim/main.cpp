@@ -26,11 +26,6 @@ Options getValidatedOptions(QCommandLineParser &parser)
     }
 
     QString loadValue = parser.value(LOAD_OPTION_NAME);
-    if (loadValue.isEmpty()) {
-        qCritical() << "Loader:" << "No --load argument";
-        EXIT_APP;
-    }
-
     unsigned memValue = parser.value(MEM_OPTION_NAME).toUInt();
     if (memValue == 0 || memValue > 1000000) {
         qCritical() << "Loader:" << "Invalid --mem argument:" << parser.value(MEM_OPTION_NAME);
@@ -74,9 +69,13 @@ int main(int argc, char *argv[])
 
     Options options = parseCommandLine(app);
 
-    MainWindow window(options);
+    try {
+        MainWindow window(options);
+        window.show();
 
-    window.show();
-
-    return app.exec();
+        return app.exec();
+    }
+    catch (std::exception ex) {
+        qCritical() << ex.what();
+    }
 }

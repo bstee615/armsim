@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
+    <width>406</width>
     <height>82</height>
    </rect>
   </property>
@@ -82,7 +82,20 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Add Breakpoint</string>
+        <string>Toggle Breakpoint at address</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnToggleBreakpoint">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Toggle breakpoint at current instruction</string>
        </property>
       </widget>
      </item>

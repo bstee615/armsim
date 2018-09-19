@@ -7,6 +7,16 @@
 #include <QCoreApplication>
 #include <QSet>
 
+// To be thrown as a general error when loading a file
+// so that the UI can display "None" instead of the invalid filename.
+struct ErrorLoadingFile : public std::exception
+{
+    const char * what () const noexcept
+    {
+        return "Error loading file";
+    }
+};
+
 class Computer: public FileWriter
 {
 public:
@@ -27,6 +37,7 @@ public:
 
     bool isBreakpoint(address addr);
     void toggleBreakpoint(address addr);
+    void toggleBreakpointAtCurrentInstruction();
 };
 
 #endif // COMPUTER_H

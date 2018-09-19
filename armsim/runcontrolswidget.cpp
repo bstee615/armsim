@@ -13,7 +13,7 @@ RunControlsWidget::RunControlsWidget(QWidget *parent) :
     btnStop = ui->btnStop;
 
     popup = new AddBreakpointPopup(this);
-    connect(popup, SIGNAL(addedBreakpoint()), this, SLOT(onAddedBreakpoint()));
+    connect(popup, SIGNAL(toggledBreakpoint()), this, SLOT(onAddedBreakpoint()));
 }
 
 RunControlsWidget::~RunControlsWidget()
@@ -64,7 +64,7 @@ void RunControlsWidget::on_btnAddBreakpoint_clicked()
 
 void RunControlsWidget::onAddedBreakpoint()
 {
-    emit addedBreakpoint();
+    emit toggledBreakpoint();
 }
 
 void RunControlsWidget::on_checkTrace_stateChanged(int state)
@@ -79,4 +79,10 @@ void RunControlsWidget::on_checkTrace_stateChanged(int state)
 void RunControlsWidget::toggleTrace()
 {
     ui->checkTrace->toggle();
+}
+
+void RunControlsWidget::on_btnToggleBreakpoint_clicked()
+{
+    _computer->toggleBreakpointAtCurrentInstruction();
+    emit toggledBreakpoint();
 }

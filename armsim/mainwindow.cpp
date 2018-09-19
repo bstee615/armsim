@@ -8,24 +8,22 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     computer(new Computer(_options.getMemory()))
 {
     ui->setupUi(this);
-    initComputerWidgets();
 
+    initComputerWidgets();
     ui->runControlsWidget->setRunningState(false);
 
     connect(ui->runControlsWidget->btnRun, SIGNAL(clicked(bool)), this, SLOT(startComputerRunThread()));
     connect(ui->runControlsWidget->btnStep, SIGNAL(clicked(bool)), this, SLOT(startComputerStepThread()));
     connect(ui->runControlsWidget->btnStop, SIGNAL(clicked(bool)), this, SLOT(stopComputerThread()));
-    connect(ui->runControlsWidget, SIGNAL(addedBreakpoint()), this, SLOT(updateAllUI()));
+    connect(ui->runControlsWidget, SIGNAL(toggledBreakpoint()), this, SLOT(updateAllUI()));
     connect(ui->loaderWidget, SIGNAL(loadedFile()), this, SLOT(updateAllUI()));
 
-    computer->cpu.setGeneralRegister(13, 0x1054);
     ui->loaderWidget->loadFile(_options.getFilename());
     ui->memoryWidget->setStartingAddress(computer->cpu.getProgramCounter());
 }
 
 MainWindow::~MainWindow()
 {
-//    computer->stopTrace();
     delete computer;
     delete ui;
 }
@@ -64,6 +62,7 @@ void MainWindow::initComputerWidgets()
     ui->memoryWidget->init(computer);
     ui->registersWidget->init(computer);
     ui->stackWidget->init(computer);
+    qDebug() << "UI:" << "Finished initializing panel info.";
 }
 
 void MainWindow::stopComputerThread()
@@ -82,10 +81,15 @@ void MainWindow::deleteComputerThread()
 
 void MainWindow::updateAllUI()
 {
-    qDebug() << "UI:" << "Updating panel info.";
+    qDebug() << "UI:" << "Updating panel info:";
     ui->disassemblyWidget->updateDisassemblyText();
+    qDebug() << "UI:" << "Updated disassembly panel";
     ui->flagsWidget->updateFlags();
+    qDebug() << "UI:" << "Updated flags panel";
     ui->memoryWidget->updateMemoryDisplay();
+    qDebug() << "UI:" << "Updated memory panel";
     ui->registersWidget->updateRegisters();
+    qDebug() << "UI:" << "Updated registers panel";
     ui->stackWidget->updateStackDisplay();
+    qDebug() << "UI:" << "Updated registers panel";
 }

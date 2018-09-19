@@ -31,8 +31,13 @@ LoaderWidget::~LoaderWidget()
 
 void LoaderWidget::loadFile(QString filepath)
 {
-    _computer->loadFile(filepath);
-    setFileDialogText(filepath);
+    try {
+        _computer->loadFile(filepath);
+        setFileDialogText(filepath);
+    }
+    catch (ErrorLoadingFile ex) {
+        setFileDialogText("None");
+    }
     ui->lblChecksum->setText(QString("%1").arg(_computer->cpu.getChecksum(), 8, 10, QChar('0')));
 
     emit loadedFile();
@@ -45,7 +50,7 @@ void LoaderWidget::setFileDialogText(QString path)
 
 void LoaderWidget::on_loadFileButton_clicked()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, "Open ELF executable", ".", "ELF Files (*)");
+    QString filePath = QFileDialog::getOpenFileName(this, "Open ELF executable", ".", "ELF Files (*.exe);;All files (*)");
     if (filePath.isEmpty()) return;
     loadFile(filePath);
 }

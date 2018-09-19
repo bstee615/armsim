@@ -45,8 +45,10 @@ private slots:
 
     void toggleTrace();
 
+    void on_btnToggleBreakpoint_clicked();
+
 signals:
-    void addedBreakpoint();
+    void toggledBreakpoint();
 
 private:
     Ui::RunControlsWidget *ui;
