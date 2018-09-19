@@ -13,7 +13,7 @@ RunControlsWidget::RunControlsWidget(QWidget *parent) :
     btnStop = ui->btnStop;
 
     popup = new AddBreakpointPopup(this);
-    connect(popup, SIGNAL(toggledBreakpoint()), this, SLOT(onAddedBreakpoint()));
+    connect(popup, SIGNAL(addedBreakpoint()), this, SLOT(onAddedBreakpoint()));
 }
 
 RunControlsWidget::~RunControlsWidget()
