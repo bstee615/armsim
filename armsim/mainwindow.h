@@ -27,6 +27,7 @@ class MainWindow : public QMainWindow
     ComputerThread *runningThread = nullptr;
 
     void setComputerThread(ComputerThread *computerThread);
+    void initComputerWidgets();
 
 public:
     // Initializes GUI elements with the specified Options.

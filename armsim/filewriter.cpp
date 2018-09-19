@@ -6,7 +6,9 @@ FileWriter::FileWriter()
 
 FileWriter::~FileWriter()
 {
-    stopTrace();
+    if (isTracing()) {
+        stopTrace();
+    }
 }
 
 void FileWriter::startTrace(QString filename)
