@@ -15,7 +15,8 @@ SOURCES +=  \
     ../armsim/shiftedregisteroperand.cpp \
     ../armsim/immediateshiftedregisteroperand.cpp \
     ../armsim/registershiftedregisteroperand.cpp \
-    ../armsim/branchinstruction.cpp \
+    ../armsim/loadstoremultipleinstruction.cpp \
+    ../armsim/softwareinterruptinstruction.cpp \
     ../armsim/loadstoreinstruction.cpp \
     ../armsim/dataprocessinginstruction.cpp \
     ../armsim/cpu.cpp \

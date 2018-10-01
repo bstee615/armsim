@@ -23,10 +23,11 @@ Instruction *CPU::decode(word w)
 
 void CPU::execute(Instruction *instr)
 {
-    if (instr == nullptr) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
-    }
-    else {
+    // Instructions cannot have a reference to CPU because of a circular dependency.
+    //  To implement SWI, the CPU will have to cast an Instruction* to a SoftwareInterruptInstruction*
+    //  to check whether instr is a SoftwareInterruptInstruction.
+
+    if (instr != nullptr) {
         instr->execute();
     }
 }

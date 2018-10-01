@@ -7,10 +7,12 @@ ImmediateShiftedRegisterOperand::ImmediateShiftedRegisterOperand(word w, Memory 
 
 QString ImmediateShiftedRegisterOperand::toString()
 {
+    // example: r4, lsl 8
     return "ImmediateShiftedRegister: Not implemented.";
 }
 
 int ImmediateShiftedRegisterOperand::value()
 {
+    // return registers[rMIndex] << immediateShift;
     return 0;
 }

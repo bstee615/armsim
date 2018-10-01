@@ -1,3 +1,7 @@
+/* rotatedimmediateoperand.h
+ * Models an addressing mode where the offset is an 8-bit immediate rotated right by 2*[a 4-bit immediate]
+*/
+
 #ifndef IMMEDIATEOPERAND_H
 #define IMMEDIATEOPERAND_H
 
@@ -6,8 +10,8 @@
 
 class RotatedImmediateOperand : public InstructionOperand
 {
-    word immediate;
-    byte rotate;
+    byte immediate; // 8-bit immediate
+    byte rotate; // Half the number of rotations
 
 public:
     RotatedImmediateOperand(word encodedWord);

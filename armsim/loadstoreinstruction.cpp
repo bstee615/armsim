@@ -12,5 +12,6 @@ QString LoadStoreInstruction::toString()
 
 void LoadStoreInstruction::execute()
 {
+    // ram[registers[rDIndex]] := addressingMode.value()
     qDebug() << "ldr/str: noop";
 }

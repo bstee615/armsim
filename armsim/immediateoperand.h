@@ -1,3 +1,7 @@
+/* immediateoperand.h
+ * Models an immediate instruction offset operand.
+*/
+
 #ifndef IMMEDIATEOPERAND_H
 #define IMMEDIATEOPERAND_H
 
@@ -7,7 +11,7 @@
 
 class ImmediateOperand : public InstructionOperand
 {
-    word immediate;
+    word immediate; // Immediate offset
 
 public:
     ImmediateOperand(word w);

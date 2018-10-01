@@ -1,3 +1,7 @@
+/* registershiftedregisteroperand.h
+ * Models an addressing mode where the offset is a register's value shifted by another register's value.
+*/
+
 #ifndef REGISTERSHIFTEDREGISTEROPERAND_H
 #define REGISTERSHIFTEDREGISTEROPERAND_H
 
@@ -7,7 +11,7 @@
 
 class RegisterShiftedRegisterOperand : public ShiftedRegisterOperand
 {
-    byte rSIndex;
+    byte rSIndex; // Index of the shift register from 0-15
 
 public:
     RegisterShiftedRegisterOperand(word w);
