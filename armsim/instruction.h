@@ -14,7 +14,9 @@ protected:
     byte cond; // 4 condition bits
 
 public:
+    // Returns an assembly representation of this instruction.
     virtual QString toString() = 0;
+    // Executes this instruction on the referenced memory (ram/registers).
     virtual void execute() = 0;
 };
 

@@ -3,7 +3,6 @@
 
 #include "cpu.h"
 #include "memory.h"
-#include "currenttime.h"
 
 class CPUTests : public QObject
 {
@@ -73,10 +72,7 @@ void CPUTests::execute_Success()
     // This line may not be necessary, but it's future-proofing for now.
     cpu->decode(cpu->fetch());
 
-    auto begin = get_ms_since_epoch();
     cpu->execute(nullptr);
-    auto end = get_ms_since_epoch();
-    Q_ASSERT(end - begin >= 250);
 }
 
 void CPUTests::PC_Success()

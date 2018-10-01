@@ -22,5 +22,4 @@ SOURCES +=  tst_cputests.cpp \
     ../armsim/cpu.cpp \
     ../armsim/memory.cpp
 
-HEADERS += \
-    currenttime.h
+HEADERS +=

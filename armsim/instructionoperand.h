@@ -12,6 +12,7 @@ class InstructionOperand
 public:
     // Returns the calculated value of this operand.
     virtual int value() = 0;
+    // Returns an assembly representation of the addressing mode, formatted to be used in Instruction::toString().
     virtual QString toString() = 0;
 };
 
