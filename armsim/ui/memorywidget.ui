@@ -94,7 +94,7 @@
   <customwidget>
    <class>HexSpinBox</class>
    <extends>QSpinBox</extends>
-   <header>hexspinbox.h</header>
+   <header>ui/hexspinbox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

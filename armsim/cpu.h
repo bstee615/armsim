@@ -2,6 +2,7 @@
 #define CPU_H
 
 #include "memory.h"
+#include "instruction.h"
 
 #define R0_OFFSET 0
 #define IP_OFFSET 48
@@ -44,9 +45,9 @@ public:
     // Reads a word from the RAM address specified by the value of the simulated Program Counter register.
     word fetch();
     // Does nothing for now.
-    void decode(word w);
+    Instruction *decode(word w);
     // Waits for 0.25sec.
-    void execute();
+    void execute(Instruction *instr);
 
     address getChecksum() { return _ram->Checksum(); }
     Memory *getRAM() { return _ram; }

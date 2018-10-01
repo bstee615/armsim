@@ -57,7 +57,14 @@ void CPUTests::fetch_Success()
 
 void CPUTests::decode_Success()
 {
-    // TODO: noop
+    Instruction *instr = cpu->decode(0xe3a02030);
+    Q_ASSERT(instr != nullptr);
+
+    Q_ASSERT(QString::compare(instr->toString(), QString("mov r2, #48")) == 0);
+
+    Q_ASSERT(cpu->getGeneralRegister(2) == 0);
+    cpu->execute(instr);
+    Q_ASSERT(cpu->getGeneralRegister(2) == 48);
 }
 
 void CPUTests::execute_Success()
@@ -67,7 +74,7 @@ void CPUTests::execute_Success()
     cpu->decode(cpu->fetch());
 
     auto begin = get_ms_since_epoch();
-    cpu->execute();
+    cpu->execute(nullptr);
     auto end = get_ms_since_epoch();
     Q_ASSERT(end - begin >= 250);
 }

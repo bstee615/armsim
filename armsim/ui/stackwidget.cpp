@@ -20,7 +20,7 @@ void StackWidget::updateStackDisplay()
     address numberOfWords = qMin<address>(16, topOfStack / 4);
 
     QString str = "";
-    for (address i = numberOfWords; i >= 0; i --) {
+    for (address i = numberOfWords; i <= numberOfWords; i --) {
         address addr = topOfStack - i*4;
         str += QString("%1").arg(addr, 8, 16, QChar('0')).toUpper().prepend("0x") +
                 QString("=") +

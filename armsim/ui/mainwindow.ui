@@ -155,49 +155,49 @@
   <customwidget>
    <class>LoaderWidget</class>
    <extends>QWidget</extends>
-   <header>loaderwidget.h</header>
+   <header>ui/loaderwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>MemoryWidget</class>
    <extends>QWidget</extends>
-   <header>memorywidget.h</header>
+   <header>ui/memorywidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TerminalWidget</class>
    <extends>QWidget</extends>
-   <header>terminalwidget.h</header>
+   <header>ui/terminalwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>FlagsWidget</class>
    <extends>QWidget</extends>
-   <header>flagswidget.h</header>
+   <header>ui/flagswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>StackWidget</class>
    <extends>QWidget</extends>
-   <header>stackwidget.h</header>
+   <header>ui/stackwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>RegistersWidget</class>
    <extends>QWidget</extends>
-   <header>registerswidget.h</header>
+   <header>ui/registerswidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>DisassemblyWidget</class>
    <extends>QWidget</extends>
-   <header>disassemblywidget.h</header>
+   <header>ui/disassemblywidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>RunControlsWidget</class>
    <extends>QWidget</extends>
-   <header>runcontrolswidget.h</header>
+   <header>ui/runcontrolswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -5,14 +5,10 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#include <cstdint>
-typedef uint8_t byte;
-typedef uint16_t halfword;
-typedef uint32_t word;
-typedef uint32_t address;
-
 #include <QDebug>
 #include <exception>
+
+#include "memorytypes.h"
 
 // To be thrown when the memory array would have been indexed out of bounds.
 struct OutOfBoundsException : public std::exception
@@ -96,6 +92,11 @@ public:
         for (address i  = 0; i < size; i ++) {
             memory[i] = 0;
         }
+    }
+
+    word *getPointerToMemory(address addr)
+    {
+        return (word*)(memory + addr);
     }
 };
 

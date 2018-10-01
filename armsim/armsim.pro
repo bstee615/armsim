@@ -23,61 +23,85 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11 console
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    hexspinbox.cpp \
-    loaderwidget.cpp \
+    cpu.cpp \
     loader.cpp \
     memory.cpp \
-    cpu.cpp \
     computer.cpp \
-    terminalwidget.cpp \
-    memorywidget.cpp \
-    flagswidget.cpp \
-    registerswidget.cpp \
-    disassemblywidget.cpp \
-    stackwidget.cpp \
-    computerwidget.cpp \
-    runcontrolswidget.cpp \
-    addbreakpointpopup.cpp \
-    filewriter.cpp
+    dataprocessinginstruction.cpp \
+    rotatedimmediateoperand.cpp \
+    filewriter.cpp \
+    barrelshifter.cpp \
+    ui/addbreakpointpopup.cpp \
+    ui/computerwidget.cpp \
+    ui/disassemblywidget.cpp \
+    ui/flagswidget.cpp \
+    ui/hexspinbox.cpp \
+    ui/loaderwidget.cpp \
+    ui/mainwindow.cpp \
+    ui/memorywidget.cpp \
+    ui/registerswidget.cpp \
+    ui/runcontrolswidget.cpp \
+    ui/stackwidget.cpp \
+    ui/terminalwidget.cpp \
+    main.cpp \
+    loadstoreinstruction.cpp \
+    instructionfactory.cpp \
+    branchinstruction.cpp \
+    immediateoperand.cpp \
+    shiftedregisteroperand.cpp \
+    immediateshiftedregisteroperand.cpp \
+    registershiftedregisteroperand.cpp
 
 HEADERS += \
-        mainwindow.h \
-    hexspinbox.h \
-    loaderwidget.h \
     options.h \
-    loader.h \
     elf.h \
     errorhandler.h \
-    memory.h \
+    memorytypes.h \
     cpu.h \
+    loader.h \
+    memory.h \
     computer.h \
-    terminalwidget.h \
-    memorywidget.h \
-    flagswidget.h \
-    registerswidget.h \
-    disassemblywidget.h \
-    stackwidget.h \
-    computerwidget.h \
-    runcontrolswidget.h \
     computerthreads.h \
-    addbreakpointpopup.h \
-    filewriter.h
-
-FORMS += \
-        mainwindow.ui \
-    loaderwidget.ui \
-    terminalwidget.ui \
-    memorywidget.ui \
-    flagswidget.ui \
-    registerswidget.ui \
-    disassemblywidget.ui \
-    stackwidget.ui \
-    runcontrolswidget.ui \
-    addbreakpointpopup.ui
+    filewriter.h \
+    barrelshifter.h \
+    instruction.h \
+    dataprocessinginstruction.h \
+    instructionoperand.h \
+    rotatedimmediateoperand.h \
+    computer.h \
+    ui/addbreakpointpopup.h \
+    ui/computerwidget.h \
+    ui/disassemblywidget.h \
+    ui/flagswidget.h \
+    ui/hexspinbox.h \
+    ui/loaderwidget.h \
+    ui/mainwindow.h \
+    ui/memorywidget.h \
+    ui/registerswidget.h \
+    ui/runcontrolswidget.h \
+    ui/stackwidget.h \
+    ui/terminalwidget.h \
+    loadstoreinstruction.h \
+    instructionfactory.h \
+    branchinstruction.h \
+    immediateoperand.h \
+    shiftedregisteroperand.h \
+    immediateshiftedregisteroperand.h \
+    registershiftedregisteroperand.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+FORMS += \
+    ui/addbreakpointpopup.ui \
+    ui/disassemblywidget.ui \
+    ui/flagswidget.ui \
+    ui/loaderwidget.ui \
+    ui/mainwindow.ui \
+    ui/memorywidget.ui \
+    ui/registerswidget.ui \
+    ui/runcontrolswidget.ui \
+    ui/stackwidget.ui \
+    ui/terminalwidget.ui

@@ -1,6 +1,8 @@
 #include "cpu.h"
 #include <chrono>
 #include <thread>
+#include "dataprocessinginstruction.h"
+#include "instructionfactory.h"
 
 CPU::CPU(Memory *ram): _ram(ram), registers(Memory(NUM_REGISTER_BYTES))
 {
@@ -14,14 +16,19 @@ word CPU::fetch()
     return _ram->ReadWord(addressToFetch);
 }
 
-void CPU::decode(word w)
+Instruction *CPU::decode(word w)
 {
-
+    return InstructionFactory::getDecodedInstruction(w, _ram, &registers);
 }
 
-void CPU::execute()
+void CPU::execute(Instruction *instr)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    if (instr == nullptr) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    }
+    else {
+        instr->execute();
+    }
 }
 
 byte CPU::getNZCF()

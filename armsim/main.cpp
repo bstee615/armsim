@@ -2,7 +2,7 @@
  * Contains the entry method into the program and command line parsing.
 **/
 
-#include "mainwindow.h"
+#include "ui/mainwindow.h"
 #include "options.h"
 #include "errorhandler.h"
 #include <QApplication>

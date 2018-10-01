@@ -149,7 +149,7 @@ bool loadELF(QString filename, CPU *cpu)
     }
 
     Elf32_Phdr* programHeaders = fetchProgramHeaders(strm, elfHeader);
-    if (fetchProgramHeaders == nullptr) {
+    if (programHeaders == nullptr) {
         return false;
     }
     if (!writeBytesToRAM(strm, cpu->getRAM(), elfHeader, programHeaders)) {

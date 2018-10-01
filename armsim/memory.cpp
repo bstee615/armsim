@@ -196,7 +196,7 @@ word Memory::ExtractBits(word w, unsigned int startBit, unsigned int endBit)
 
     word mask = 0;
     for (size_t i = startBit; i <= endBit; i ++) {
-        mask = mask | 1 << i;
+        mask = mask | (1 << i);
     }
 
     return w & mask;
