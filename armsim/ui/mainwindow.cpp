@@ -5,7 +5,7 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     QMainWindow (parent),
     ui(new Ui::MainWindow),
     _options(options),
-    computer(new Computer(_options.getMemory()))
+    computer(new Computer(_options.memory))
 {
     ui->setupUi(this);
 
@@ -18,8 +18,14 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     connect(ui->runControlsWidget, SIGNAL(toggledBreakpoint()), this, SLOT(updateAllUI()));
     connect(ui->loaderWidget, SIGNAL(loadedFile()), this, SLOT(updateAllUI()));
 
-    ui->loaderWidget->loadFile(_options.getFilename());
+    ui->loaderWidget->loadFile(_options.filename);
     ui->memoryWidget->setStartingAddress(computer->cpu.getProgramCounter());
+
+    ui->runControlsWidget->startTrace();
+
+    if (_options.execFlag) {
+        startComputerRunThread();
+    }
 }
 
 MainWindow::~MainWindow()

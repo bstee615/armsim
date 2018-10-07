@@ -35,6 +35,11 @@ void RunControlsWidget::init(Computer *computer)
     new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_B), this, SLOT(on_btnAddBreakpoint_clicked()));
 }
 
+void RunControlsWidget::startTrace()
+{
+    ui->checkTrace->setChecked(true);
+}
+
 void RunControlsWidget::setRunningState(bool running)
 {
     ui->btnRun->setEnabled(!running);

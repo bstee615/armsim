@@ -156,6 +156,7 @@ bool loadELF(QString filename, CPU *cpu)
         return false;
     }
     cpu->setProgramCounter(elfHeader.e_entry);
+    cpu->setGeneralRegister(13, 0x7000);
 
     delete[] programHeaders;
     strm.close();

@@ -26,6 +26,7 @@ public:
     AddBreakpointPopup *popup;
 
     void init(Computer *computer);
+    void startTrace();
 
 public slots:
     void setRunningState(bool running);

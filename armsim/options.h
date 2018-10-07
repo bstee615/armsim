@@ -14,14 +14,12 @@ typedef unsigned long int numbytes;
 // Options class to encapsulate command line arguments.
 class Options
 {
-    QString _filename;
-    numbytes _memory;
-
 public:
-    Options(QString filename, numbytes memory): _filename(filename), _memory(memory) { }
+    QString filename;
+    numbytes memory;
+    bool execFlag;
 
-    QString getFilename() { return _filename; }
-    numbytes getMemory() { return _memory; }
+    Options() { }
 };
 
 #endif // OPTIONS_H

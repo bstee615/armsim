@@ -13,6 +13,7 @@
 
 const QString LOAD_OPTION_NAME = "load";
 const QString MEM_OPTION_NAME = "mem";
+const QString EXEC_OPTION_NAME = "exec";
 
 Options getValidatedOptions(QCommandLineParser &parser)
 {
@@ -31,8 +32,13 @@ Options getValidatedOptions(QCommandLineParser &parser)
         qCritical() << "Loader:" << "Invalid --mem argument:" << parser.value(MEM_OPTION_NAME);
         EXIT_APP;
     }
+    bool execFlag = parser.isSet(EXEC_OPTION_NAME);
+    Options options;
+    options.filename = loadValue;
+    options.memory = memValue;
+    options.execFlag = execFlag ? !loadValue.isEmpty() : execFlag;
 
-    return Options(loadValue, memValue);
+    return options;
 }
 
 // Helper method to use a Qt command line parser.
@@ -53,6 +59,10 @@ Options parseCommandLine(QCoreApplication &app)
             QString("memory"),
             QString("32768"));
     parser.addOption(memOption);
+
+    QCommandLineOption execOption(QStringList() << EXEC_OPTION_NAME,
+            QString("A flag that directs the program to load and execute the file specified by --load. Ignored if --load is not present."));
+    parser.addOption(execOption);
 
     parser.process(app);
     return getValidatedOptions(parser);
