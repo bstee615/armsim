@@ -9,7 +9,7 @@ RotatedImmediateOperand::RotatedImmediateOperand(word encodedWord)
 
 int RotatedImmediateOperand::value()
 {
-    return BarrelShifter::rotateRight((word)immediate, rotate*2);
+    return BarrelShifter::ror((word)immediate, rotate*2);
 }
 
 QString RotatedImmediateOperand::toString()
