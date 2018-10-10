@@ -70,8 +70,7 @@ void CPUTests::execute_Success()
 {
     // TODO: Update this test when functionality is added to execute().
     // This line may not be necessary, but it's future-proofing for now.
-    cpu->decode(cpu->fetch());
-
+    qDebug() << cpu->decode(0x709180E3)->toString();
     cpu->execute(nullptr);
 }
 

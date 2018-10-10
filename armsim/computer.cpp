@@ -33,10 +33,12 @@ void Computer::run(bool *shouldStop)
 word Computer::step()
 {
     word w = cpu.fetch();
+    if (w == 0) return w;
     Instruction *i = cpu.decode(w);
+//    if (i != nullptr) qDebug() << i->toString();
     cpu.execute(i);
 
-    qDebug() << "Computer:" << "Instruction count" << instructionCounter << "Executed word" << QString("%1").arg(w, 8, 16, QChar('0')).toUpper().prepend(QString("0x"));
+    qDebug() << "Computer:" << "Instruction count" << instructionCounter << "Executed word" << QString::number(w, 16).toUpper().prepend(QString("0x"));
     logTrace();
     instructionCounter ++;
 

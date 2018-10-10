@@ -16,16 +16,16 @@ class BarrelShifter
     static word asr(word w);
 public:
     // Rotate w right by numRotations bits.
-    static word ror(word w, byte numRotations);
+    static word ror(word w, word numRotations);
 
     // Shift w left (don't wrap around) by numRotations bits.
-    static word lsl(word w, byte numShifts);
+    static word lsl(word w, word numShifts);
 
     // Shift w right (don't wrap around) by numRotations bits and pad the left with 0's.
-    static word lsr(word w, byte numShifts);
+    static word lsr(word w, word numShifts);
 
     // Shift w right (don't wrap around) by numRotations bits and sign-extend the left.
-    static word asr(word w, byte numShifts);
+    static word asr(word w, word numShifts);
 };
 
 #endif // BARRELSHIFTER_H

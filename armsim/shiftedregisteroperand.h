@@ -14,10 +14,12 @@ protected:
     // Enumeration of all shift types, encoded in instructions as a 2-bit integer.
     enum ShiftType {
         lsl = 0,
-        asl = 1,
+        asr = 1,
         lsr = 2,
-        rorrrx = 3
+        ror = 3
     };
+
+    static const char * const ShiftTypeToString [4];
 
     Memory *registers; // A reference to the register memory instance from the CPU.
     byte rMIndex; // Index of the destination register from 0-15
@@ -26,6 +28,7 @@ protected:
 public:
     // Assigns class members for w and registers.
     ShiftedRegisterOperand(word w, Memory *registers);
+    word shiftTypeToMethod(word w, word numShifts, ShiftType shiftType);
 
     virtual int value() = 0;
     virtual QString toString() = 0;

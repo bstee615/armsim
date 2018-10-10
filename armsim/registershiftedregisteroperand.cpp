@@ -1,18 +1,16 @@
 #include "registershiftedregisteroperand.h"
 
-RegisterShiftedRegisterOperand::RegisterShiftedRegisterOperand(word w): ShiftedRegisterOperand(w, registers)
+RegisterShiftedRegisterOperand::RegisterShiftedRegisterOperand(word w, Memory *_registers): ShiftedRegisterOperand(w, _registers)
 {
-    // rSIndex := rSIndex(w)
+     rSIndex = Memory::ExtractBits(w, 8, 11) >> 8;
 }
 
 QString RegisterShiftedRegisterOperand::toString()
 {
-    // example: r6, lsl r7
-    return "RegisterShiftedOperand: Not implemented.";
+    return QString("r%1, %2 r%3").arg(QString::number(rMIndex), QString(ShiftTypeToString[shiftType]), QString::number(rSIndex));
 }
 
 int RegisterShiftedRegisterOperand::value()
 {
-    // return registers[rMIndex] << registers[rSIndex];
-    return 0;
+    return shiftTypeToMethod(registers->ReadWord(rMIndex), registers->ReadWord(rSIndex), shiftType);
 }

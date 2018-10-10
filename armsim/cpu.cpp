@@ -4,21 +4,21 @@
 #include "dataprocessinginstruction.h"
 #include "instructionfactory.h"
 
-CPU::CPU(Memory *ram): _ram(ram), registers(Memory(NUM_REGISTER_BYTES))
+CPU::CPU(Memory *ram): _ram(ram), registers(new Memory(NUM_REGISTER_BYTES))
 {
-    qDebug() << "CPU:" << "Initialized with" << _ram->getSize() << "bytes of RAM and" << registers.getSize() << "bytes of register memory.";
+    qDebug() << "CPU:" << "Initialized with" << _ram->getSize() << "bytes of RAM and" << registers->getSize() << "bytes of register memory.";
 }
 
 word CPU::fetch()
 {
-    auto addressToFetch = registers.ReadWord(PC_OFFSET);
-    registers.WriteWord(PC_OFFSET, addressToFetch + 4);
+    auto addressToFetch = registers->ReadWord(PC_OFFSET);
+    registers->WriteWord(PC_OFFSET, addressToFetch + 4);
     return _ram->ReadWord(addressToFetch);
 }
 
 Instruction *CPU::decode(word w)
 {
-    return InstructionFactory::getDecodedInstruction(w, _ram, &registers);
+    return InstructionFactory::getDecodedInstruction(w, _ram, registers);
 }
 
 void CPU::execute(Instruction *instr)
@@ -42,7 +42,7 @@ byte CPU::getNZCF()
 
 bool CPU::getNZCF(NZCFFlag whichFlag)
 {
-    return registers.TestFlag(CPSR_OFFSET, whichFlag);
+    return registers->TestFlag(CPSR_OFFSET, whichFlag);
 }
 
 void checkForInvalidRegister(unsigned int index)
@@ -53,16 +53,16 @@ void checkForInvalidRegister(unsigned int index)
 word CPU::getGeneralRegister(unsigned int index)
 {
     checkForInvalidRegister(index);
-    return registers.ReadWord(R0_OFFSET + index*4);
+    return registers->ReadWord(R0_OFFSET + index*4);
 }
 
 void CPU::setNZCFFlag(NZCFFlag whichFlag, bool val)
 {
-    registers.SetFlag(CPSR_OFFSET, whichFlag, val);
+    registers->SetFlag(CPSR_OFFSET, whichFlag, val);
 }
 
 void CPU::setGeneralRegister(unsigned int index, word w)
 {
     checkForInvalidRegister(index);
-    return registers.WriteWord(R0_OFFSET + index*4, w);
+    return registers->WriteWord(R0_OFFSET + index*4, w);
 }

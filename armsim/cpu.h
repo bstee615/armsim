@@ -36,7 +36,7 @@ enum NZCFFlag {
 class CPU
 {
     Memory *_ram;
-    Memory registers;
+    Memory *registers;
 
 public:
     CPU() {}
@@ -51,10 +51,10 @@ public:
 
     address getChecksum() { return _ram->Checksum(); }
     Memory *getRAM() { return _ram; }
-    Memory *getRegisters() { return &registers; }
+    Memory *getRegisters() { return registers; }
 
-    address getProgramCounter() { return registers.ReadWord(PC_OFFSET); }
-    void setProgramCounter(address addr) { registers.WriteWord(PC_OFFSET, addr); }
+    address getProgramCounter() { return registers->ReadWord(PC_OFFSET); }
+    void setProgramCounter(address addr) { registers->WriteWord(PC_OFFSET, addr); }
     byte getNZCF();
     bool getNZCF(NZCFFlag whichFlag);
     word getGeneralRegister(unsigned int index);

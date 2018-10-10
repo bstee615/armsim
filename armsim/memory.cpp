@@ -7,10 +7,10 @@ Memory::Memory()
     size = 0;
 }
 
-Memory::Memory(address size)
+Memory::Memory(address _size)
 {
-    memory = new byte[size];
-    this->size = size;
+    memory = new byte[_size];
+    size = _size;
     clearMemory();
 }
 

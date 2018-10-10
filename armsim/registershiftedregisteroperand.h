@@ -14,7 +14,7 @@ class RegisterShiftedRegisterOperand : public ShiftedRegisterOperand
     byte rSIndex; // Index of the shift register from 0-15
 
 public:
-    RegisterShiftedRegisterOperand(word w);
+    RegisterShiftedRegisterOperand(word w, Memory *_registers);
 
     QString toString();
     int value();

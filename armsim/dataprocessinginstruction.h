@@ -17,7 +17,7 @@ class DataProcessingInstruction : public Instruction
     };
 
     // An array of strings with one string corresponding to each data processing instruction opcode.
-    static const char * const DataProcessingOpcodeToString [];
+    static const char * const DataProcessingOpcodeToString [16];
 
     DataProcessingOpcode opcode;
     bool s; // Do / Do not set condition flags
@@ -28,6 +28,7 @@ class DataProcessingInstruction : public Instruction
 
 public:
     DataProcessingInstruction(word w, Memory *registers);
+    ~DataProcessingInstruction();
 
     QString toString();
     void execute();

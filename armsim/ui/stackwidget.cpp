@@ -20,8 +20,8 @@ void StackWidget::updateStackDisplay()
     address numberOfWords = qMin<address>(16, topOfStack / 4);
 
     QString str = "";
-    for (address i = numberOfWords; i <= numberOfWords; i --) {
-        address addr = topOfStack - i*4;
+    for (address i = 0; i < numberOfWords; i ++) {
+        address addr = topOfStack - (numberOfWords-i)*4;
         str += QString("%1").arg(addr, 8, 16, QChar('0')).toUpper().prepend("0x") +
                 QString("=") +
                 QString("%1").arg(_computer->cpu.getRAM()->ReadWord(addr), 8, 16, QChar('0')).prepend("0x") +
