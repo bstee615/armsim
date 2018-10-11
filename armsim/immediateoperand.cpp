@@ -1,18 +1,18 @@
 #include "immediateoperand.h"
+#include "memory.h"
 
 ImmediateOperand::ImmediateOperand(word w)
 {
-
+    immediate = Memory::ExtractBits(2, 0, 11);
 }
 
 QString ImmediateOperand::toString()
 {
     // example: #15
-    return "ImmediateOperand: Not implemented.";
+    return QString("#%1").arg(immediate, 0, 10);
 }
 
 int ImmediateOperand::value()
 {
-    // return immediate;
-    return 0;
+    return immediate;
 }

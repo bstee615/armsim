@@ -56,7 +56,7 @@ QString DataProcessingInstruction::toString()
         opcodeDependentPortion = QString("r%1, r%2, %3").arg(QString::number(rDIndex), QString::number(rNIndex), addressingMode->toString());
         break;
     default:
-        opcodeDependentPortion = QString("instruction type not implemented");
+        opcodeDependentPortion = QString("instruction: not implemented yet.");
         break;
     }
 
@@ -66,7 +66,7 @@ QString DataProcessingInstruction::toString()
 void DataProcessingInstruction::execute()
 {
     word destinationValue;
-    word rNValue = registers->ReadWord(rNIndex);
+    word rNValue = registers->ReadWord(rNIndex*4);
 
     switch (opcode) {
     case MOV:
@@ -97,7 +97,6 @@ void DataProcessingInstruction::execute()
         destinationValue = rNValue & (~addressingMode->value());
         break;
     default:
-        qDebug() << toString();
         destinationValue = 0;
         break;
     }

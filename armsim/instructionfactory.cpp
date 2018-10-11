@@ -6,7 +6,6 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memo
     word bit4;
     word bit7;
 
-    qDebug() << "instructionOpcode" << instructionOpcode;
     switch (instructionOpcode) {
     case 0b000:
         bit4 = Memory::ExtractBits(w, 4, 4) >> 4;
@@ -30,7 +29,7 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memo
     case 0b100:
         return new LoadStoreMultipleInstruction(w, ram, registers);
     case 0b101:
-        qDebug() << "Branch instruction: not implemented yet.";
+//        return new BranchInstruction(w, registers);
         break;
     case 0b111:
         if (Memory::ExtractBits(w, 24, 24) >> 24 == 1) {
@@ -41,7 +40,6 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memo
             break;
         }
     default:
-        qDebug() << "Other not-implemented instruction.";
         break;
     }
 

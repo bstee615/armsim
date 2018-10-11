@@ -20,5 +20,5 @@ void LoadStoreMultipleInstruction::execute()
     //     }
     //     rD := rD + 4
     // }
-    qDebug() << "ldm/stm: noop";
+//    qDebug() << "ldm/stm: noop";
 }

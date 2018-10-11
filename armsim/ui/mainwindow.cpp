@@ -87,15 +87,16 @@ void MainWindow::deleteComputerThread()
 
 void MainWindow::updateAllUI()
 {
-    qDebug() << "UI:" << "Updating panel info:";
+//    qDebug() << "UI:" << "Updating panel info:";
     ui->disassemblyWidget->updateDisassemblyText();
-    qDebug() << "UI:" << "Updated disassembly panel";
+//    qDebug() << "UI:" << "Updated disassembly panel";
     ui->flagsWidget->updateFlags();
-    qDebug() << "UI:" << "Updated flags panel";
+//    qDebug() << "UI:" << "Updated flags panel";
     ui->memoryWidget->updateMemoryDisplay();
-    qDebug() << "UI:" << "Updated memory panel";
+//    qDebug() << "UI:" << "Updated memory panel";
     ui->registersWidget->updateRegisters();
-    qDebug() << "UI:" << "Updated registers panel";
+//    qDebug() << "UI:" << "Updated registers panel";
     ui->stackWidget->updateStackDisplay();
-    qDebug() << "UI:" << "Updated registers panel";
+//    qDebug() << "UI:" << "Updated registers panel";
+    qDebug() << "UI:" << "Updated panel info.";
 }

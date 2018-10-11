@@ -21,7 +21,3 @@ SOURCES +=  tst_cputests.cpp \
     ../armsim/dataprocessinginstruction.cpp \
     ../armsim/cpu.cpp \
     ../armsim/memory.cpp
-
-HEADERS +=
-
-DISTFILES +=

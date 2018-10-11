@@ -7,8 +7,11 @@ ImmediateShiftedRegisterOperand::ImmediateShiftedRegisterOperand(word w, Memory 
 
 QString ImmediateShiftedRegisterOperand::toString()
 {
-    return QString("r%1, %2 #%3").arg(QString::number(rMIndex), QString(ShiftTypeToString[shiftType]), QString::number(immediateShift));
-}
+    return QString("r%1%2").arg(QString::number(rMIndex),
+                                 immediateShift == 0 ? "" : QString(", %2 #%3").arg(
+                                                               QString(ShiftTypeToString[shiftType]),
+                                                               QString::number(immediateShift)));
+    }
 
 int ImmediateShiftedRegisterOperand::value()
 {

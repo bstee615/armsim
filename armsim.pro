@@ -7,4 +7,5 @@ SUBDIRS += armsim \
     loadertests \
     cputests \
     computertests \
-    barrelshiftertests
+    barrelshiftertests \
+    instructiontests

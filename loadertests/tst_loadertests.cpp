@@ -7,6 +7,7 @@
 #include "loader.h"
 #include "elf.h"
 #include "cpu.h"
+#include "testfiles.h"
 
 class LoaderTests : public QObject
 {
@@ -74,21 +75,24 @@ void LoaderTests::containsELFSignature_Success()
 void LoaderTests::loadELF_SuccessTest1()
 {
     Memory ram = Memory(32768);
-    loadELF("testfiles\\loader\\test1.exe", new CPU(&ram));
+    QString fullpath = QString("%1%2").arg(testFileDirectory, "loader/test1.exe");
+    loadELF(fullpath.toStdString().c_str(), new CPU(&ram));
     Q_ASSERT(ram.Checksum() == 536861081);
 }
 
 void LoaderTests::loadELF_SuccessTest2()
 {
     Memory ram = Memory(32768);
-    loadELF("testfiles\\loader\\test2.exe", new CPU(&ram));
+    QString fullpath = QString("%1%2").arg(testFileDirectory, "loader/test2.exe");
+    loadELF(fullpath.toStdString().c_str(), new CPU(&ram));
     Q_ASSERT(ram.Checksum() == 536864433);
 }
 
 void LoaderTests::loadELF_SuccessTest3()
 {
     Memory ram = Memory(32768);
-    loadELF("testfiles\\loader\\test3.exe", new CPU(&ram));
+    QString fullpath = QString("%1%2").arg(testFileDirectory, "loader/test3.exe");
+    loadELF(fullpath.toStdString().c_str(), new CPU(&ram));
     Q_ASSERT(ram.Checksum() == 536861199);
 }
 

@@ -89,7 +89,8 @@ HEADERS += \
     immediateshiftedregisteroperand.h \
     registershiftedregisteroperand.h \
     loadstoremultipleinstruction.h \
-    softwareinterruptinstruction.h
+    softwareinterruptinstruction.h \
+    testfiles.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
