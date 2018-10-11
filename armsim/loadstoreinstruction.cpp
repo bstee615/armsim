@@ -17,10 +17,11 @@ LoadStoreInstruction::LoadStoreInstruction(word w, Memory *_ram, Memory *_regist
 
 QString LoadStoreInstruction::toString()
 {
-    return QString("%1 r%2, [%3]%4").arg(L ? QString("ldr") : QString("ldr"),
-                                         QString::number(rDIndex),
-                                         addressingMode->toString(),
-                                         W ? QString("!") : QString(""));
+    return QString("%1%2 r%3, [%4]%5").arg(L ? QString("ldr") : QString("ldr"),
+                                           B ? QString("b") : QString(""),
+                                           QString::number(rDIndex),
+                                           addressingMode->toString(),
+                                           W ? QString("!") : QString(""));
 }
 
 void LoadStoreInstruction::execute()
@@ -30,9 +31,21 @@ void LoadStoreInstruction::execute()
         rDValue += 8;
     }
     if (L) {
-        registers->WriteWord(rDIndex*4, ram->ReadWord(addressingMode->value()));
+        word loadedValue;
+        if (B) {
+            loadedValue = ram->ReadByte(addressingMode->value());
+        }
+        else {
+            loadedValue = ram->ReadWord(addressingMode->value());
+        }
+        registers->WriteWord(rDIndex*4, loadedValue);
     }
     else {
-        ram->WriteWord(addressingMode->value(), rDValue);
+        if (B) {
+            ram->WriteByte(addressingMode->value(), (byte)rDValue);
+        }
+        else {
+            ram->WriteWord(addressingMode->value(), rDValue);
+        }
     }
 }

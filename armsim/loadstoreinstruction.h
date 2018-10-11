@@ -28,8 +28,8 @@ class LoadStoreInstruction: public Instruction
 public:
     LoadStoreInstruction(word w, Memory *ram, Memory *registers);
 
-    QString toString();
-    void execute();
+    QString toString() override;
+    void execute() override;
 };
 
 #endif // LOADSTOREINSTRUCTION_H

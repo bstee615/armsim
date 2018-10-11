@@ -2,6 +2,7 @@
 
 #include "memory.h"
 #include "dataprocessinginstruction.h"
+#include "mulinstruction.h"
 
 class InstructionTests : public QObject
 {
@@ -21,6 +22,7 @@ private slots:
     void movAndRotate_Success();
     void movWithImmediateShiftedRegister_Success();
     void add_Success();
+    void mul_Success();
 };
 
 InstructionTests::InstructionTests(): ram(new Memory(100)), registers(new Memory(72))
@@ -94,6 +96,20 @@ void InstructionTests::add_Success()
     Q_ASSERT(registers->ReadWord(2*4) == 0);
     instr->execute();
     Q_ASSERT(registers->ReadWord(2*4) == 15);
+}
+
+void InstructionTests::mul_Success()
+{
+    MultiplyInstruction *instr = new MultiplyInstruction(0xe0050291, registers);
+    Q_ASSERT(instr != nullptr);
+
+    registers->WriteWord(1*4, 0xa1000000);
+    registers->WriteWord(2*4, 0x00001050);
+    Q_ASSERT(QString::compare(instr->toString(), QString("mul r5, r1, r2")) == 0);
+
+    Q_ASSERT(registers->ReadWord(5*4) == 0);
+    instr->execute();
+    Q_ASSERT(registers->ReadWord(5*4) == 0x50000000);
 }
 
 QTEST_APPLESS_MAIN(InstructionTests)

@@ -18,6 +18,7 @@ SOURCES +=  \
     ../armsim/loadstoremultipleinstruction.cpp \
     ../armsim/softwareinterruptinstruction.cpp \
     ../armsim/loadstoreinstruction.cpp \
+    ../armsim/mulinstruction.cpp \
     ../armsim/dataprocessinginstruction.cpp \
     ../armsim/cpu.cpp \
     ../armsim/loader.cpp \

@@ -24,8 +24,8 @@ class LoadStoreMultipleInstruction : public Instruction
 public:
     LoadStoreMultipleInstruction(word w, Memory *ram, Memory *registers);
 
-    QString toString();
-    void execute();
+    QString toString() override;
+    void execute() override;
 };
 
 #endif // LOADSTOREMULTIPLEINSTRUCTION_H

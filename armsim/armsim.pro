@@ -45,13 +45,14 @@ SOURCES += \
     ui/terminalwidget.cpp \
     main.cpp \
     loadstoreinstruction.cpp \
-    instructionfactory.cpp \
     immediateoperand.cpp \
     shiftedregisteroperand.cpp \
     immediateshiftedregisteroperand.cpp \
     registershiftedregisteroperand.cpp \
     loadstoremultipleinstruction.cpp \
-    softwareinterruptinstruction.cpp
+    softwareinterruptinstruction.cpp \
+    mulinstruction.cpp \
+    instructionfactory.cpp
 
 HEADERS += \
     options.h \
@@ -83,14 +84,15 @@ HEADERS += \
     ui/stackwidget.h \
     ui/terminalwidget.h \
     loadstoreinstruction.h \
-    instructionfactory.h \
     immediateoperand.h \
     shiftedregisteroperand.h \
     immediateshiftedregisteroperand.h \
     registershiftedregisteroperand.h \
     loadstoremultipleinstruction.h \
     softwareinterruptinstruction.h \
-    testfiles.h
+    testfiles.h \
+    mulinstruction.h \
+    instructionfactory.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

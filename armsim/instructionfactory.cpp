@@ -1,4 +1,9 @@
 #include "instructionfactory.h"
+#include "softwareinterruptinstruction.h"
+#include "loadstoremultipleinstruction.h"
+#include "loadstoreinstruction.h"
+#include "dataprocessinginstruction.h"
+#include "mulinstruction.h"
 
 Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memory *registers)
 {
@@ -18,9 +23,10 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memo
                 return new DataProcessingInstruction(w, registers);
             }
             else {
-//                return new MultiplyInstruction(w, registers);
+                return new MultiplyInstruction(w, registers);
             }
         }
+        break;
     case 0b001:
         return new DataProcessingInstruction(w, registers);
     case 0b010:

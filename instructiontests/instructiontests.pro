@@ -10,6 +10,7 @@ INCLUDEPATH += ../armsim/
 SOURCES +=  tst_instructiontests.cpp \
     ../armsim/barrelshifter.cpp \
     ../armsim/dataprocessinginstruction.cpp \
+    ../armsim/mulinstruction.cpp \
     ../armsim/rotatedimmediateoperand.cpp \
     ../armsim/registershiftedregisteroperand.cpp \
     ../armsim/immediateshiftedregisteroperand.cpp \

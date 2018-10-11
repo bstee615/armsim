@@ -5,11 +5,8 @@
 #ifndef INSTRUCTIONFACTORY_H
 #define INSTRUCTIONFACTORY_H
 
+#include "memory.h"
 #include "instruction.h"
-#include "softwareinterruptinstruction.h"
-#include "loadstoremultipleinstruction.h"
-#include "loadstoreinstruction.h"
-#include "dataprocessinginstruction.h"
 
 class InstructionFactory {
 public:

@@ -3,7 +3,7 @@
 
 ImmediateOperand::ImmediateOperand(word w)
 {
-    immediate = Memory::ExtractBits(2, 0, 11);
+    immediate = Memory::ExtractBits(w, 0, 11);
 }
 
 QString ImmediateOperand::toString()

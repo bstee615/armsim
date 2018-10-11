@@ -30,8 +30,8 @@ public:
     DataProcessingInstruction(word w, Memory *registers);
     ~DataProcessingInstruction();
 
-    QString toString();
-    void execute();
+    QString toString() override;
+    void execute() override;
 };
 
 #endif // DATAPROCESSINGINSTRUCTION_H

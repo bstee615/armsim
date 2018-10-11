@@ -18,6 +18,7 @@ SOURCES +=  tst_computertests.cpp \
     ../armsim/loadstoremultipleinstruction.cpp \
     ../armsim/softwareinterruptinstruction.cpp \
     ../armsim/loadstoreinstruction.cpp \
+    ../armsim/mulinstruction.cpp \
     ../armsim/dataprocessinginstruction.cpp \
     ../armsim/computer.cpp \
     ../armsim/cpu.cpp \
