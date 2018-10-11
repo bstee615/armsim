@@ -22,16 +22,18 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     ui->memoryWidget->setStartingAddress(computer->cpu.getProgramCounter());
 
     ui->runControlsWidget->startTrace();
-
-    if (_options.execFlag) {
-        startComputerRunThread();
-    }
 }
 
 MainWindow::~MainWindow()
 {
     delete computer;
     delete ui;
+}
+
+void MainWindow::runThenExit()
+{
+    startComputerRunThread();
+    connect(runningThread, SIGNAL(finished()), this, SLOT(close()));
 }
 
 void MainWindow::startComputerRunThread()

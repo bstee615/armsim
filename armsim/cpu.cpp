@@ -12,8 +12,12 @@ CPU::CPU(Memory *ram): _ram(ram), registers(new Memory(NUM_REGISTER_BYTES))
 word CPU::fetch()
 {
     auto addressToFetch = registers->ReadWord(PC_OFFSET);
-    registers->WriteWord(PC_OFFSET, addressToFetch + 4);
     return _ram->ReadWord(addressToFetch);
+}
+
+void CPU::incrementPC()
+{
+    registers->WriteWord(PC_OFFSET, registers->ReadWord(PC_OFFSET) + 4);
 }
 
 Instruction *CPU::decode(word w)

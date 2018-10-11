@@ -83,6 +83,10 @@ int main(int argc, char *argv[])
         MainWindow window(options);
         window.show();
 
+        if (options.execFlag) {
+            window.runThenExit();
+        }
+
         return app.exec();
     }
     catch (std::exception ex) {

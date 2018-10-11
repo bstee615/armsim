@@ -1,4 +1,5 @@
 #include "computer.h"
+#include "softwareinterruptinstruction.h"
 
 Computer::Computer(address numBytes)
 {
@@ -43,12 +44,17 @@ word Computer::step()
     logTrace();
     instructionCounter ++;
 
+    if (dynamic_cast<SoftwareInterruptInstruction*>(i) != nullptr) {
+        return 0;
+    }
+
+    cpu.incrementPC();
     return w;
 }
 
-QString formattedNumber(unsigned int num, const char *fmt = "%1", int numDigits = 8)
+QString formattedNumber(unsigned int num, const char *fmt = "%1", int numDigits = 8, int base = 16)
 {
-    return QString(fmt).arg(num, numDigits, 10, QChar('0')).append(" ");
+    return QString(fmt).arg(num, numDigits, base, QChar('0')).append(" ").toUpper();
 }
 
 void Computer::logTrace()
@@ -57,7 +63,7 @@ void Computer::logTrace()
 
     QTextStream &writer = *writeMessage();
 
-    writer << formattedNumber(instructionCounter, "%1", 6)
+    writer << formattedNumber(instructionCounter, "%1", 6, 10)
            << formattedNumber(cpu.getProgramCounter())
            << formattedNumber(cpu.getChecksum())
            << formattedNumber(cpu.getNZCF(), "%1", 4)

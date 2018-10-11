@@ -36,6 +36,8 @@ public:
 
     Computer *computer;
 
+    void runThenExit();
+
 private slots:
     void startComputerRunThread();
     void startComputerStepThread();

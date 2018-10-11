@@ -44,6 +44,7 @@ public:
 
     // Reads a word from the RAM address specified by the value of the simulated Program Counter register.
     word fetch();
+    void incrementPC();
     // Does nothing for now.
     Instruction *decode(word w);
     // Waits for 0.25sec.
