@@ -25,10 +25,14 @@ QString LoadStoreInstruction::toString()
 
 void LoadStoreInstruction::execute()
 {
+    word rDValue = registers->ReadWord(rDIndex*4);
+    if (rDIndex == 15) {
+        rDValue += 8;
+    }
     if (L) {
         registers->WriteWord(rDIndex*4, ram->ReadWord(addressingMode->value()));
     }
     else {
-        ram->WriteWord(addressingMode->value(), registers->ReadWord(rDIndex*4));
+        ram->WriteWord(addressingMode->value(), rDValue);
     }
 }

@@ -67,6 +67,9 @@ void DataProcessingInstruction::execute()
 {
     word destinationValue;
     word rNValue = registers->ReadWord(rNIndex*4);
+    if (rNIndex == 15) {
+        rNValue += 8;
+    }
 
     switch (opcode) {
     case MOV:

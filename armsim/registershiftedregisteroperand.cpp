@@ -12,5 +12,13 @@ QString RegisterShiftedRegisterOperand::toString()
 
 int RegisterShiftedRegisterOperand::value()
 {
-    return shiftTypeToMethod(registers->ReadWord(rMIndex), registers->ReadWord(rSIndex), shiftType);
+    word rMValue = registers->ReadWord(rMIndex*4);
+    if (rMIndex == 15) {
+        rMValue += 8;
+    }
+    word rSValue = registers->ReadWord(rSIndex*4);
+    if (rSIndex == 15) {
+        rSValue += 8;
+    }
+    return shiftTypeToMethod(rMValue, rSValue, shiftType);
 }

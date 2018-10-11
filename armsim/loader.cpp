@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cmath>
 #include <cstring>
+#include <QFileInfo>
 
 using namespace std;
 
@@ -133,6 +134,8 @@ std::ifstream::pos_type filesize(const char* filename)
 
 bool loadELF(QString filename, CPU *cpu)
 {
+    QFileInfo fileInfo(filename);
+    filename = fileInfo.absoluteFilePath();
     qDebug() << "Loader:" << "Loading file" << filename;
 
     if (filesize(filename.toStdString().c_str()) < sizeof(Elf32_Ehdr)) {
