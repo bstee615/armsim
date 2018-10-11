@@ -14,10 +14,10 @@ word ShiftedRegisterOperand::shiftTypeToMethod(word w, word numShifts, ShiftedRe
     switch (shiftType) {
     case lsl:
         return BarrelShifter::lsl(w, numShifts);
-    case asr:
-        return BarrelShifter::asr(w, numShifts);
     case lsr:
         return BarrelShifter::lsr(w, numShifts);
+    case asr:
+        return BarrelShifter::asr(w, numShifts);
     case ror:
         return BarrelShifter::ror(w, numShifts);
     }
@@ -25,7 +25,7 @@ word ShiftedRegisterOperand::shiftTypeToMethod(word w, word numShifts, ShiftedRe
 
 const char* const ShiftedRegisterOperand::ShiftTypeToString [4] = {
     "lsl",
-    "asr",
     "lsr",
+    "asr",
     "ror"
 };

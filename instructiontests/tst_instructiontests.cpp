@@ -7,7 +7,7 @@ class InstructionTests : public QObject
 {
     Q_OBJECT
 
-    Memory *memory;
+    Memory *ram;
     Memory *registers;
 
 public:
@@ -18,28 +18,32 @@ private slots:
     void init();
     void cleanup();
     void mov_Success();
+    void movAndRotate_Success();
+    void movWithImmediateShiftedRegister_Success();
     void add_Success();
 };
 
-InstructionTests::InstructionTests(): memory(new Memory(100)), registers(new Memory(72))
+InstructionTests::InstructionTests(): ram(new Memory(100)), registers(new Memory(72))
 {
-    registers->WriteWord(13 * 4, 0x7000);
 }
 
 InstructionTests::~InstructionTests()
 {
-    delete memory;
+    delete ram;
     delete registers;
 }
 
 void InstructionTests::init()
 {
+    registers->clearMemory();
+    ram->clearMemory();
 
+    registers->WriteWord(13 * 4, 0x7000);
 }
 
 void InstructionTests::cleanup()
 {
-    memory->clearMemory();
+    ram->clearMemory();
     registers->clearMemory();
 }
 
@@ -53,6 +57,31 @@ void InstructionTests::mov_Success()
     Q_ASSERT(registers->ReadWord(2*4) == 0);
     instr->execute();
     Q_ASSERT(registers->ReadWord(2*4) == 48);
+}
+
+void InstructionTests::movAndRotate_Success()
+{
+    DataProcessingInstruction *instr = new DataProcessingInstruction(0xe3a00fb5, registers);
+    Q_ASSERT(instr != nullptr);
+
+    Q_ASSERT(QString::compare(instr->toString(), QString("mov r0, #724")) == 0);
+
+    Q_ASSERT(registers->ReadWord(0) == 0);
+    instr->execute();
+    Q_ASSERT(registers->ReadWord(0) == 724);
+}
+
+void InstructionTests::movWithImmediateShiftedRegister_Success()
+{
+    DataProcessingInstruction *instr = new DataProcessingInstruction(0xe1a02141, registers);
+    Q_ASSERT(instr != nullptr);
+
+    registers->WriteWord(1*4, 0xa1000000);
+    Q_ASSERT(QString::compare(instr->toString(), QString("mov r2, r1, asr #2")) == 0);
+
+    Q_ASSERT(registers->ReadWord(2*4) == 0);
+    instr->execute();
+    Q_ASSERT(registers->ReadWord(2*4) == 0xe8400000);
 }
 
 void InstructionTests::add_Success()

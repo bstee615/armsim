@@ -14,8 +14,8 @@ protected:
     // Enumeration of all shift types, encoded in instructions as a 2-bit integer.
     enum ShiftType {
         lsl = 0,
-        asr = 1,
-        lsr = 2,
+        lsr = 1,
+        asr = 2,
         ror = 3
     };
 

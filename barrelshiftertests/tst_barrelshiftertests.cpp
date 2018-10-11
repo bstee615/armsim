@@ -97,9 +97,9 @@ void BarrelShifterTests::lsr_ZeroShifts()
 
 void BarrelShifterTests::lsr_Success()
 {
-    word w = 0x00FF0000;
-    w = BarrelShifter::lsr(w, 4);
-    Q_ASSERT(w == 0x000FF000);
+    int32_t w = 0xa1000000;
+    w = BarrelShifter::lsr(w, 2);
+    Q_ASSERT(w == 0x28400000);
 }
 
 void BarrelShifterTests::lsr_Overflow()
@@ -126,9 +126,9 @@ void BarrelShifterTests::asr_ZeroShifts()
 
 void BarrelShifterTests::asr_Success()
 {
-    int32_t w = 0x0000FF00;
-    w = BarrelShifter::asr(w, 4);
-    Q_ASSERT(w == 0x00000FF0);
+    int32_t w = 0xa1000000;
+    w = BarrelShifter::asr(w, 2);
+    Q_ASSERT(w == 0xe8400000);
 }
 
 void BarrelShifterTests::asr_Overflow()

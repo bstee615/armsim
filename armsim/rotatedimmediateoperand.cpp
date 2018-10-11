@@ -4,7 +4,7 @@
 RotatedImmediateOperand::RotatedImmediateOperand(word encodedWord)
 {
     immediate = (byte)Memory::ExtractBits(encodedWord, 0, 7);
-    rotate = Memory::ExtractBits(encodedWord, 8, 11);
+    rotate = Memory::ExtractBits(encodedWord, 8, 11) >> 8;
 }
 
 int RotatedImmediateOperand::value()
