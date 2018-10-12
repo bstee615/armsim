@@ -5,9 +5,9 @@
 #ifndef DATAPROCESSINGINSTRUCTION_H
 #define DATAPROCESSINGINSTRUCTION_H
 
-#include "memory.h"
 #include "instruction.h"
 #include "instructionoperand.h"
+#include "memory.h"
 
 class DataProcessingInstruction : public Instruction
 {
@@ -19,11 +19,12 @@ class DataProcessingInstruction : public Instruction
     // An array of strings with one string corresponding to each data processing instruction opcode.
     static const char * const DataProcessingOpcodeToString [16];
 
+    Memory *registers;
     DataProcessingOpcode opcode;
     bool s; // Do / Do not set condition flags
-    Memory *registers; // A reference to the register memory instance from the CPU.
     byte rDIndex; // Index of rD from 0-15
     byte rNIndex; // Index of rN from 0-15
+    word rNValue;
     InstructionOperand *addressingMode;
 
 public:

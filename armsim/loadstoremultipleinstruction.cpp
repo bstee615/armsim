@@ -1,24 +1,69 @@
 #include "loadstoremultipleinstruction.h"
+#include <QDebug>
 
-LoadStoreMultipleInstruction::LoadStoreMultipleInstruction(word w, Memory *ram, Memory *registers)
+LoadStoreMultipleInstruction::LoadStoreMultipleInstruction(word w, Memory *_ram, Memory *_registers)
 {
+    ram = _ram;
+    registers = _registers;
+    P = Memory::ExtractBits(w, 24, 24) != 0;
+    U = Memory::ExtractBits(w, 23, 23) != 0;
+    S = Memory::ExtractBits(w, 22, 22) != 0;
+    W = Memory::ExtractBits(w, 21, 21) != 0;
+    L = Memory::ExtractBits(w, 20, 20) != 0;
 
+    rNIndex = Memory::ExtractBits(w, 16, 19) >> 16;
+    rNValue = registers->ReadWord(rNIndex*4);
+    if (rNIndex == 15) rNValue += 8;
+    registerList = (halfword)Memory::ExtractBits(w, 0, 15);
+}
+
+bool registerIsSetInList(halfword registerList, int i) {
+    return ((registerList >> i) & 1) != 0;
+}
+
+QString registerListToString(halfword registerList) {
+    QString str;
+    for (int i = 0; i < 16; i ++) {
+        if (registerIsSetInList(registerList, i)) {
+            if (!str.isEmpty()) str.append(", ");
+            str.append(QString("r%1").arg(i));
+        }
+    }
+
+    return str;
+}
+
+QString operationToString(bool L, bool U, bool P) {
+    return QString(L ? "ldm" : "stm").append(U ? "i" : "d").append(P ? "b" : "a");
 }
 
 QString LoadStoreMultipleInstruction::toString()
 {
     // example: ldmia r13!, {r2, r4, r6}
-    return "LoadStoreMultipleInstruction: Not implemented.";
+    return QString("%1 r%2%3, { %4 }").arg(
+                operationToString(L, U, P),
+                QString::number(rNIndex),
+                W ? QString("!") : QString(""),
+                registerListToString(registerList));
 }
 
 void LoadStoreMultipleInstruction::execute()
 {
-    // int rD := registers[rDIndex]
-    // for (0 <= i < 16) {
-    //     if ((registerList >> i) & 1 == 1) {
-    //         ram[registers[rD]] := registers[i]
-    //     }
-    //     rD := rD + 4
-    // }
-//    qDebug() << "ldm/stm: noop";
+    word currentAddress = rNValue;
+    for (int in = 0; in < 16; in ++) {
+        int i = L ? 15-in : in;
+        if (registerIsSetInList(registerList, i)) {
+            int changeInBytes = U ? 4 : -4;
+            if (P) currentAddress += changeInBytes;
+
+            if (L) registers->WriteWord(i*4, ram->ReadWord(currentAddress));
+            else ram->WriteWord(currentAddress, registers->ReadWord(i*4));
+
+            if (!P) currentAddress += changeInBytes;
+        }
+    }
+
+    if (W) {
+        registers->WriteWord(rNIndex*4, currentAddress);
+    }
 }

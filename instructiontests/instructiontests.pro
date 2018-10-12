@@ -14,5 +14,6 @@ SOURCES +=  tst_instructiontests.cpp \
     ../armsim/rotatedimmediateoperand.cpp \
     ../armsim/registershiftedregisteroperand.cpp \
     ../armsim/immediateshiftedregisteroperand.cpp \
+    ../armsim/registeroffsetoperand.cpp \
     ../armsim/shiftedregisteroperand.cpp \
     ../armsim/memory.cpp

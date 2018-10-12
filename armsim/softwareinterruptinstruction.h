@@ -6,7 +6,6 @@
 #define SOFTWAREINTERRUPTINSTRUCTION_H
 
 #include "instruction.h"
-#include "memorytypes.h"
 
 class SoftwareInterruptInstruction : public Instruction
 {

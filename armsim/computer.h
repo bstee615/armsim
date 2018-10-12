@@ -33,7 +33,7 @@ public:
     // Call the CPU's fetch(), decode(), and execute() methods once.
     word step();
 
-    void logTrace();
+    void logTrace(word pc);
 
     bool isBreakpoint(address addr);
     void toggleBreakpoint(address addr);

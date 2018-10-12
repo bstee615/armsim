@@ -6,6 +6,8 @@ ShiftedRegisterOperand::ShiftedRegisterOperand(word w, Memory *_registers)
 {
     registers = _registers;
     rMIndex = Memory::ExtractBits(w, 0, 3);
+    rMValue = registers->ReadWord(rMIndex*4);
+    if (rMIndex == 15) rMValue += 8;
     shiftType = (ShiftType)(Memory::ExtractBits(w, 5, 6) >> 5);
 }
 

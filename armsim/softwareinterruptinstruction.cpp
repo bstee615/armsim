@@ -9,10 +9,9 @@ SoftwareInterruptInstruction::SoftwareInterruptInstruction(word w)
 
 QString SoftwareInterruptInstruction::toString()
 {
-    return "SoftwareInterruptInstruction: Not implemented.";
+    return QString("swi %1").arg(QString::number(interruptCode));
 }
 
 void SoftwareInterruptInstruction::execute()
 {
-    qDebug() << "swi: noop";
 }

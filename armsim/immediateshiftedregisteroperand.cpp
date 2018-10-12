@@ -15,9 +15,5 @@ QString ImmediateShiftedRegisterOperand::toString()
 
 int ImmediateShiftedRegisterOperand::value()
 {
-    word rMValue = registers->ReadWord(rMIndex*4);
-    if (rMIndex == 15) {
-        rMValue += 8;
-    }
     return shiftTypeToMethod(rMValue, immediateShift, shiftType);
 }

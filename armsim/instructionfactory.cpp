@@ -48,6 +48,7 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memo
     default:
         break;
     }
+    qDebug() << QString("did not execute instruction") << QString::number(w, 16).prepend("0x");
 
     return nullptr;
 }

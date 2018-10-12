@@ -10,7 +10,9 @@ class MultiplyInstruction: public Instruction
     Memory *registers;
     address rDIndex;
     address rMIndex;
+    word rMValue;
     address rSIndex;
+    word rSValue;
     bool S;
 
 public:

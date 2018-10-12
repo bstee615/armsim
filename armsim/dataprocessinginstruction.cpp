@@ -24,11 +24,13 @@ InstructionOperand *getAddressingMode(word w, Memory *registers) {
 
 DataProcessingInstruction::DataProcessingInstruction(word w, Memory *_registers)
 {
+    registers = _registers;
     opcode = (DataProcessingOpcode)(Memory::ExtractBits(w, 21, 24) >> 21);
     s = Memory::ExtractBits(w, 20, 20) != 0;
     rNIndex = (byte)(Memory::ExtractBits(w, 16, 19) >> 16);
     rDIndex = (byte)(Memory::ExtractBits(w, 12, 15) >> 12);
-    registers = _registers;
+    rNValue = registers->ReadWord(rNIndex*4);
+    if (rNIndex == 15) rNValue += 8;
     addressingMode = getAddressingMode(w, registers);
 }
 
@@ -66,10 +68,6 @@ QString DataProcessingInstruction::toString()
 void DataProcessingInstruction::execute()
 {
     word destinationValue;
-    word rNValue = registers->ReadWord(rNIndex*4);
-    if (rNIndex == 15) {
-        rNValue += 8;
-    }
 
     switch (opcode) {
     case MOV:

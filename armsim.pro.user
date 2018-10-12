@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.7.1, 2018-10-11T14:51:13. -->
+<!-- Written by QtCreator 4.7.1, 2018-10-12T01:49:20. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -8,7 +8,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">1</value>
+  <value type="int">0</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -70,7 +70,7 @@
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.qt5.5112.win32_mingw53_kit</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">5</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
     <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MinGW_32bit-Debug</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
@@ -294,7 +294,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/armsim/armsim/armsim.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--load &quot;C:\Users\benja\OneDrive\Documents\School\Microprocessor Architecture\Loader\testfiles\sim1\ctest.exe&quot; --exec</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--load &quot;C:\Users\benja\OneDrive\Documents\School\Microprocessor Architecture\Loader\testfiles\sim1\pctest.exe&quot; --exec</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">armsim/armsim.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MinGW_32bit-Debug/armsim</value>
@@ -885,7 +885,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">computertests/computertests.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MSVC2017_64bit-Debug/computertests</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
@@ -942,7 +942,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">cputests/cputests.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MSVC2017_64bit-Debug/cputests</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
@@ -999,7 +999,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">loadertests/loadertests.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MSVC2017_64bit-Debug/loadertests</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
@@ -1056,7 +1056,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ramtests/ramtests.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MSVC2017_64bit-Debug/ramtests</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
@@ -1113,7 +1113,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--load &quot;C:\Users\benja\OneDrive\Documents\School\Microprocessor Architecture\Loader\testfiles\sim1\btest.exe&quot; --exec</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">armsim/armsim.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MSVC2017_64bit-Debug/armsim</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
@@ -1170,7 +1170,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">barrelshiftertests/barrelshiftertests.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MSVC2017_64bit-Debug/barrelshiftertests</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
@@ -1227,7 +1227,7 @@
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">instructiontests/instructiontests.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/benja/OneDrive/Documents/School/Microprocessor Architecture/Loader/build-armsim-Desktop_Qt_5_11_2_MSVC2017_64bit-Debug/instructiontests</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>

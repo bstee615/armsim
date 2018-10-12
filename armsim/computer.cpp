@@ -1,5 +1,6 @@
 #include "computer.h"
 #include "softwareinterruptinstruction.h"
+#include <QDebug>
 
 Computer::Computer(address numBytes)
 {
@@ -34,46 +35,44 @@ void Computer::run(bool *shouldStop)
 word Computer::step()
 {
     word w = cpu.fetch();
+    word pc = cpu.getProgramCounter();
     if (w == 0) return w;
     Instruction *i = cpu.decode(w);
-    if (i != nullptr) qDebug() << "Computer:" << "instruction" << QString::number(cpu.getProgramCounter(), 16).toUpper().prepend(QString("0x")) <<
-                                  ":" << "executing word" << QString::number(w, 16).toUpper().prepend(QString("0x")) <<
-                                  ":" << i->toString();
+    cpu.incrementPC();
     cpu.execute(i);
 
-    logTrace();
+    logTrace(pc);
     instructionCounter ++;
 
     if (dynamic_cast<SoftwareInterruptInstruction*>(i) != nullptr) {
         return 0;
     }
 
-    cpu.incrementPC();
     return w;
 }
 
 QString formattedNumber(unsigned int num, const char *fmt = "%1", int numDigits = 8, int base = 16)
 {
-    return QString(fmt).arg(num, numDigits, base, QChar('0')).append(" ").toUpper();
+    return QString(fmt).arg(num, numDigits, base, QChar('0')).toUpper();
 }
 
-void Computer::logTrace()
+void Computer::logTrace(word pc)
 {
     if (!isTracing()) return;
 
     QTextStream &writer = *writeMessage();
 
     writer << formattedNumber(instructionCounter, "%1", 6, 10)
-           << formattedNumber(cpu.getProgramCounter())
-           << formattedNumber(cpu.getChecksum())
-           << formattedNumber(cpu.getNZCF(), "%1", 4)
-           << "SYS "; // TODO: Replace this when implementing CPU mode.
+           << formattedNumber(pc).prepend(" ")
+           << formattedNumber(cpu.getChecksum()).prepend(" ")
+           << formattedNumber(cpu.getNZCF(), "%1", 4).prepend(" ")
+           << " SYS"; // TODO: Replace this when implementing CPU mode.
 
     for (unsigned int i = 0; i <= 14; i ++) {
         QString fmt("%1=~"); // This will end up in as "r<i>=<contents of ri>"
         fmt = fmt.arg(i).replace("~", "%1");
 
-        writer << formattedNumber(cpu.getGeneralRegister(i), fmt.toStdString().c_str());
+        writer << formattedNumber(cpu.getGeneralRegister(i), fmt.toStdString().c_str()).prepend(" ");
     }
 
     writer << "\r\n";
