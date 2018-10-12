@@ -50,7 +50,7 @@ void LoadStoreMultipleInstruction::execute()
 {
     word currentAddress = rNValue;
     for (int in = 0; in < 16; in ++) {
-        int i = L ? 15-in : in;
+        int i = L ? in : 15-in;
         if (registerIsSetInList(registerList, i)) {
             int changeInBytes = U ? 4 : -4;
             if (P) currentAddress += changeInBytes;

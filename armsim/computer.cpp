@@ -25,21 +25,29 @@ void Computer::loadFile(QString path)
 
 void Computer::run(bool *shouldStop)
 {
-    const word halt = 0;
-    while (!(*shouldStop) && step() != halt && !breakpoints.contains(cpu.getProgramCounter()))
+    while (!(*shouldStop) && step() != 0 && !breakpoints.contains(cpu.getProgramCounter()))
     {
-        // Do nothing for now.
+
     }
 }
 
 word Computer::step()
 {
-    word w = cpu.fetch();
-    word pc = cpu.getProgramCounter();
-    if (w == 0) return w;
-    Instruction *i = cpu.decode(w);
-    cpu.incrementPC();
-    cpu.execute(i);
+    Instruction *i;
+    word w, pc;
+
+    try {
+        w = cpu.fetch();
+        pc = cpu.getProgramCounter();
+
+        i = cpu.decode(w);
+        cpu.incrementPC();
+        cpu.execute(i);
+    }
+    catch (OutOfBoundsException ex) {
+        qDebug() << "out of bounds";
+        return 0;
+    }
 
     logTrace(pc);
     instructionCounter ++;
@@ -48,7 +56,7 @@ word Computer::step()
         return 0;
     }
 
-    return w;
+    return 1;
 }
 
 QString formattedNumber(unsigned int num, const char *fmt = "%1", int numDigits = 8, int base = 16)
@@ -72,11 +80,11 @@ void Computer::logTrace(word pc)
         QString fmt("%1=~"); // This will end up in as "r<i>=<contents of ri>"
         fmt = fmt.arg(i).replace("~", "%1");
         fmt = formattedNumber(cpu.getGeneralRegister(i), fmt.toStdString().c_str());
-        if (i == 14) fmt = fmt.trimmed();
+//        if (i == 14) fmt = fmt.trimmed();
         writer << fmt;
     }
 
-    writer << "\r\n";
+    writer << "\n";
     writer.flush();
 }
 

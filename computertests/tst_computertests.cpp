@@ -2,6 +2,9 @@
 #include <QDebug>
 
 #include "computer.h"
+#include "testfiles.h"
+
+#define TRACE_NAME "trace.log"
 
 class ComputerTests : public QObject
 {
@@ -19,17 +22,10 @@ private slots:
     void step_Success();
 };
 
-const address bytes = 100;
-const address targetAddress = 12;
-const word targetValue = 0xDADFABEA;
-const word fillValue = 0xFFFFFFFF;
+const address bytes = 32768;
 ComputerTests::ComputerTests()
 {
     computer = new Computer(bytes);
-    for (unsigned int i = 0; i < targetAddress; i ++) {
-        computer->cpu.getRAM()->WriteWord(targetAddress, fillValue);
-    }
-    computer->cpu.getRAM()->WriteWord(targetAddress, targetValue);
 }
 
 void ComputerTests::init()
@@ -40,7 +36,6 @@ void ComputerTests::run_Success()
 {
     bool b = false;
     computer->run(&b);
-    Q_ASSERT(computer->cpu.getProgramCounter() == 4);
 }
 
 void ComputerTests::step_Success()
