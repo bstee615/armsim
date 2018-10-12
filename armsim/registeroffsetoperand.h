@@ -6,7 +6,6 @@
 
 class RegisterOffsetOperand : public InstructionOperand
 {
-    Memory *registers; // A reference to the register memory instance from the CPU.
     byte rMIndex; // Index of the destination register from 0-15
     word rMValue;
 public:

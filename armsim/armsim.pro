@@ -53,7 +53,9 @@ SOURCES += \
     softwareinterruptinstruction.cpp \
     mulinstruction.cpp \
     instructionfactory.cpp \
-    registeroffsetoperand.cpp
+    registeroffsetoperand.cpp \
+    instruction.cpp \
+    instructionoperand.cpp
 
 HEADERS += \
     options.h \
@@ -94,7 +96,8 @@ HEADERS += \
     testfiles.h \
     mulinstruction.h \
     instructionfactory.h \
-    registeroffsetoperand.h
+    registeroffsetoperand.h \
+    instructionutils.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

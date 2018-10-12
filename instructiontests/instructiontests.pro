@@ -9,6 +9,8 @@ TEMPLATE = app
 INCLUDEPATH += ../armsim/
 SOURCES +=  tst_instructiontests.cpp \
     ../armsim/barrelshifter.cpp \
+    ../armsim/instruction.cpp \
+    ../armsim/instructionoperand.cpp \
     ../armsim/dataprocessinginstruction.cpp \
     ../armsim/mulinstruction.cpp \
     ../armsim/rotatedimmediateoperand.cpp \

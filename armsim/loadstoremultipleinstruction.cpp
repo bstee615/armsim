@@ -12,8 +12,7 @@ LoadStoreMultipleInstruction::LoadStoreMultipleInstruction(word w, Memory *_ram,
     L = Memory::ExtractBits(w, 20, 20) != 0;
 
     rNIndex = Memory::ExtractBits(w, 16, 19) >> 16;
-    rNValue = registers->ReadWord(rNIndex*4);
-    if (rNIndex == 15) rNValue += 8;
+    rNValue = getRegisterValue(rNIndex);
     registerList = (halfword)Memory::ExtractBits(w, 0, 15);
 }
 

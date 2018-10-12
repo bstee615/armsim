@@ -6,8 +6,7 @@ ShiftedRegisterOperand::ShiftedRegisterOperand(word w, Memory *_registers)
 {
     registers = _registers;
     rMIndex = Memory::ExtractBits(w, 0, 3);
-    rMValue = registers->ReadWord(rMIndex*4);
-    if (rMIndex == 15) rMValue += 8;
+    rMValue = getRegisterValue(rMIndex);
     shiftType = (ShiftType)(Memory::ExtractBits(w, 5, 6) >> 5);
 }
 
@@ -23,6 +22,7 @@ word ShiftedRegisterOperand::shiftTypeToMethod(word w, word numShifts, ShiftedRe
     case ror:
         return BarrelShifter::ror(w, numShifts);
     }
+    return 0;
 }
 
 const char* const ShiftedRegisterOperand::ShiftTypeToString [4] = {

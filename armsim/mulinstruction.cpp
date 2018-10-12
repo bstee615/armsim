@@ -6,11 +6,9 @@ MultiplyInstruction::MultiplyInstruction(word w, Memory *_registers)
     S = Memory::ExtractBits(w, 20, 20) != 0;
     rDIndex = Memory::ExtractBits(w, 16, 19) >> 16;
     rSIndex = Memory::ExtractBits(w, 8, 11) >> 8;
-    rSValue = registers->ReadWord(rSIndex*4);
-    if (rSIndex == 15) rSValue += 8;
+    rSValue = getRegisterValue(rSIndex);
     rMIndex = Memory::ExtractBits(w, 0, 3) >> 0;
-    rMValue = registers->ReadWord(rMIndex*4);
-    if (rMIndex == 15) rMValue += 8;
+    rMValue = getRegisterValue(rMIndex);
 }
 
 QString MultiplyInstruction::toString()

@@ -21,7 +21,6 @@ protected:
 
     static const char * const ShiftTypeToString [4];
 
-    Memory *registers; // A reference to the register memory instance from the CPU.
     byte rMIndex; // Index of the destination register from 0-15
     word rMValue;
     ShiftType shiftType;

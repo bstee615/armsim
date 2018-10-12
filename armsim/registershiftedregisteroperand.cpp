@@ -4,8 +4,7 @@ RegisterShiftedRegisterOperand::RegisterShiftedRegisterOperand(word w, Memory *_
 {
     registers = _registers;
     rSIndex = Memory::ExtractBits(w, 8, 11) >> 8;
-    rSValue = registers->ReadWord(rSIndex*4);
-    if (rSIndex == 15) rSValue += 8;
+    rSValue = getRegisterValue(rSIndex);
 }
 
 QString RegisterShiftedRegisterOperand::toString()

@@ -4,8 +4,7 @@ RegisterOffsetOperand::RegisterOffsetOperand(word _w, Memory *_registers)
 {
     registers = _registers;
     rMIndex = Memory::ExtractBits(_w, 0, 3);
-    rMValue = registers->ReadWord(rMIndex*4);
-    if (rMIndex == 15) rMValue += 8;
+    rMValue = getRegisterValue(rMIndex);
 }
 
 int RegisterOffsetOperand::value()

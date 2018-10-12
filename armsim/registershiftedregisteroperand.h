@@ -12,7 +12,6 @@
 
 class RegisterShiftedRegisterOperand : public ShiftedRegisterOperand
 {
-    Memory *registers;
     byte rSIndex; // Index of the shift register from 0-15
     word rSValue;
 

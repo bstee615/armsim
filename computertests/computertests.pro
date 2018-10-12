@@ -8,6 +8,8 @@ TEMPLATE = app
 
 INCLUDEPATH += ../armsim/
 SOURCES +=  tst_computertests.cpp \
+    ../armsim/instruction.cpp \
+    ../armsim/instructionoperand.cpp \
     ../armsim/instructionfactory.cpp \
     ../armsim/barrelshifter.cpp \
     ../armsim/immediateoperand.cpp \

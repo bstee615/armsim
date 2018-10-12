@@ -14,9 +14,8 @@ class LoadStoreMultipleInstruction : public Instruction
     bool W; // false: No Writeback / true: Writeback
     bool L; // false: Store / true: Load
 
-    Memory *registers;
     Memory *ram; // A reference to the RAM memory instance from the CPU.
-    word rNIndex; // Index of register n from 0-15
+    byte rNIndex; // Index of register n from 0-15
     word rNValue;
 
     InstructionOperand *addressingMode;

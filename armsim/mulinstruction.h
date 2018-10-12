@@ -7,11 +7,10 @@
 
 class MultiplyInstruction: public Instruction
 {
-    Memory *registers;
-    address rDIndex;
-    address rMIndex;
+    byte rDIndex;
+    byte rMIndex;
     word rMValue;
-    address rSIndex;
+    byte rSIndex;
     word rSValue;
     bool S;
 

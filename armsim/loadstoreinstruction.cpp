@@ -13,11 +13,9 @@ LoadStoreInstruction::LoadStoreInstruction(word w, Memory *_ram, Memory *_regist
     W = Memory::ExtractBits(w, 21, 21) != 0;
     L = Memory::ExtractBits(w, 20, 20) != 0;
     rNIndex = Memory::ExtractBits(w, 16, 19) >> 16;
-    rNValue = registers->ReadWord(rNIndex*4);
-    if (rNIndex == 15) rNValue += 8;
+    rNValue = getRegisterValue(rNIndex);
     rDIndex = Memory::ExtractBits(w, 12, 15) >> 12;
-    rDValue = registers->ReadWord(rDIndex*4);
-    if (rDIndex == 15) rDValue += 8;
+    rDValue = getRegisterValue(rDIndex);
 
     if (Memory::ExtractBits(w, 25, 25) != 0) {
         if (Memory::ExtractBits(w, 4, 11) == 0) {

@@ -29,8 +29,7 @@ DataProcessingInstruction::DataProcessingInstruction(word w, Memory *_registers)
     s = Memory::ExtractBits(w, 20, 20) != 0;
     rNIndex = (byte)(Memory::ExtractBits(w, 16, 19) >> 16);
     rDIndex = (byte)(Memory::ExtractBits(w, 12, 15) >> 12);
-    rNValue = registers->ReadWord(rNIndex*4);
-    if (rNIndex == 15) rNValue += 8;
+    rNValue = getRegisterValue(rNIndex);
     addressingMode = getAddressingMode(w, registers);
 }
 
