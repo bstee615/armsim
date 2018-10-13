@@ -17,17 +17,15 @@ StackWidget::~StackWidget()
 void StackWidget::updateStackDisplay()
 {
     word topOfStack = _computer->cpu.getGeneralRegister(13);
-    address numberOfWords = qMin<address>(16, topOfStack / 4);
+    address numberOfWords = qMin<address>(12, topOfStack / 4);
 
     QString str = "";
     for (address i = 0; i < numberOfWords; i ++) {
-        address addr = topOfStack - (numberOfWords-i)*4;
+        address addr = topOfStack + i*4;
         str += QString("%1").arg(addr, 8, 16, QChar('0')).toUpper().prepend("0x") +
                 QString("=") +
                 QString("%1").arg(_computer->cpu.getRAM()->ReadWord(addr), 8, 16, QChar('0')).prepend("0x") +
                 QString("\r\n");
-
-        if (i == 0) break;
     }
 
     ui->textareaStack->setText(str);

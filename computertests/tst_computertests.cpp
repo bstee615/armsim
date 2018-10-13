@@ -16,31 +16,33 @@ public:
     ComputerTests();
 
 private slots:
-    void init();
+    void cleanup();
 
     void run_Success();
     void step_Success();
 };
 
-const address bytes = 32768;
 ComputerTests::ComputerTests()
 {
-    computer = new Computer(bytes);
+    computer = new Computer(32768);
 }
 
-void ComputerTests::init()
+void ComputerTests::cleanup()
 {
+    computer->cpu.getRAM()->clearMemory();
 }
 
 void ComputerTests::run_Success()
 {
     bool b = false;
+    computer->cpu.getRAM()->WriteWord(0x40, 0xef000011); // Write SWI at 0x40
     computer->run(&b);
+    Q_ASSERT(computer->cpu.getProgramCounter() == 0x44);
 }
 
 void ComputerTests::step_Success()
 {
-    Q_ASSERT(computer->step() == 0);
+    Q_ASSERT(computer->step() == 1); // Successfully got 0.
 }
 
 QTEST_APPLESS_MAIN(ComputerTests)

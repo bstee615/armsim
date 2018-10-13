@@ -33,16 +33,25 @@ void DisassemblyWidget::updateDisassemblyText()
     ui->listDisassembly->clear();
 
     Memory &ram = _computer->ram;
-    address pc = _computer->cpu.getProgramCounter();
+    address pc;
+    try {
+        pc = _computer->cpu.getProgramCounter();
+    }
+    catch (OutOfBoundsException) {
+        pc = _computer->cpu.getRAM()->getSize() - 4;
+    }
     const int rowPadding = 6;
     for (int offset = -rowPadding; offset <= rowPadding; offset ++) {
         int signedAddress = pc + (offset*4);
-        if (signedAddress < 0) continue;
+        if (signedAddress < 0 || ((address)signedAddress) >= _computer->cpu.getRAM()->getSize()) continue;
 
         address addr = signedAddress;
         word instruction = ram.ReadWord(addr);
         bool bp = _computer->isBreakpoint(addr);
         QString disassembly = InstructionFactory::getDecodedInstruction(instruction, _computer->cpu.getRAM(), _computer->cpu.getRegisters())->toString();
+        if (instruction == 0) {
+            disassembly = "";
+        }
         auto item = new QListWidgetItem(listItemText(addr, instruction, disassembly, bp), ui->listDisassembly);
         if (offset == 0) item->setBackgroundColor(QColor(255, 100, 100));
         ui->listDisassembly->addItem(item);

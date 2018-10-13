@@ -31,7 +31,7 @@ public:
     // Calls the CPU's fetch(), decode(), and execute() in a loop, until fetch() returns a 0.
     void run(bool *shouldStop);
     // Call the CPU's fetch(), decode(), and execute() methods once.
-    word step();
+    int step();
 
     void logTrace(word pc);
 

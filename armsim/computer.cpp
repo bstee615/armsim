@@ -25,13 +25,13 @@ void Computer::loadFile(QString path)
 
 void Computer::run(bool *shouldStop)
 {
-    while (!(*shouldStop) && step() != 0 && !breakpoints.contains(cpu.getProgramCounter()))
+    while (!(*shouldStop) && step() > 0 && !breakpoints.contains(cpu.getProgramCounter()))
     {
 
     }
 }
 
-word Computer::step()
+int Computer::step()
 {
     Instruction *i;
     word w, pc;
@@ -45,8 +45,7 @@ word Computer::step()
         cpu.execute(i);
     }
     catch (OutOfBoundsException ex) {
-        qDebug() << "out of bounds";
-        return 0;
+        return -1;
     }
 
     logTrace(pc);
