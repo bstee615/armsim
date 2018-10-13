@@ -43,6 +43,7 @@ int Computer::step()
         i = cpu.decode(w);
         cpu.incrementPC();
         cpu.execute(i);
+        if (i != nullptr) qDebug() << "Computer:" << QString("executing instruction %1: %2").arg(QString::number(w), i->toString());
     }
     catch (OutOfBoundsException ex) {
         return -1;

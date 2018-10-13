@@ -85,9 +85,3 @@ void RunControlsWidget::toggleTrace()
 {
     ui->checkTrace->toggle();
 }
-
-void RunControlsWidget::on_btnToggleBreakpoint_clicked()
-{
-    _computer->toggleBreakpointAtCurrentInstruction();
-    emit toggledBreakpoint();
-}

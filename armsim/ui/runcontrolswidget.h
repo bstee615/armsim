@@ -46,8 +46,6 @@ private slots:
 
     void toggleTrace();
 
-    void on_btnToggleBreakpoint_clicked();
-
 signals:
     void toggledBreakpoint();
 
