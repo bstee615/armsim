@@ -1,5 +1,5 @@
 #include "computer.h"
-#include "softwareinterruptinstruction.h"
+#include "instructions/softwareinterruptinstruction.h"
 #include <QDebug>
 
 Computer::Computer(address numBytes)
@@ -73,7 +73,7 @@ void Computer::logTrace(word pc)
     writer << formattedNumber(instructionCounter, "%1", 6, 10)
            << formattedNumber(pc)
            << formattedNumber(cpu.getChecksum())
-           << formattedNumber(cpu.getNZCF(), "%1", 4)
+           << formattedNumber(cpu.getNZCF(), "%1", 4, 2)
            << "SYS "; // TODO: Replace this when implementing CPU mode.
 
     for (unsigned int i = 0; i <= 14; i ++) {

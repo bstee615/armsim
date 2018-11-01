@@ -27,8 +27,6 @@ SOURCES += \
     loader.cpp \
     memory.cpp \
     computer.cpp \
-    dataprocessinginstruction.cpp \
-    rotatedimmediateoperand.cpp \
     filewriter.cpp \
     barrelshifter.cpp \
     ui/addbreakpointpopup.cpp \
@@ -44,18 +42,21 @@ SOURCES += \
     ui/stackwidget.cpp \
     ui/terminalwidget.cpp \
     main.cpp \
-    loadstoreinstruction.cpp \
-    immediateoperand.cpp \
-    shiftedregisteroperand.cpp \
-    immediateshiftedregisteroperand.cpp \
-    registershiftedregisteroperand.cpp \
-    loadstoremultipleinstruction.cpp \
-    softwareinterruptinstruction.cpp \
-    mulinstruction.cpp \
-    instructionfactory.cpp \
-    registeroffsetoperand.cpp \
-    instruction.cpp \
-    instructionoperand.cpp
+    instructions/dataprocessinginstruction.cpp \
+    instructions/immediateoperand.cpp \
+    instructions/immediateshiftedregisteroperand.cpp \
+    instructions/instruction.cpp \
+    instructions/instructionfactory.cpp \
+    instructions/instructionoperand.cpp \
+    instructions/loadstoreinstruction.cpp \
+    instructions/loadstoremultipleinstruction.cpp \
+    instructions/mulinstruction.cpp \
+    instructions/registeroffsetoperand.cpp \
+    instructions/registershiftedregisteroperand.cpp \
+    instructions/rotatedimmediateoperand.cpp \
+    instructions/shiftedregisteroperand.cpp \
+    instructions/softwareinterruptinstruction.cpp \
+    instructions/branchinstruction.cpp
 
 HEADERS += \
     options.h \
@@ -69,10 +70,6 @@ HEADERS += \
     computerthreads.h \
     filewriter.h \
     barrelshifter.h \
-    instruction.h \
-    dataprocessinginstruction.h \
-    instructionoperand.h \
-    rotatedimmediateoperand.h \
     computer.h \
     ui/addbreakpointpopup.h \
     ui/computerwidget.h \
@@ -86,18 +83,23 @@ HEADERS += \
     ui/runcontrolswidget.h \
     ui/stackwidget.h \
     ui/terminalwidget.h \
-    loadstoreinstruction.h \
-    immediateoperand.h \
-    shiftedregisteroperand.h \
-    immediateshiftedregisteroperand.h \
-    registershiftedregisteroperand.h \
-    loadstoremultipleinstruction.h \
-    softwareinterruptinstruction.h \
     testfiles.h \
-    mulinstruction.h \
-    instructionfactory.h \
-    registeroffsetoperand.h \
-    instructionutils.h
+    instructions/dataprocessinginstruction.h \
+    instructions/immediateoperand.h \
+    instructions/immediateshiftedregisteroperand.h \
+    instructions/instruction.h \
+    instructions/instructionfactory.h \
+    instructions/instructionoperand.h \
+    instructions/instructionutils.h \
+    instructions/loadstoreinstruction.h \
+    instructions/loadstoremultipleinstruction.h \
+    instructions/mulinstruction.h \
+    instructions/registeroffsetoperand.h \
+    instructions/registershiftedregisteroperand.h \
+    instructions/rotatedimmediateoperand.h \
+    instructions/shiftedregisteroperand.h \
+    instructions/softwareinterruptinstruction.h \
+    instructions/branchinstruction.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

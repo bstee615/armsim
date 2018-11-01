@@ -1,7 +1,7 @@
 #include "disassemblywidget.h"
 #include "ui_disassemblywidget.h"
 #include <QtMath>
-#include "instructionfactory.h"
+#include "instructions/instructionfactory.h"
 
 DisassemblyWidget::DisassemblyWidget(QWidget *parent) :
     QWidget(parent),

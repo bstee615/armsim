@@ -22,6 +22,34 @@ InstructionOperand *getAddressingMode(word w, Memory *registers) {
     }
 }
 
+void DataProcessingInstruction::compare(word uval1, word uval2)
+{
+    word uresult = uval1 - uval2;
+    int sval1 = uval1;
+    int sval2 = uval2;
+    int sresult = uresult;
+
+    registers->SetFlag(64, 31, Memory::ExtractBits(uresult, 31, 31) != 0); // N
+    registers->SetFlag(64, 30, uresult == 0); // Z
+    registers->SetFlag(64, 29, uval2 <= uval1); // C
+    registers->SetFlag(64, 28, (sval1 > 0 && sval2 < 0 && sresult < 0) ||
+                       (sval1 < 0 && sval2 > 0 && sresult > 0)); // F
+}
+
+void DataProcessingInstruction::compareNegative(word uval1, word uval2)
+{
+    word uresult = uval1 - uval2;
+    int sval1 = uval1;
+    int sval2 = uval2;
+    int sresult = uresult;
+
+    registers->SetFlag(64, 31, Memory::ExtractBits(uresult, 31, 31) != 0); // N
+    registers->SetFlag(64, 30, uresult == 0); // Z
+    registers->SetFlag(64, 29, false); // C
+    registers->SetFlag(64, 28, (sval1 > 0 && sval2 < 0 && sresult < 0) ||
+                       (sval1 < 0 && sval2 > 0 && sresult > 0)); // F
+}
+
 DataProcessingInstruction::DataProcessingInstruction(word w, Memory *_registers)
 {
     registers = _registers;
@@ -55,6 +83,10 @@ QString DataProcessingInstruction::toString()
     case EOR:
     case BIC:
         opcodeDependentPortion = QString("r%1, r%2, %3").arg(QString::number(rDIndex), QString::number(rNIndex), addressingMode->toString());
+        break;
+    case CMP:
+    case CMN:
+        opcodeDependentPortion = QString("r%1, %2").arg(QString::number(rNIndex), addressingMode->toString());
         break;
     default:
         opcodeDependentPortion = QString("instruction: not implemented yet.");
@@ -96,10 +128,18 @@ void DataProcessingInstruction::execute()
     case BIC:
         destinationValue = rNValue & (~addressingMode->value());
         break;
+    case CMP:
+        compare(rNValue, addressingMode->value());
+        break;
+    case CMN:
+        compareNegative(rNValue, -addressingMode->value());
+        break;
     default:
         destinationValue = 0;
         break;
     }
 
-    registers->WriteWord(rDIndex * 4, destinationValue);
+    if (opcode != CMP && opcode != CMN) {
+        registers->WriteWord(rDIndex * 4, destinationValue);
+    }
 }

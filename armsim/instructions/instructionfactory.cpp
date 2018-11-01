@@ -3,6 +3,7 @@
 #include "loadstoremultipleinstruction.h"
 #include "loadstoreinstruction.h"
 #include "dataprocessinginstruction.h"
+#include "branchinstruction.h"
 #include "mulinstruction.h"
 
 Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memory *registers)
@@ -35,7 +36,7 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memo
     case 0b100:
         return new LoadStoreMultipleInstruction(w, ram, registers);
     case 0b101:
-//        return new BranchInstruction(w, registers);
+        return new BranchInstruction(w, registers);
         break;
     case 0b111:
         if (Memory::ExtractBits(w, 24, 24) >> 24 == 1) {

@@ -159,7 +159,8 @@ bool Memory::TestFlag(address addr, unsigned int bit)
         throw OutOfBoundsException();
         return false;
     }
-    if (bit > sizeof(word)*8-1) {
+    if (bit > (sizeof(word)*8)-1) {
+        qDebug() << "Invalid bit access" << bit;
         throw InvalidBitException();
         return false;
     }
@@ -176,7 +177,8 @@ void Memory::SetFlag(address addr, unsigned int bit, bool flag)
         throw OutOfBoundsException();
         return;
     }
-    if (bit > sizeof(word)*8-1) {
+    if (bit > (sizeof(word)*8)-1) {
+        qDebug() << "Invalid bit access" << bit;
         throw InvalidBitException();
         return;
     }

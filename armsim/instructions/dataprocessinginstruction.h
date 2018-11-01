@@ -26,6 +26,9 @@ class DataProcessingInstruction : public Instruction
     word rNValue;
     InstructionOperand *addressingMode;
 
+    void compare(word uval1, word uval2);
+    void compareNegative(word uval1, word uval2);
+
 public:
     DataProcessingInstruction(word w, Memory *registers);
     ~DataProcessingInstruction();

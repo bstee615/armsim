@@ -2,7 +2,7 @@
 #define CPU_H
 
 #include "memory.h"
-#include "instruction.h"
+#include "instructions/instruction.h"
 
 #define R0_OFFSET 0
 #define IP_OFFSET 48
@@ -27,10 +27,10 @@ struct InvalidRegisterIndexException : public std::exception
 };
 
 enum NZCFFlag {
-    Negative = 0,
-    Zero = 1,
-    Carry = 2,
-    Overflow = 3
+    Negative = 31,
+    Zero = 30,
+    Carry = 29,
+    Overflow = 28
 };
 
 class CPU

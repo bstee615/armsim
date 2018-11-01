@@ -1,8 +1,8 @@
 #include "cpu.h"
 #include <chrono>
 #include <thread>
-#include "dataprocessinginstruction.h"
-#include "instructionfactory.h"
+#include "instructions/dataprocessinginstruction.h"
+#include "instructions/instructionfactory.h"
 
 CPU::CPU(Memory *ram): _ram(ram), registers(new Memory(NUM_REGISTER_BYTES))
 {
@@ -38,10 +38,10 @@ void CPU::execute(Instruction *instr)
 
 byte CPU::getNZCF()
 {
-    return (unsigned int)getNZCF(NZCFFlag::Negative) << 3 |
-           (unsigned int)getNZCF(NZCFFlag::Zero) << 2 |
-           (unsigned int)getNZCF(NZCFFlag::Carry) << 1 |
-           (unsigned int)getNZCF(NZCFFlag::Overflow);
+    return (word)(getNZCF(NZCFFlag::Negative) ? 1 : 0) << 3 |
+           (word)(getNZCF(NZCFFlag::Zero) ? 1 : 0) << 2 |
+           (word)(getNZCF(NZCFFlag::Carry) ? 1 : 0) << 1 |
+           (word)(getNZCF(NZCFFlag::Overflow) ? 1 : 0);
 }
 
 bool CPU::getNZCF(NZCFFlag whichFlag)

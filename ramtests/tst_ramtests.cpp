@@ -307,7 +307,7 @@ void RAMTests::ExtractBits_FromAll0s()
 void RAMTests::ClearMemory_Success()
 {
     int cksum = ram.Checksum();
-    ram.WriteByte(bytes/2, 0xFADE);
+    ram.WriteWord(bytes/2, 0xFADE);
     Q_ASSERT(cksum != ram.Checksum());
     ram.clearMemory();
     Q_ASSERT(cksum == ram.Checksum());

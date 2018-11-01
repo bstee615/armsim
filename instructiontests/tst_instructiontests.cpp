@@ -2,8 +2,8 @@
 
 #include "cpu.h"
 #include "memory.h"
-#include "dataprocessinginstruction.h"
-#include "mulinstruction.h"
+#include "instructions/dataprocessinginstruction.h"
+#include "instructions/mulinstruction.h"
 
 class InstructionTests : public QObject
 {
@@ -13,6 +13,9 @@ class InstructionTests : public QObject
 
     void assert_Instruction(word encodedInstruction, QString expectedDisassembly, byte destinationRegister, word expectedValue);
     void assert_Instruction(word encodedInstruction, QString expectedDisassembly, byte destinationRegister, word expectedValue, address destinationAddress, word expectedMemoryValue);
+
+    void assert_cmp(word rNValue, word Operand2Value, byte expectedNZCF);
+    void assert_cmn(word rNValue, word Operand2Value, byte expectedNZCF);
 
 public:
     InstructionTests();
@@ -36,6 +39,9 @@ private slots:
     void bic();
     void mul();
 
+    void cmp_flags();
+    void cmn_flags();
+
     void ldr();
     void str();
     void ldrWithImmediateOffset();
@@ -56,6 +62,24 @@ void InstructionTests::assert_Instruction(word encodedInstruction, QString expec
 
     instr->execute();
     Q_ASSERT(cpu->getGeneralRegister(destinationRegister) == expectedValue);
+}
+
+void InstructionTests::assert_cmp(word rNValue, word Operand2Value, byte expectedNZCF)
+{
+    cpu->setGeneralRegister(1, rNValue);
+    cpu->setGeneralRegister(2, Operand2Value);
+    assert_Instruction(0xe1510002, QString("cmp r1, r2"), 1, rNValue);
+    qDebug() << rNValue << Operand2Value << cpu->getNZCF();
+    Q_ASSERT(cpu->getNZCF() == expectedNZCF);
+}
+
+void InstructionTests::assert_cmn(word rNValue, word Operand2Value, byte expectedNZCF)
+{
+    cpu->setGeneralRegister(1, rNValue);
+    cpu->setGeneralRegister(2, Operand2Value);
+    assert_Instruction(0xe1710002, QString("cmn r1, r2"), 1, rNValue);
+    qDebug() << cpu->getNZCF();
+    Q_ASSERT(cpu->getNZCF() == expectedNZCF);
 }
 
 InstructionTests::InstructionTests(): cpu(new CPU(new Memory(32768)))
@@ -161,6 +185,22 @@ void InstructionTests::mul()
     cpu->setGeneralRegister(1, 0xa1000000);
     cpu->setGeneralRegister(2, 0x00001050);
     assert_Instruction(0xe0050291, QString("mul r5, r1, r2"), 5, 0x50000000);
+}
+
+void InstructionTests::cmp_flags()
+{
+    assert_cmp(1, 2, 0b1000); // Negative
+    assert_cmp(2, 1, 0b0010);
+    assert_cmp(1, 1, 0b0110); // Zero
+    assert_cmp(-5, -5, 0b0110); // Zero
+    assert_cmp(0, 1, 0b1000); // Carry
+}
+
+void InstructionTests::cmn_flags()
+{
+    assert_cmn(1, 2, 0b0000); // Normal case
+    assert_cmn(0x7FFFFFFF, 0x1, 0b1001); // Overflow
+    assert_cmn(-4, 4, 0b0100); // Zero
 }
 
 void InstructionTests::ldr()

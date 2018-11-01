@@ -8,21 +8,21 @@ TEMPLATE = app
 
 INCLUDEPATH += ../armsim/
 SOURCES +=  tst_computertests.cpp \
-    ../armsim/instruction.cpp \
-    ../armsim/instructionoperand.cpp \
-    ../armsim/instructionfactory.cpp \
+    ../armsim/instructions/instruction.cpp \
+    ../armsim/instructions/instructionoperand.cpp \
+    ../armsim/instructions/instructionfactory.cpp \
     ../armsim/barrelshifter.cpp \
-    ../armsim/immediateoperand.cpp \
-    ../armsim/rotatedimmediateoperand.cpp \
-    ../armsim/shiftedregisteroperand.cpp \
-    ../armsim/immediateshiftedregisteroperand.cpp \
-    ../armsim/registershiftedregisteroperand.cpp \
-    ../armsim/registeroffsetoperand.cpp \
-    ../armsim/loadstoremultipleinstruction.cpp \
-    ../armsim/softwareinterruptinstruction.cpp \
-    ../armsim/loadstoreinstruction.cpp \
-    ../armsim/mulinstruction.cpp \
-    ../armsim/dataprocessinginstruction.cpp \
+    ../armsim/instructions/immediateoperand.cpp \
+    ../armsim/instructions/rotatedimmediateoperand.cpp \
+    ../armsim/instructions/shiftedregisteroperand.cpp \
+    ../armsim/instructions/immediateshiftedregisteroperand.cpp \
+    ../armsim/instructions/registershiftedregisteroperand.cpp \
+    ../armsim/instructions/registeroffsetoperand.cpp \
+    ../armsim/instructions/loadstoremultipleinstruction.cpp \
+    ../armsim/instructions/softwareinterruptinstruction.cpp \
+    ../armsim/instructions/loadstoreinstruction.cpp \
+    ../armsim/instructions/mulinstruction.cpp \
+    ../armsim/instructions/dataprocessinginstruction.cpp \
     ../armsim/computer.cpp \
     ../armsim/cpu.cpp \
     ../armsim/memory.cpp \
