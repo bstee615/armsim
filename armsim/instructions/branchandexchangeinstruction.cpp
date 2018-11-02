@@ -1,15 +1,15 @@
 #include "branchandexchangeinstruction.h"
 
-BranchAndExchangeInstruction::BranchAndExchangeInstruction(word w, Memory *_registers)
+BranchAndExchangeInstruction::BranchAndExchangeInstruction(word w, Memory *_registers):
+    Instruction(w, _registers)
 {
-    registers = _registers;
     byte rMIndex = Memory::ExtractBits(w, 0, 3);
     rMValue = getRegisterValue(rMIndex);
 }
 
 QString BranchAndExchangeInstruction::toString()
 {
-    return QString("bx #%1").arg(QString::number(rMValue));
+    return QString("bx%1 #%2").arg(CC_STR, QString::number(rMValue));
 }
 
 void BranchAndExchangeInstruction::execute()

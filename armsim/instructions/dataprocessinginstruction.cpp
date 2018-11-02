@@ -50,9 +50,9 @@ void DataProcessingInstruction::compareNegative(word uval1, word uval2)
                        (sval1 < 0 && sval2 > 0 && sresult > 0)); // F
 }
 
-DataProcessingInstruction::DataProcessingInstruction(word w, Memory *_registers)
+DataProcessingInstruction::DataProcessingInstruction(word w, Memory *_registers):
+    Instruction(w, _registers)
 {
-    registers = _registers;
     opcode = (DataProcessingOpcode)(Memory::ExtractBits(w, 21, 24) >> 21);
     s = Memory::ExtractBits(w, 20, 20) != 0;
     rNIndex = (byte)(Memory::ExtractBits(w, 16, 19) >> 16);
@@ -93,7 +93,7 @@ QString DataProcessingInstruction::toString()
         break;
     }
 
-    return QString("%1 %2").arg(QString(DataProcessingOpcodeToString[opcode]), opcodeDependentPortion);
+    return QString("%1%2 %3").arg(QString(DataProcessingOpcodeToString[opcode]), CC_STR, opcodeDependentPortion);
 }
 
 void DataProcessingInstruction::execute()

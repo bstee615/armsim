@@ -3,7 +3,8 @@
 #include "immediateshiftedregisteroperand.h"
 #include "registeroffsetoperand.h"
 
-LoadStoreInstruction::LoadStoreInstruction(word w, Memory *_ram, Memory *_registers)
+LoadStoreInstruction::LoadStoreInstruction(word w, Memory *_ram, Memory *_registers):
+    Instruction(w, _registers)
 {
     ram = _ram;
     registers = _registers;
@@ -40,8 +41,9 @@ QString LoadStoreInstruction::addressingModeToString()
 
 QString LoadStoreInstruction::toString()
 {
-    return QString("%1%2 r%3, [r%4%5]%6").arg(L ? QString("ldr") : QString("str"),
+    return QString("%1%2%3 r%4, [r%5%6]%7").arg(L ? QString("ldr") : QString("str"),
                                            B ? QString("b") : QString(""),
+                                           CC_STR,
                                            QString::number(rDIndex),
                                            QString::number(rNIndex),
                                            addressingModeToString(),

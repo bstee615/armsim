@@ -12,6 +12,7 @@ class InstructionOperand
 {
 protected:
     Memory *registers;
+
 public:
     virtual ~InstructionOperand() { }
     // Returns the calculated value of this operand.

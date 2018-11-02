@@ -1,10 +1,10 @@
 #include "loadstoremultipleinstruction.h"
 #include <QDebug>
 
-LoadStoreMultipleInstruction::LoadStoreMultipleInstruction(word w, Memory *_ram, Memory *_registers)
+LoadStoreMultipleInstruction::LoadStoreMultipleInstruction(word w, Memory *_ram, Memory *_registers):
+    Instruction(w, _registers)
 {
     ram = _ram;
-    registers = _registers;
     P = Memory::ExtractBits(w, 24, 24) != 0;
     U = Memory::ExtractBits(w, 23, 23) != 0;
     S = Memory::ExtractBits(w, 22, 22) != 0;
@@ -39,8 +39,9 @@ QString operationToString(bool L, bool U, bool P) {
 QString LoadStoreMultipleInstruction::toString()
 {
     // example: ldmia r13!, {r2, r4, r6}
-    return QString("%1 r%2%3, { %4 }").arg(
+    return QString("%1%2 r%3%4, { %5 }").arg(
                 operationToString(L, U, P),
+                CC_STR,
                 QString::number(rNIndex),
                 W ? QString("!") : QString(""),
                 registerListToString(registerList));

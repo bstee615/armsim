@@ -101,7 +101,8 @@ HEADERS += \
     instructions/shiftedregisteroperand.h \
     instructions/softwareinterruptinstruction.h \
     instructions/branchinstruction.h \
-    instructions/branchandexchangeinstruction.h
+    instructions/branchandexchangeinstruction.h \
+    instructions/nzcf.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

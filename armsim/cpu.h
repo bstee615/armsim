@@ -1,6 +1,7 @@
 #ifndef CPU_H
 #define CPU_H
 
+#include "instructions/nzcf.h"
 #include "memory.h"
 #include "instructions/instruction.h"
 
@@ -24,13 +25,6 @@ struct InvalidRegisterIndexException : public std::exception
     {
         return "Invalid register index";
     }
-};
-
-enum NZCFFlag {
-    Negative = 31,
-    Zero = 30,
-    Carry = 29,
-    Overflow = 28
 };
 
 class CPU

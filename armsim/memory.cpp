@@ -71,7 +71,7 @@ halfword Memory::ReadHalfWord(address addr)
 {
     halfword w = 0;
     if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16) << "out of bounds.";
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
         throw OutOfBoundsException();
         return w;
     }
@@ -90,7 +90,7 @@ halfword Memory::ReadHalfWord(address addr)
 byte  Memory::ReadByte(address addr)
 {
     if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16) << "out of bounds.";
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
         throw OutOfBoundsException();
         return 0;
     }
@@ -101,7 +101,7 @@ byte  Memory::ReadByte(address addr)
 void Memory::WriteWord(address addr, word data)
 {
     if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16) << "out of bounds.";
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
         throw OutOfBoundsException();
         return;
     }
@@ -118,7 +118,7 @@ void Memory::WriteWord(address addr, word data)
 void Memory::WriteHalfWord(address addr, halfword data)
 {
     if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16) << "out of bounds.";
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
         throw OutOfBoundsException();
         return;
     }
@@ -133,7 +133,7 @@ void Memory::WriteHalfWord(address addr, halfword data)
 void Memory::WriteByte(address addr, byte data)
 {
     if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16) << "out of bounds.";
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
         throw OutOfBoundsException();
         return;
     }
@@ -155,7 +155,7 @@ int Memory::Checksum()
 bool Memory::TestFlag(address addr, unsigned int bit)
 {
     if (addr > size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16) << "out of bounds.";
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
         throw OutOfBoundsException();
         return false;
     }
@@ -173,7 +173,7 @@ bool Memory::TestFlag(address addr, unsigned int bit)
 void Memory::SetFlag(address addr, unsigned int bit, bool flag)
 {
     if (addr > size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16) << "out of bounds.";
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
         throw OutOfBoundsException();
         return;
     }

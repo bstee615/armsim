@@ -2,7 +2,6 @@
 
 RegisterShiftedRegisterOperand::RegisterShiftedRegisterOperand(word w, Memory *_registers): ShiftedRegisterOperand(w, _registers)
 {
-    registers = _registers;
     rSIndex = Memory::ExtractBits(w, 8, 11) >> 8;
     rSValue = getRegisterValue(rSIndex);
 }
