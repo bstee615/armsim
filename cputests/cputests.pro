@@ -10,6 +10,8 @@ INCLUDEPATH += ../armsim/
 SOURCES +=  tst_cputests.cpp \
     ../armsim/instructions/instructionfactory.cpp \
     ../armsim/instructions/instruction.cpp \
+    ../armsim/instructions/branchinstruction.cpp \
+    ../armsim/instructions/branchandexchangeinstruction.cpp \
     ../armsim/instructions/instructionoperand.cpp \
     ../armsim/barrelshifter.cpp \
     ../armsim/instructions/immediateoperand.cpp \

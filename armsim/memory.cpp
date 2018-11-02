@@ -52,7 +52,7 @@ word Memory::ReadWord(address addr)
 {
     word w = 0;
     if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16) << "out of bounds.";
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
         throw OutOfBoundsException();
     }
     if (!isValidWordAddress(addr)) {

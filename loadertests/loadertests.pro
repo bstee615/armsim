@@ -23,6 +23,8 @@ SOURCES +=  \
     ../armsim/instructions/loadstoreinstruction.cpp \
     ../armsim/instructions/mulinstruction.cpp \
     ../armsim/instructions/dataprocessinginstruction.cpp \
+    ../armsim/instructions/branchinstruction.cpp \
+    ../armsim/instructions/branchandexchangeinstruction.cpp \
     ../armsim/cpu.cpp \
     ../armsim/loader.cpp \
     ../armsim/memory.cpp \

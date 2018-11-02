@@ -12,6 +12,8 @@ SOURCES +=  tst_instructiontests.cpp \
     ../armsim/instructions/instructionfactory.cpp \
     ../armsim/barrelshifter.cpp \
     ../armsim/instructions/instruction.cpp \
+    ../armsim/instructions/branchinstruction.cpp \
+    ../armsim/instructions/branchandexchangeinstruction.cpp \
     ../armsim/instructions/loadstoreinstruction.cpp \
     ../armsim/instructions/loadstoremultipleinstruction.cpp \
     ../armsim/instructions/softwareinterruptinstruction.cpp \

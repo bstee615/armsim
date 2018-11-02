@@ -4,11 +4,11 @@
 #include "memory.h"
 #include "instruction.h"
 
-class BranchInstruction: public Instruction
+class BranchInstruction : public Instruction
 {
     int offset;
     bool L;
-    Memory *registers;
+    word pcValue;
 
 public:
     BranchInstruction(word w, Memory *_registers);

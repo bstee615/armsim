@@ -42,6 +42,9 @@ private slots:
     void cmp_flags();
     void cmn_flags();
 
+    void b();
+    void bl();
+
     void ldr();
     void str();
     void ldrWithImmediateOffset();
@@ -84,6 +87,7 @@ void InstructionTests::assert_cmn(word rNValue, word Operand2Value, byte expecte
 
 InstructionTests::InstructionTests(): cpu(new CPU(new Memory(32768)))
 {
+
 }
 
 InstructionTests::~InstructionTests()
@@ -201,6 +205,16 @@ void InstructionTests::cmn_flags()
     assert_cmn(1, 2, 0b0000); // Normal case
     assert_cmn(0x7FFFFFFF, 0x1, 0b1001); // Overflow
     assert_cmn(-4, 4, 0b0100); // Zero
+}
+
+void InstructionTests::b()
+{
+    assert_Instruction(0xea000001, QString("b #4"), 15, 8 + 4);
+}
+
+void InstructionTests::bl()
+{
+    assert_Instruction(0xeb000008, QString("bl #32"), 14, 4);
 }
 
 void InstructionTests::ldr()

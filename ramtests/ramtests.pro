@@ -23,4 +23,6 @@ SOURCES +=  tst_ramtests.cpp \
     ../armsim/instructions/loadstoreinstruction.cpp \
     ../armsim/instructions/mulinstruction.cpp \
     ../armsim/instructions/dataprocessinginstruction.cpp \
+    ../armsim/instructions/branchinstruction.cpp \
+    ../armsim/instructions/branchandexchangeinstruction.cpp \
     ../armsim/memory.cpp

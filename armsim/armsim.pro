@@ -56,7 +56,8 @@ SOURCES += \
     instructions/rotatedimmediateoperand.cpp \
     instructions/shiftedregisteroperand.cpp \
     instructions/softwareinterruptinstruction.cpp \
-    instructions/branchinstruction.cpp
+    instructions/branchinstruction.cpp \
+    instructions/branchandexchangeinstruction.cpp
 
 HEADERS += \
     options.h \
@@ -99,7 +100,8 @@ HEADERS += \
     instructions/rotatedimmediateoperand.h \
     instructions/shiftedregisteroperand.h \
     instructions/softwareinterruptinstruction.h \
-    instructions/branchinstruction.h
+    instructions/branchinstruction.h \
+    instructions/branchandexchangeinstruction.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
