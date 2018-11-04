@@ -1,6 +1,14 @@
 #include "memory.h"
 #include <QtMath>
 
+void Memory::testInBounds(word addr)
+{
+    if (addr >= size) {
+        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
+        throw OutOfBoundsException();
+    }
+}
+
 Memory::Memory()
 {
     memory = nullptr;
@@ -20,7 +28,8 @@ Memory::Memory(const Memory& other)
     Memory& otherNotConst = const_cast<Memory&>(other);
     size = otherNotConst.getSize();
     memory = new byte[size];
-    byte *otherMemory = otherNotConst.getMemory();
+    outputData = other.outputData;
+    auto otherMemory = other.memory;
     for (address i  = 0; i < size; i ++) {
         memory[i] = otherMemory[i];
     }
@@ -50,11 +59,10 @@ Memory::~Memory()
 
 word Memory::ReadWord(address addr)
 {
+    testInBounds(addr);
+
     word w = 0;
-    if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
-        throw OutOfBoundsException();
-    }
+
     if (!isValidWordAddress(addr)) {
         return w;
     }
@@ -69,12 +77,9 @@ word Memory::ReadWord(address addr)
 
 halfword Memory::ReadHalfWord(address addr)
 {
+    testInBounds(addr);
+
     halfword w = 0;
-    if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
-        throw OutOfBoundsException();
-        return w;
-    }
     if (!isValidHalfWordAddress(addr)) {
         return w;
     }
@@ -89,22 +94,15 @@ halfword Memory::ReadHalfWord(address addr)
 
 byte  Memory::ReadByte(address addr)
 {
-    if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
-        throw OutOfBoundsException();
-        return 0;
-    }
+    testInBounds(addr);
 
     return memory[addr];
 }
 
 void Memory::WriteWord(address addr, word data)
 {
-    if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
-        throw OutOfBoundsException();
-        return;
-    }
+    testInBounds(addr);
+
     if (!isValidWordAddress(addr)) {
         return;
     }
@@ -117,11 +115,8 @@ void Memory::WriteWord(address addr, word data)
 
 void Memory::WriteHalfWord(address addr, halfword data)
 {
-    if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
-        throw OutOfBoundsException();
-        return;
-    }
+    testInBounds(addr);
+
     if (!isValidHalfWordAddress(addr)) {
         return;
     }
@@ -132,11 +127,14 @@ void Memory::WriteHalfWord(address addr, halfword data)
 
 void Memory::WriteByte(address addr, byte data)
 {
-    if (addr >= size) {
-        qDebug() << "Memory: Address" << QString::number(addr, 16).prepend("0x") << "out of bounds.";
-        throw OutOfBoundsException();
-        return;
+    if (addr == 0x100000) {
+        outputData = new char(data);
     }
+    else {
+        outputData = nullptr;
+    }
+
+    testInBounds(addr);
 
     memory[addr] = data;
 }

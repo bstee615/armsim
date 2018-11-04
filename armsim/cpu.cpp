@@ -36,6 +36,17 @@ void CPU::execute(Instruction *instr)
     }
 }
 
+void CPU::reset()
+{
+    _ram->clearMemory();
+    for (int i = 0; i < 15; i ++) {
+        registers->WriteWord(i * 4, 0);
+    }
+    for (int i = 28; i < 32; i ++) {
+        registers->SetFlag(CPSR_OFFSET, i, false);
+    }
+}
+
 byte CPU::getNZCF()
 {
     return (word)(getNZCF(NZCFFlag::Negative) ? 1 : 0) << 3 |

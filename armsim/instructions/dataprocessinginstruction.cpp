@@ -22,39 +22,51 @@ InstructionOperand *getAddressingMode(word w, Memory *registers) {
     }
 }
 
-void DataProcessingInstruction::compare(word uval1, word uval2)
+void DataProcessingInstruction::cmp(word uval1, word uval2)
 {
     word uresult = uval1 - uval2;
     int sval1 = uval1;
     int sval2 = uval2;
     int sresult = uresult;
 
-    registers->SetFlag(64, 31, Memory::ExtractBits(uresult, 31, 31) != 0); // N
-    registers->SetFlag(64, 30, uresult == 0); // Z
-    registers->SetFlag(64, 29, uval2 <= uval1); // C
-    registers->SetFlag(64, 28, (sval1 > 0 && sval2 < 0 && sresult < 0) ||
+    registers->SetFlag(CPSR_OFFSET, 31, Memory::ExtractBits(uresult, 31, 31) != 0); // N
+    registers->SetFlag(CPSR_OFFSET, 30, uresult == 0); // Z
+    registers->SetFlag(CPSR_OFFSET, 29, uval2 <= uval1); // C
+    registers->SetFlag(CPSR_OFFSET, 28, (sval1 > 0 && sval2 < 0 && sresult < 0) ||
                        (sval1 < 0 && sval2 > 0 && sresult > 0)); // F
 }
 
-void DataProcessingInstruction::compareNegative(word uval1, word uval2)
+void DataProcessingInstruction::cmn(word uval1, word uval2)
 {
     word uresult = uval1 - uval2;
     int sval1 = uval1;
     int sval2 = uval2;
     int sresult = uresult;
 
-    registers->SetFlag(64, 31, Memory::ExtractBits(uresult, 31, 31) != 0); // N
-    registers->SetFlag(64, 30, uresult == 0); // Z
-    registers->SetFlag(64, 29, false); // C
-    registers->SetFlag(64, 28, (sval1 > 0 && sval2 < 0 && sresult < 0) ||
+    registers->SetFlag(CPSR_OFFSET, 31, Memory::ExtractBits(uresult, 31, 31) != 0); // N
+    registers->SetFlag(CPSR_OFFSET, 30, uresult == 0); // Z
+    registers->SetFlag(CPSR_OFFSET, 29, false); // C
+    registers->SetFlag(CPSR_OFFSET, 28, (sval1 > 0 && sval2 < 0 && sresult < 0) ||
                        (sval1 < 0 && sval2 > 0 && sresult > 0)); // F
+}
+
+void DataProcessingInstruction::movs()
+{
+    word uval = addressingMode->value();
+    // TODO: If register is r15:
+    registers->SetFlag(CPSR_OFFSET, 31, uval < 0); // N
+    registers->SetFlag(CPSR_OFFSET, 31, uval == 0); // Z
+    // TODO: Set C flag.
+
+    // TODO: If register is not r15:
+    // Set the CPSR to the current mode's SPSR.
 }
 
 DataProcessingInstruction::DataProcessingInstruction(word w, Memory *_registers):
     Instruction(w, _registers)
 {
     opcode = (DataProcessingOpcode)(Memory::ExtractBits(w, 21, 24) >> 21);
-    s = Memory::ExtractBits(w, 20, 20) != 0;
+    S = Memory::ExtractBits(w, 20, 20) != 0;
     rNIndex = (byte)(Memory::ExtractBits(w, 16, 19) >> 16);
     rDIndex = (byte)(Memory::ExtractBits(w, 12, 15) >> 12);
     rNValue = getRegisterValue(rNIndex);
@@ -103,6 +115,9 @@ void DataProcessingInstruction::execute()
     switch (opcode) {
     case MOV:
         destinationValue = addressingMode->value();
+        if (S) {
+            movs();
+        }
         break;
     case MVN:
         destinationValue = ~addressingMode->value();
@@ -129,10 +144,10 @@ void DataProcessingInstruction::execute()
         destinationValue = rNValue & (~addressingMode->value());
         break;
     case CMP:
-        compare(rNValue, addressingMode->value());
+        cmp(rNValue, addressingMode->value());
         break;
     case CMN:
-        compareNegative(rNValue, -addressingMode->value());
+        cmn(rNValue, -addressingMode->value());
         break;
     default:
         destinationValue = 0;

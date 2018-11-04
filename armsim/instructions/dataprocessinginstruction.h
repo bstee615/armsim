@@ -20,14 +20,15 @@ class DataProcessingInstruction : public Instruction
     static const char * const DataProcessingOpcodeToString [16];
 
     DataProcessingOpcode opcode;
-    bool s; // Do / Do not set condition flags
+    bool S; // Do / Do not set condition flags
     byte rDIndex; // Index of rD from 0-15
     byte rNIndex; // Index of rN from 0-15
     word rNValue;
     InstructionOperand *addressingMode;
 
-    void compare(word uval1, word uval2);
-    void compareNegative(word uval1, word uval2);
+    void cmp(word uval1, word uval2);
+    void cmn(word uval1, word uval2);
+    void movs();
 
 public:
     DataProcessingInstruction(word w, Memory *registers);

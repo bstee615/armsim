@@ -37,6 +37,16 @@ struct InvalidBitmaskException : public std::exception
     }
 };
 
+// Define register offsets
+#define R0_OFFSET 0
+#define IP_OFFSET 48
+#define SP_OFFSET 52
+#define LR_OFFSET 56
+#define PC_OFFSET 60
+#define CPSR_OFFSET 64
+
+#define NUM_REGISTER_BYTES 68
+
 // Class that represents simulated RAM as an array.
 class Memory
 {
@@ -53,7 +63,10 @@ class Memory
         return addr % 2 == 0;
     }
 
+    void testInBounds(word addr);
+
 public:
+    char *outputData = nullptr;
     Memory();
     Memory(address size);
     Memory(const Memory& other);

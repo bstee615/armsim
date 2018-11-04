@@ -59,5 +59,5 @@ bool Instruction::shouldExecute()
 
 bool Instruction::flagIsSet(NZCFFlag flag)
 {
-    return registers->TestFlag(64, flag);
+    return registers->TestFlag(CPSR_OFFSET, flag);
 }

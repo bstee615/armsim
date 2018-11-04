@@ -6,6 +6,7 @@
 #include "filewriter.h"
 #include <QCoreApplication>
 #include <QSet>
+#include <queue>
 
 // To be thrown as a general error when loading a file
 // so that the UI can display "None" instead of the invalid filename.
@@ -19,6 +20,7 @@ struct ErrorLoadingFile : public std::exception
 
 class Computer: public FileWriter
 {
+    std::queue<char> outputDevice;
 public:
     CPU cpu;
     Memory ram;
@@ -38,6 +40,8 @@ public:
     bool isBreakpoint(address addr);
     void toggleBreakpoint(address addr);
     void toggleBreakpointAtCurrentInstruction();
+
+    char *getOutputCharacter();
 };
 
 #endif // COMPUTER_H

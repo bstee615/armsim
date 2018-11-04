@@ -10,7 +10,7 @@ BranchInstruction::BranchInstruction(word w, Memory *_registers):
 
 QString BranchInstruction::toString()
 {
-    return QString("b%1%2 #%3").arg(L ? QString("l") : QString(""), CC_STR, QString::number(offset));
+    return QString("b%1%2 #%3").arg(L ? QString("l") : QString(""), CC_STR, QString::number(pcValue + offset));
 }
 
 void BranchInstruction::execute()

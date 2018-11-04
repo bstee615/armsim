@@ -45,6 +45,7 @@ private slots:
     void deleteComputerThread();
 
     void updateAllUI();
+    void printCharacterToTerminal();
 };
 
 #endif // MAINWINDOW_H

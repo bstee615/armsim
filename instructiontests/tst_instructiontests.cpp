@@ -61,6 +61,7 @@ void InstructionTests::assert_Instruction(word encodedInstruction, QString expec
     Instruction *instr = cpu->decode(encodedInstruction);
     Q_ASSERT(instr != nullptr);
 
+    qDebug() << instr->toString();
     Q_ASSERT(QString::compare(instr->toString(), expectedDisassembly) == 0);
 
     instr->execute();
@@ -209,12 +210,12 @@ void InstructionTests::cmn_flags()
 
 void InstructionTests::b()
 {
-    assert_Instruction(0xea000001, QString("b #4"), 15, 8 + 4);
+    assert_Instruction(0xea000001, QString("b #12"), 15, 8 + 4);
 }
 
 void InstructionTests::bl()
 {
-    assert_Instruction(0xeb000008, QString("bl #32"), 14, 4);
+    assert_Instruction(0xeb000008, QString("bl #40"), 14, 4);
 }
 
 void InstructionTests::ldr()

@@ -17,6 +17,7 @@ public:
     ~TerminalWidget();
 
     void runCommand(QString command);
+    void printCharacter(char c);
 
 private slots:
     void on_btnEnterCommand_clicked();

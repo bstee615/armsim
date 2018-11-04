@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QTimer>
 
 MainWindow::MainWindow(Options &options, QWidget *parent):
     QMainWindow (parent),
@@ -17,6 +18,10 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     connect(ui->runControlsWidget->btnStop, SIGNAL(clicked(bool)), this, SLOT(stopComputerThread()));
     connect(ui->runControlsWidget, SIGNAL(toggledBreakpoint()), this, SLOT(updateAllUI()));
     connect(ui->loaderWidget, SIGNAL(loadedFile()), this, SLOT(updateAllUI()));
+
+    QTimer *updateTerminalTimer = new QTimer(this);
+    updateTerminalTimer->start(100);
+    connect(updateTerminalTimer, SIGNAL(timeout()), this, SLOT(printCharacterToTerminal()));
 
     ui->loaderWidget->loadFile(_options.filename);
     ui->memoryWidget->setStartingAddress(computer->cpu.getProgramCounter());
@@ -101,4 +106,15 @@ void MainWindow::updateAllUI()
     ui->stackWidget->updateStackDisplay();
 //    qDebug() << "UI:" << "Updated registers panel";
     qDebug() << "UI:" << "Updated panel info.";
+}
+
+void MainWindow::printCharacterToTerminal()
+{
+    if (runningThread == nullptr) {
+        return;
+    }
+    char *output = runningThread->getOutputCharacter();
+    if (output != nullptr) {
+        ui->terminalWidget->printCharacter(*output);
+    }
 }

@@ -15,13 +15,18 @@ protected:
 
 public:
     void stopRunning() { shouldStop = true; }
+    char *getOutputCharacter() {
+        return _computer->getOutputCharacter();
+    }
 };
 
 class ComputerRunThread : public ComputerThread
 {
     Q_OBJECT
 
-    void run() { _computer->run(&shouldStop); }
+    void run() {
+        _computer->run(&shouldStop);
+    }
 
 public:
     ComputerRunThread(Computer *computer) { _computer = computer; }

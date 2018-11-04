@@ -7,6 +7,7 @@ Computer::Computer(address numBytes)
     ram = Memory(numBytes);
     cpu = CPU(&ram);
     instructionCounter = 1;
+    outputDevice = std::queue<char>();
 }
 
 void Computer::loadFile(QString path)
@@ -53,6 +54,10 @@ int Computer::step()
 
     logTrace(pc);
     instructionCounter ++;
+
+    if (ram.outputData != nullptr) {
+        outputDevice.push(*ram.outputData);
+    }
 
     if (dynamic_cast<SoftwareInterruptInstruction*>(i) != nullptr) {
         return 0;
@@ -108,4 +113,16 @@ void Computer::toggleBreakpoint(address addr)
 void Computer::toggleBreakpointAtCurrentInstruction()
 {
     toggleBreakpoint(cpu.getProgramCounter());
+}
+
+char *Computer::getOutputCharacter()
+{
+    if (outputDevice.empty()) {
+        return nullptr;
+    }
+    else {
+        char *ret = new char(outputDevice.front());
+        outputDevice.pop();
+        return ret;
+    }
 }
