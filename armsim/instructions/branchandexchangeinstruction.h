@@ -9,7 +9,7 @@ class BranchAndExchangeInstruction: public Instruction
     word rMValue;
 
 public:
-    BranchAndExchangeInstruction(word w, Memory *_registers);
+    BranchAndExchangeInstruction(word w, RegisterMemory *_registers);
 
     QString toString() override;
     void execute() override;

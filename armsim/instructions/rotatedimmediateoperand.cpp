@@ -16,3 +16,13 @@ QString RotatedImmediateOperand::toString()
 {
     return QString("#%1").arg(value());
 }
+
+bool RotatedImmediateOperand::CarryFlag()
+{
+    if (rotate == 0) {
+        return Memory::ExtractBits(registers->getCPSR(), 29, 29) != 0;
+    }
+    else {
+        return Memory::ExtractBits(value(), 31, 31) != 0;
+    }
+}

@@ -162,6 +162,10 @@ bool loadELF(QString filename, CPU *cpu)
     }
     cpu->setProgramCounter(elfHeader.e_entry);
     cpu->setGeneralRegister(13, 0x7000);
+    cpu->setNZCFFlag(Negative, false);
+    cpu->setNZCFFlag(Zero, false);
+    cpu->setNZCFFlag(Carry, false);
+    cpu->setNZCFFlag(Overflow, false);
 
     delete[] programHeaders;
     strm.close();

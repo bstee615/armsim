@@ -8,7 +8,18 @@ const char * const DataProcessingInstruction::DataProcessingOpcodeToString [16] 
     "and", "eor", "sub", "rsb", "add", "adc", "sbc", "rsc", "tst", "teq", "cmp", "cmn", "orr", "mov", "bic", "mvn"
 };
 
-InstructionOperand *getAddressingMode(word w, Memory *registers) {
+DataProcessingInstruction::DataProcessingInstruction(word w, RegisterMemory *_registers):
+    Instruction(w, _registers)
+{
+    opcode = (DataProcessingOpcode)(Memory::ExtractBits(w, 21, 24) >> 21);
+    S = Memory::ExtractBits(w, 20, 20) != 0;
+    rNIndex = (byte)(Memory::ExtractBits(w, 16, 19) >> 16);
+    rDIndex = (byte)(Memory::ExtractBits(w, 12, 15) >> 12);
+    rNValue = registers->getRegisterValue(rNIndex);
+    addressingMode = getAddressingMode(w, registers);
+}
+
+InstructionOperand *DataProcessingInstruction::getAddressingMode(word w, RegisterMemory *registers) {
     if (Memory::ExtractBits(w, 25, 25) != 0) {
         return new RotatedImmediateOperand(w);
     }
@@ -52,25 +63,17 @@ void DataProcessingInstruction::cmn(word uval1, word uval2)
 
 void DataProcessingInstruction::movs()
 {
-    word uval = addressingMode->value();
-    // TODO: If register is r15:
-    registers->SetFlag(CPSR_OFFSET, 31, uval < 0); // N
-    registers->SetFlag(CPSR_OFFSET, 31, uval == 0); // Z
-    // TODO: Set C flag.
-
-    // TODO: If register is not r15:
-    // Set the CPSR to the current mode's SPSR.
-}
-
-DataProcessingInstruction::DataProcessingInstruction(word w, Memory *_registers):
-    Instruction(w, _registers)
-{
-    opcode = (DataProcessingOpcode)(Memory::ExtractBits(w, 21, 24) >> 21);
-    S = Memory::ExtractBits(w, 20, 20) != 0;
-    rNIndex = (byte)(Memory::ExtractBits(w, 16, 19) >> 16);
-    rDIndex = (byte)(Memory::ExtractBits(w, 12, 15) >> 12);
-    rNValue = getRegisterValue(rNIndex);
-    addressingMode = getAddressingMode(w, registers);
+    if (addressingMode->registerIndex() != 15) {
+        word val = addressingMode->value();
+        registers->SetFlag(CPSR_OFFSET, 31, Memory::ExtractBits(val, 31, 31) != 0); // N
+        registers->SetFlag(CPSR_OFFSET, 30, val == 0); // Z
+        registers->SetFlag(CPSR_OFFSET, 29, addressingMode->CarryFlag()); // C
+    }
+    else {
+        // Set the CPSR to the current mode's SPSR.
+        word current_spsr = registers->getSPSR();
+        registers->setCPSR(current_spsr);
+    }
 }
 
 DataProcessingInstruction::~DataProcessingInstruction()
@@ -85,7 +88,7 @@ QString DataProcessingInstruction::toString()
     switch (opcode) {
     case MOV:
     case MVN:
-        opcodeDependentPortion = QString("r%1, %2").arg(QString::number(rDIndex), addressingMode->toString());
+        opcodeDependentPortion = QString("r%1%2, %3").arg(QString::number(rDIndex), S ? QString("s") : QString(""), addressingMode->toString());
         break;
     case ADD:
     case SUB:
@@ -155,6 +158,6 @@ void DataProcessingInstruction::execute()
     }
 
     if (opcode != CMP && opcode != CMN) {
-        registers->WriteWord(rDIndex * 4, destinationValue);
+        registers->setRegisterValue(rDIndex, destinationValue);
     }
 }

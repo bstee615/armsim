@@ -16,8 +16,10 @@ class ImmediateOperand : public InstructionOperand
 public:
     ImmediateOperand(word w);
 
-    QString toString();
-    int value();
+    QString toString() override;
+    int value() override;
+    byte registerIndex() override;
+    bool CarryFlag() override;
 };
 
 #endif // IMMEDIATEOPERAND_H

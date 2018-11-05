@@ -10,7 +10,6 @@ INCLUDEPATH += ../armsim/
 SOURCES +=  tst_ramtests.cpp \
     ../armsim/instructions/instructionfactory.cpp \
     ../armsim/instructions/instruction.cpp \
-    ../armsim/instructions/instructionoperand.cpp \
     ../armsim/barrelshifter.cpp \
     ../armsim/instructions/immediateoperand.cpp \
     ../armsim/instructions/rotatedimmediateoperand.cpp \
@@ -25,4 +24,6 @@ SOURCES +=  tst_ramtests.cpp \
     ../armsim/instructions/dataprocessinginstruction.cpp \
     ../armsim/instructions/branchinstruction.cpp \
     ../armsim/instructions/branchandexchangeinstruction.cpp \
-    ../armsim/memory.cpp
+    ../armsim/instructions/statusregisterinstruction.cpp \
+    ../armsim/memory.cpp \
+    ../armsim/registermemory.cpp

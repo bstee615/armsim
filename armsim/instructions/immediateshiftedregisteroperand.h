@@ -13,10 +13,11 @@ class ImmediateShiftedRegisterOperand : public ShiftedRegisterOperand
     byte immediateShift; // The 5-bit shift magnitude
 
 public:
-    ImmediateShiftedRegisterOperand(word w, Memory *registers);
+    ImmediateShiftedRegisterOperand(word w, RegisterMemory *registers);
 
-    QString toString();
-    int value();
+    QString toString() override;
+    int value() override;
+    bool CarryFlag() override;
 };
 
 #endif // IMMEDIATESHIFTEDREGISTEROPERAND_H

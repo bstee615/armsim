@@ -1,14 +1,14 @@
 #include "mulinstruction.h"
 
-MultiplyInstruction::MultiplyInstruction(word w, Memory *_registers):
+MultiplyInstruction::MultiplyInstruction(word w, RegisterMemory *_registers):
     Instruction(w, _registers)
 {
     S = Memory::ExtractBits(w, 20, 20) != 0;
     rDIndex = Memory::ExtractBits(w, 16, 19) >> 16;
     rSIndex = Memory::ExtractBits(w, 8, 11) >> 8;
-    rSValue = getRegisterValue(rSIndex);
+    rSValue = registers->getRegisterValue(rSIndex);
     rMIndex = Memory::ExtractBits(w, 0, 3) >> 0;
-    rMValue = getRegisterValue(rMIndex);
+    rMValue = registers->getRegisterValue(rMIndex);
 }
 
 QString MultiplyInstruction::toString()
@@ -18,13 +18,13 @@ QString MultiplyInstruction::toString()
 
 void MultiplyInstruction::execute()
 {
-    word rSValue = registers->ReadWord(rSIndex*4);
+    word rSValue = registers->getRegisterValue(rSIndex);
     if (rSIndex == 15) {
         rSValue += 8;
     }
-    word rMValue = registers->ReadWord(rMIndex*4);
+    word rMValue = registers->getRegisterValue(rMIndex);
     if (rMIndex == 15) {
         rMValue += 8;
     }
-    registers->WriteWord(rDIndex*4, rSValue * rMValue);
+    registers->setRegisterValue(rDIndex, rSValue * rMValue);
 }

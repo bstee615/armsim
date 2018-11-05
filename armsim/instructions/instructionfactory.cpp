@@ -6,9 +6,17 @@
 #include "branchinstruction.h"
 #include "branchandexchangeinstruction.h"
 #include "mulinstruction.h"
+#include "statusregisterinstruction.h"
 
-Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Memory *registers)
+Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, RegisterMemory *registers)
 {
+    word _23thru27 = Memory::ExtractBits(w, 23, 27) >> 23;
+    word _20thru21 = Memory::ExtractBits(w, 20, 21) >> 20;
+    if (((_23thru27 == 0b00110 || _23thru27 >> 23 == 0b00010) && _20thru21 == 0b10) ||
+        _23thru27 == 0b00010 && _20thru21 == 0b00) {
+        return new StatusRegisterInstruction(w, registers);
+    }
+
     word instructionOpcode = Memory::ExtractBits(w, 25, 27) >> 25;
     word bit4;
     word bit7;

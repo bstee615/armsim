@@ -27,24 +27,17 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="leTerminalText">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btnEnterCommand">
-     <property name="text">
-      <string>Enter</string>
-     </property>
-    </widget>
+    <widget class="TerminalTextBrowser" name="terminalWindow"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TerminalTextBrowser</class>
+   <extends>QTextBrowser</extends>
+   <header>ui/terminalwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

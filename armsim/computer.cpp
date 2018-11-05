@@ -59,8 +59,11 @@ int Computer::step()
         outputDevice.push(*ram.outputData);
     }
 
-    if (dynamic_cast<SoftwareInterruptInstruction*>(i) != nullptr) {
-        return 0;
+    SoftwareInterruptInstruction *swi = dynamic_cast<SoftwareInterruptInstruction*>(i);
+    if (swi != nullptr) {
+        if (swi->interruptCode == 0x11) {
+            return 0;
+        }
     }
 
     return 1;
@@ -113,6 +116,13 @@ void Computer::toggleBreakpoint(address addr)
 void Computer::toggleBreakpointAtCurrentInstruction()
 {
     toggleBreakpoint(cpu.getProgramCounter());
+}
+
+void Computer::handleInputCharacter(char data)
+{
+    *ram.inputData = data;
+    word cpsr = cpu.getRegisters()->getCPSR();
+    cpu.getRegisters()->setCPSR(cpsr | 0x80);
 }
 
 char *Computer::getOutputCharacter()

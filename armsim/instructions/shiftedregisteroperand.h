@@ -6,7 +6,7 @@
 #define SHIFTEDREGISTEROPERAND_H
 
 #include "instructionoperand.h"
-#include "memory.h"
+#include "registermemory.h"
 
 class ShiftedRegisterOperand: public InstructionOperand
 {
@@ -27,11 +27,13 @@ protected:
 
 public:
     // Assigns class members for w and registers.
-    ShiftedRegisterOperand(word w, Memory *registers);
+    ShiftedRegisterOperand(word w, RegisterMemory *registers);
     word shiftTypeToMethod(word w, word numShifts, ShiftType shiftType);
 
     virtual int value() = 0;
     virtual QString toString() = 0;
+    byte registerIndex() override;
+    virtual bool CarryFlag() override = 0;
 };
 
 #endif // SHIFTEDREGISTEROPERAND_H

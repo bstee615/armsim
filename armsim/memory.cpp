@@ -92,8 +92,18 @@ halfword Memory::ReadHalfWord(address addr)
     return w;
 }
 
-byte  Memory::ReadByte(address addr)
+byte Memory::ReadByte(address addr)
 {
+    if (addr == 0x100001) {
+        if (inputData != nullptr) {
+            char data = *inputData;
+            inputData = nullptr;
+            return data;
+        }
+        else {
+            qCritical() << "Keyboard IRQ triggered without input data.";
+        }
+    }
     testInBounds(addr);
 
     return memory[addr];
@@ -129,6 +139,7 @@ void Memory::WriteByte(address addr, byte data)
 {
     if (addr == 0x100000) {
         outputData = new char(data);
+        return;
     }
     else {
         outputData = nullptr;

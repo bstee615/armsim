@@ -8,7 +8,7 @@
 #include <QString>
 #include "instruction.h"
 #include "instructionoperand.h"
-#include "memory.h"
+#include "registermemory.h"
 
 class LoadStoreInstruction: public Instruction
 {
@@ -29,7 +29,7 @@ class LoadStoreInstruction: public Instruction
     QString addressingModeToString();
 
 public:
-    LoadStoreInstruction(word w, Memory *ram, Memory *registers);
+    LoadStoreInstruction(word w, Memory *ram, RegisterMemory *registers);
 
     QString toString() override;
     void execute() override;

@@ -9,9 +9,9 @@
 
 class SoftwareInterruptInstruction : public Instruction
 {
-    word interruptCode; // 24-bit interrupt code, to be ignored by the processor and used by the OS.
 
 public:
+    word interruptCode; // 24-bit interrupt code, to be ignored by the processor and used by the OS.
     SoftwareInterruptInstruction(word w);
 
     QString toString() override;

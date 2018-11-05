@@ -16,3 +16,13 @@ int ImmediateOperand::value()
 {
     return immediate;
 }
+
+byte ImmediateOperand::registerIndex()
+{
+    return 16;
+}
+
+bool ImmediateOperand::CarryFlag()
+{
+    return true;
+}

@@ -3,7 +3,7 @@
 #include "immediateshiftedregisteroperand.h"
 #include "registeroffsetoperand.h"
 
-LoadStoreInstruction::LoadStoreInstruction(word w, Memory *_ram, Memory *_registers):
+LoadStoreInstruction::LoadStoreInstruction(word w, Memory *_ram, RegisterMemory *_registers):
     Instruction(w, _registers)
 {
     ram = _ram;
@@ -14,9 +14,9 @@ LoadStoreInstruction::LoadStoreInstruction(word w, Memory *_ram, Memory *_regist
     W = Memory::ExtractBits(w, 21, 21) != 0;
     L = Memory::ExtractBits(w, 20, 20) != 0;
     rNIndex = Memory::ExtractBits(w, 16, 19) >> 16;
-    rNValue = getRegisterValue(rNIndex);
+    rNValue = registers->getRegisterValue(rNIndex);
     rDIndex = Memory::ExtractBits(w, 12, 15) >> 12;
-    rDValue = getRegisterValue(rDIndex);
+    rDValue = registers->getRegisterValue(rDIndex);
 
     if (Memory::ExtractBits(w, 25, 25) != 0) {
         if (Memory::ExtractBits(w, 4, 11) == 0) {
@@ -63,7 +63,7 @@ void LoadStoreInstruction::execute()
         else {
             loadedValue = loadedValue | ram->ReadWord(addr);
         }
-        registers->WriteWord(rDIndex*4, loadedValue);
+        registers->setRegisterValue(rDIndex, loadedValue);
     }
     else {
         if (B) {
@@ -75,6 +75,6 @@ void LoadStoreInstruction::execute()
     }
 
     if (W) {
-        registers->WriteWord(rNIndex*4, addr);
+        registers->setRegisterValue(rNIndex, addr);
     }
 }

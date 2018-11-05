@@ -6,8 +6,7 @@
 #define INSTRUCTION_H
 
 #include <QString>
-#include "memory.h"
-#include "nzcf.h"
+#include "registermemory.h"
 
 #define CC_STR QString(ConditionCodeToString[cond])
 
@@ -15,7 +14,7 @@ class Instruction
 {
 protected:
     byte cond; // 4 condition bits
-    Memory *registers;
+    RegisterMemory *registers;
 
     enum ConditionCode {
         EQ, NE, CS, CC, MI, PL, VS, VC, HI, LS, GE, LT, GT, LE, AL, XX // XX for unpredictable
@@ -25,14 +24,13 @@ protected:
     static const char * const ConditionCodeToString [16];
 
 public:
-    Instruction(word w, Memory *_registers);
+    Instruction(word w, RegisterMemory *_registers);
 
     // Returns an assembly representation of this instruction.
     virtual QString toString() = 0;
     // Executes this instruction on the referenced memory (ram/registers).
     virtual void execute() = 0;
 
-    word getRegisterValue(byte index);
     bool shouldExecute();
     bool flagIsSet(NZCFFlag flag);
 };

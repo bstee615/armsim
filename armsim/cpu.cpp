@@ -4,7 +4,7 @@
 #include "instructions/dataprocessinginstruction.h"
 #include "instructions/instructionfactory.h"
 
-CPU::CPU(Memory *ram): _ram(ram), registers(new Memory(NUM_REGISTER_BYTES))
+CPU::CPU(Memory *ram): _ram(ram), registers(new RegisterMemory())
 {
     qDebug() << "CPU:" << "Initialized with" << _ram->getSize() << "bytes of RAM and" << registers->getSize() << "bytes of register memory.";
 }
@@ -40,7 +40,7 @@ void CPU::reset()
 {
     _ram->clearMemory();
     for (int i = 0; i < 15; i ++) {
-        registers->WriteWord(i * 4, 0);
+        registers->setRegisterValue(i, 0);
     }
     for (int i = 28; i < 32; i ++) {
         registers->SetFlag(CPSR_OFFSET, i, false);
@@ -49,15 +49,15 @@ void CPU::reset()
 
 byte CPU::getNZCF()
 {
-    return (word)(getNZCF(NZCFFlag::Negative) ? 1 : 0) << 3 |
-           (word)(getNZCF(NZCFFlag::Zero) ? 1 : 0) << 2 |
-           (word)(getNZCF(NZCFFlag::Carry) ? 1 : 0) << 1 |
-           (word)(getNZCF(NZCFFlag::Overflow) ? 1 : 0);
+    return (word)(registers->getNZCF(NZCFFlag::Negative) ? 1 : 0) << 3 |
+           (word)(registers->getNZCF(NZCFFlag::Zero) ? 1 : 0) << 2 |
+           (word)(registers->getNZCF(NZCFFlag::Carry) ? 1 : 0) << 1 |
+           (word)(registers->getNZCF(NZCFFlag::Overflow) ? 1 : 0);
 }
 
-bool CPU::getNZCF(NZCFFlag whichFlag)
+void CPU::setNZCFFlag(NZCFFlag whichFlag, bool val)
 {
-    return registers->TestFlag(CPSR_OFFSET, whichFlag);
+    registers->setNZCFFlag(whichFlag, val);
 }
 
 void checkForInvalidRegister(unsigned int index)
@@ -67,17 +67,11 @@ void checkForInvalidRegister(unsigned int index)
 
 word CPU::getGeneralRegister(unsigned int index)
 {
-    checkForInvalidRegister(index);
-    return registers->ReadWord(R0_OFFSET + index*4);
-}
-
-void CPU::setNZCFFlag(NZCFFlag whichFlag, bool val)
-{
-    registers->SetFlag(CPSR_OFFSET, whichFlag, val);
+    return registers->getRegisterValue(index);
 }
 
 void CPU::setGeneralRegister(unsigned int index, word w)
 {
     checkForInvalidRegister(index);
-    return registers->WriteWord(R0_OFFSET + index*4, w);
+    return registers->setRegisterValue(index, w);
 }

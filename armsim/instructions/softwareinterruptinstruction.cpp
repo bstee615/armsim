@@ -15,4 +15,5 @@ QString SoftwareInterruptInstruction::toString()
 
 void SoftwareInterruptInstruction::execute()
 {
+    // Computer handles 0x11 quit, others handled by armos
 }

@@ -1,7 +1,7 @@
 #ifndef BRANCHINSTRUCTION_H
 #define BRANCHINSTRUCTION_H
 
-#include "memory.h"
+#include "registermemory.h"
 #include "instruction.h"
 
 class BranchInstruction : public Instruction
@@ -11,7 +11,7 @@ class BranchInstruction : public Instruction
     word pcValue;
 
 public:
-    BranchInstruction(word w, Memory *_registers);
+    BranchInstruction(word w, RegisterMemory *_registers);
 
     QString toString() override;
     void execute() override;

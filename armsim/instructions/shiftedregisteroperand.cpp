@@ -2,11 +2,11 @@
 #include <QDebug>
 #include "barrelshifter.h"
 
-ShiftedRegisterOperand::ShiftedRegisterOperand(word w, Memory *_registers)
+ShiftedRegisterOperand::ShiftedRegisterOperand(word w, RegisterMemory *_registers)
 {
     registers = _registers;
     rMIndex = Memory::ExtractBits(w, 0, 3);
-    rMValue = getRegisterValue(rMIndex);
+    rMValue = registers->getRegisterValue(rMIndex);
     shiftType = (ShiftType)(Memory::ExtractBits(w, 5, 6) >> 5);
 }
 
@@ -23,6 +23,11 @@ word ShiftedRegisterOperand::shiftTypeToMethod(word w, word numShifts, ShiftedRe
         return BarrelShifter::ror(w, numShifts);
     }
     return 0;
+}
+
+byte ShiftedRegisterOperand::registerIndex()
+{
+    return rMIndex;
 }
 
 const char* const ShiftedRegisterOperand::ShiftTypeToString [4] = {

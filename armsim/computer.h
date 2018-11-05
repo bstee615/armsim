@@ -7,6 +7,7 @@
 #include <QCoreApplication>
 #include <QSet>
 #include <queue>
+#include "instructions/softwareinterruptinstruction.h"
 
 // To be thrown as a general error when loading a file
 // so that the UI can display "None" instead of the invalid filename.
@@ -41,6 +42,7 @@ public:
     void toggleBreakpoint(address addr);
     void toggleBreakpointAtCurrentInstruction();
 
+    void handleInputCharacter(char data);
     char *getOutputCharacter();
 };
 

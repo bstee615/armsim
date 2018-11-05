@@ -4,7 +4,7 @@
 #include <QString>
 #include "instruction.h"
 #include "instructionoperand.h"
-#include "memory.h"
+#include "registermemory.h"
 
 class LoadStoreMultipleInstruction : public Instruction
 {
@@ -22,7 +22,7 @@ class LoadStoreMultipleInstruction : public Instruction
     halfword registerList;
 
 public:
-    LoadStoreMultipleInstruction(word w, Memory *_ram, Memory *registers);
+    LoadStoreMultipleInstruction(word w, Memory *_ram, RegisterMemory *registers);
 
     QString toString() override;
     void execute() override;

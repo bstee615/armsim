@@ -47,7 +47,6 @@ SOURCES += \
     instructions/immediateshiftedregisteroperand.cpp \
     instructions/instruction.cpp \
     instructions/instructionfactory.cpp \
-    instructions/instructionoperand.cpp \
     instructions/loadstoreinstruction.cpp \
     instructions/loadstoremultipleinstruction.cpp \
     instructions/mulinstruction.cpp \
@@ -57,7 +56,9 @@ SOURCES += \
     instructions/shiftedregisteroperand.cpp \
     instructions/softwareinterruptinstruction.cpp \
     instructions/branchinstruction.cpp \
-    instructions/branchandexchangeinstruction.cpp
+    instructions/branchandexchangeinstruction.cpp \
+    registermemory.cpp \
+    instructions/statusregisterinstruction.cpp
 
 HEADERS += \
     options.h \
@@ -91,7 +92,6 @@ HEADERS += \
     instructions/instruction.h \
     instructions/instructionfactory.h \
     instructions/instructionoperand.h \
-    instructions/instructionutils.h \
     instructions/loadstoreinstruction.h \
     instructions/loadstoremultipleinstruction.h \
     instructions/mulinstruction.h \
@@ -102,7 +102,8 @@ HEADERS += \
     instructions/softwareinterruptinstruction.h \
     instructions/branchinstruction.h \
     instructions/branchandexchangeinstruction.h \
-    instructions/nzcf.h
+    registermemory.h \
+    instructions/statusregisterinstruction.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -12,7 +12,6 @@ SOURCES +=  tst_cputests.cpp \
     ../armsim/instructions/instruction.cpp \
     ../armsim/instructions/branchinstruction.cpp \
     ../armsim/instructions/branchandexchangeinstruction.cpp \
-    ../armsim/instructions/instructionoperand.cpp \
     ../armsim/barrelshifter.cpp \
     ../armsim/instructions/immediateoperand.cpp \
     ../armsim/instructions/rotatedimmediateoperand.cpp \
@@ -25,5 +24,7 @@ SOURCES +=  tst_cputests.cpp \
     ../armsim/instructions/loadstoreinstruction.cpp \
     ../armsim/instructions/mulinstruction.cpp \
     ../armsim/instructions/dataprocessinginstruction.cpp \
+    ../armsim/instructions/statusregisterinstruction.cpp \
     ../armsim/cpu.cpp \
-    ../armsim/memory.cpp
+    ../armsim/memory.cpp \
+    ../armsim/registermemory.cpp

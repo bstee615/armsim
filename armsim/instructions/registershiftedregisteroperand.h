@@ -8,7 +8,7 @@
 #include <QString>
 #include "shiftedregisteroperand.h"
 #include "memorytypes.h"
-#include "memory.h"
+#include "registermemory.h"
 
 class RegisterShiftedRegisterOperand : public ShiftedRegisterOperand
 {
@@ -16,10 +16,11 @@ class RegisterShiftedRegisterOperand : public ShiftedRegisterOperand
     word rSValue;
 
 public:
-    RegisterShiftedRegisterOperand(word w, Memory *_registers);
+    RegisterShiftedRegisterOperand(word w, RegisterMemory *_registers);
 
-    QString toString();
-    int value();
+    QString toString() override;
+    int value() override;
+    bool CarryFlag() override;
 };
 
 #endif // REGISTERSHIFTEDREGISTEROPERAND_H

@@ -21,10 +21,10 @@ QString formatRegisterValue(QString registerName, word registerValue)
 
 void RegistersWidget::updateRegisters()
 {
-    Memory *regs = _computer->cpu.getRegisters();
+    RegisterMemory *regs = _computer->cpu.getRegisters();
     QString str = "";
     for (int i = 0; i <= 11; i ++) {
-        str += formatRegisterValue(QString("r") + QString::number(i), regs->ReadWord(R0_OFFSET + i*4));
+        str += formatRegisterValue(QString("r") + QString::number(i), regs->getRegisterValue(i));
     }
     str += formatRegisterValue(QString("IP"), regs->ReadWord(IP_OFFSET));
     str += formatRegisterValue(QString("SP"), regs->ReadWord(SP_OFFSET));

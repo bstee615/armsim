@@ -4,18 +4,10 @@ const char * const Instruction::ConditionCodeToString [16] = {
     "eq", "ne", "cs", "cc", "mi", "pl", "vs", "vc", "hi", "ls", "ge", "lt", "gt", "le", "", "XX" // XX for unpredictable
 };
 
-Instruction::Instruction(word w, Memory *_registers)
+Instruction::Instruction(word w, RegisterMemory *_registers)
 {
     cond = Memory::ExtractBits(w, 28, 31) >> 28;
     registers = _registers;
-}
-
-word Instruction::getRegisterValue(byte index) {
-    word value = registers->ReadWord(index*4);
-    if (index == 15) {
-        value += 8;
-    }
-    return value;
 }
 
 bool Instruction::shouldExecute()

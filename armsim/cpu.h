@@ -1,8 +1,7 @@
 #ifndef CPU_H
 #define CPU_H
 
-#include "instructions/nzcf.h"
-#include "memory.h"
+#include "registermemory.h"
 #include "instructions/instruction.h"
 
 struct InvalidRegisterIndexException : public std::exception
@@ -16,7 +15,7 @@ struct InvalidRegisterIndexException : public std::exception
 class CPU
 {
     Memory *_ram;
-    Memory *registers;
+    RegisterMemory *registers;
 
 public:
     CPU() {}
@@ -34,12 +33,11 @@ public:
 
     address getChecksum() { return _ram->Checksum(); }
     Memory *getRAM() { return _ram; }
-    Memory *getRegisters() { return registers; }
+    RegisterMemory *getRegisters() { return registers; }
 
     address getProgramCounter() { return registers->ReadWord(PC_OFFSET); }
     void setProgramCounter(address addr) { registers->WriteWord(PC_OFFSET, addr); }
     byte getNZCF();
-    bool getNZCF(NZCFFlag whichFlag);
     word getGeneralRegister(unsigned int index);
     void setNZCFFlag(NZCFFlag whichFlag, bool val);
     void setGeneralRegister(unsigned int index, word w);

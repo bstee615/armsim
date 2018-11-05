@@ -1,11 +1,11 @@
 #include "branchinstruction.h"
 
-BranchInstruction::BranchInstruction(word w, Memory *_registers):
+BranchInstruction::BranchInstruction(word w, RegisterMemory *_registers):
     Instruction(w, _registers)
 {
     offset = Memory::ExtractBits(w, 0, 23) << 2;
     L = Memory::ExtractBits(w, 24, 24) != 0;
-    pcValue = getRegisterValue(15);
+    pcValue = registers->getRegisterValue(15);
 }
 
 QString BranchInstruction::toString()
@@ -15,8 +15,8 @@ QString BranchInstruction::toString()
 
 void BranchInstruction::execute()
 {
-    registers->WriteWord(15 * 4, pcValue + offset);
+    registers->setRegisterValue(15, pcValue + offset);
     if (L) {
-        registers->WriteWord(14 * 4, pcValue - 4);
+        registers->setRegisterValue(14, pcValue - 4);
     }
 }

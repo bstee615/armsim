@@ -16,8 +16,12 @@ class RotatedImmediateOperand : public InstructionOperand
 public:
     RotatedImmediateOperand(word encodedWord);
 
-    int value();
-    QString toString();
+    int value() override;
+    QString toString() override;
+    byte registerIndex() override{
+        return 16;
+    }
+    bool CarryFlag() override;
 };
 
 #endif // IMMEDIATEOPERAND_H

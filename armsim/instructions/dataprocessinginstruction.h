@@ -7,7 +7,7 @@
 
 #include "instruction.h"
 #include "instructionoperand.h"
-#include "memory.h"
+#include "registermemory.h"
 
 class DataProcessingInstruction : public Instruction
 {
@@ -30,8 +30,10 @@ class DataProcessingInstruction : public Instruction
     void cmn(word uval1, word uval2);
     void movs();
 
+    InstructionOperand *getAddressingMode(word w, RegisterMemory *registers);
+
 public:
-    DataProcessingInstruction(word w, Memory *registers);
+    DataProcessingInstruction(word w, RegisterMemory *registers);
     ~DataProcessingInstruction();
 
     QString toString() override;

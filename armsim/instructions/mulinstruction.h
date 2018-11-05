@@ -2,7 +2,7 @@
 #define MULINSTRUCTION_H
 
 #include <QString>
-#include "memory.h"
+#include "registermemory.h"
 #include "instruction.h"
 
 class MultiplyInstruction: public Instruction
@@ -15,7 +15,7 @@ class MultiplyInstruction: public Instruction
     bool S;
 
 public:
-    MultiplyInstruction(word w, Memory *_registers);
+    MultiplyInstruction(word w, RegisterMemory *_registers);
 
     QString toString() override;
     void execute() override;

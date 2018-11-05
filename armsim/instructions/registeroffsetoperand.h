@@ -2,17 +2,19 @@
 #define REGISTEROFFSETOPERAND_H
 
 #include "instructionoperand.h"
-#include "memory.h"
+#include "registermemory.h"
 
 class RegisterOffsetOperand : public InstructionOperand
 {
     byte rMIndex; // Index of the destination register from 0-15
     word rMValue;
 public:
-    RegisterOffsetOperand(word _w, Memory *_registers);
+    RegisterOffsetOperand(word _w, RegisterMemory *_registers);
 
-    virtual int value();
-    virtual QString toString();
+    virtual int value() override;
+    virtual QString toString() override;
+    byte registerIndex() override;
+    bool CarryFlag() override;
 };
 
 #endif // REGISTEROFFSETOPERAND_H

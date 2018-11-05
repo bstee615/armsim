@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "computerwidget.h"
+#include "registermemory.h"
 
 namespace Ui {
 class RegistersWidget;

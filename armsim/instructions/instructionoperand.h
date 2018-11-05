@@ -6,12 +6,12 @@
 #define INSTRUCTIONOPERAND_H
 
 #include <QString>
-#include "memory.h"
+#include "registermemory.h"
 
 class InstructionOperand
 {
 protected:
-    Memory *registers;
+    RegisterMemory *registers;
 
 public:
     virtual ~InstructionOperand() { }
@@ -20,7 +20,8 @@ public:
     // Returns an assembly representation of the addressing mode, formatted to be used in Instruction::toString().
     virtual QString toString() = 0;
 
-    word getRegisterValue(byte index);
+    virtual byte registerIndex() = 0;
+    virtual bool CarryFlag() = 0;
 };
 
 #endif // INSTRUCTIONOPERAND_H

@@ -1,7 +1,7 @@
 #include "loadstoremultipleinstruction.h"
 #include <QDebug>
 
-LoadStoreMultipleInstruction::LoadStoreMultipleInstruction(word w, Memory *_ram, Memory *_registers):
+LoadStoreMultipleInstruction::LoadStoreMultipleInstruction(word w, Memory *_ram, RegisterMemory *_registers):
     Instruction(w, _registers)
 {
     ram = _ram;
@@ -12,7 +12,7 @@ LoadStoreMultipleInstruction::LoadStoreMultipleInstruction(word w, Memory *_ram,
     L = Memory::ExtractBits(w, 20, 20) != 0;
 
     rNIndex = Memory::ExtractBits(w, 16, 19) >> 16;
-    rNValue = getRegisterValue(rNIndex);
+    rNValue = registers->getRegisterValue(rNIndex);
     registerList = (halfword)Memory::ExtractBits(w, 0, 15);
 }
 
@@ -56,14 +56,14 @@ void LoadStoreMultipleInstruction::execute()
             int changeInBytes = U ? 4 : -4;
             if (P) currentAddress += changeInBytes;
 
-            if (L) registers->WriteWord(i*4, ram->ReadWord(currentAddress));
-            else ram->WriteWord(currentAddress, registers->ReadWord(i*4));
+            if (L) registers->setRegisterValue(i, ram->ReadWord(currentAddress));
+            else ram->WriteWord(currentAddress, registers->getRegisterValue(i));
 
             if (!P) currentAddress += changeInBytes;
         }
     }
 
     if (W) {
-        registers->WriteWord(rNIndex*4, currentAddress);
+        registers->setRegisterValue(rNIndex, currentAddress);
     }
 }
