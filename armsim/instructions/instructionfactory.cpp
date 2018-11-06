@@ -68,7 +68,7 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Regi
     default:
         break;
     }
-    qDebug() << QString("did not execute instruction") << QString::number(w, 16).prepend("0x");
+    qDebug() << QString("Unrecognized instruction %1").arg(QString::number(w, 16).prepend("0x"));
 
     return nullptr;
 }

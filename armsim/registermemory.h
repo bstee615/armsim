@@ -50,7 +50,8 @@ public:
 
     word getRegisterAddress(ProcessorMode mode, word index);
     ProcessorMode getProcessorMode();
-    void setProcessorMode(ProcessorMode mode, address jumpAddress);
+    void processException(ProcessorMode nextMode, address jumpAddress);
+    void setProcessorMode(ProcessorMode nextMode);
     word getCPSR();
     void setCPSR(word data);
     bool getNZCF(NZCFFlag whichFlag);

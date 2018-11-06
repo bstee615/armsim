@@ -38,8 +38,6 @@ bool writeBytesToRAM(fstream &strm, Memory *ram, Elf32_Ehdr &elfHeader, Elf32_Ph
         return false;
     }
 
-    ram->clearMemory();
-
     for (size_t ph_i = 0; ph_i < elfHeader.e_phnum; ph_i ++) {
         Elf32_Phdr &progHeader = programHeaders[ph_i];
         strm.seekg(progHeader.p_offset);
@@ -157,15 +155,22 @@ bool loadELF(QString filename, CPU *cpu)
     if (programHeaders == nullptr) {
         return false;
     }
+
+    cpu->reset();
     if (!writeBytesToRAM(strm, cpu->getRAM(), elfHeader, programHeaders)) {
         return false;
     }
-    cpu->setProgramCounter(elfHeader.e_entry);
-    cpu->setGeneralRegister(13, 0x7000);
-    cpu->setNZCFFlag(Negative, false);
-    cpu->setNZCFFlag(Zero, false);
-    cpu->setNZCFFlag(Carry, false);
-    cpu->setNZCFFlag(Overflow, false);
+
+    if (cpu->getRAM()->ReadWord(0) == 0) { // No OS loaded.
+        qDebug() << "Loader:" << "No operating system loaded. Loading to address" << QString::number(elfHeader.e_entry);
+        cpu->setProgramCounter(elfHeader.e_entry);
+        cpu->setGeneralRegister(13, 0x7000);
+        cpu->getRegisters()->setIRQ(false);
+    }
+    else {
+        qDebug() << "Loader:" << "Operating system loaded. Loading to address 0";
+        cpu->setProgramCounter(0);
+    }
 
     delete[] programHeaders;
     strm.close();

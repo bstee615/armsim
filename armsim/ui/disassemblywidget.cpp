@@ -35,7 +35,7 @@ void DisassemblyWidget::updateDisassemblyText()
     Memory &ram = _computer->ram;
     address pc;
     try {
-        pc = _computer->cpu.getProgramCounter();
+        pc = _computer->cpu.getProgramCounter() - 8;
     }
     catch (OutOfBoundsException) {
         pc = _computer->cpu.getRAM()->getSize() - 4;
@@ -46,13 +46,17 @@ void DisassemblyWidget::updateDisassemblyText()
         if (signedAddress < 0 || ((address)signedAddress) >= _computer->cpu.getRAM()->getSize()) continue;
 
         address addr = signedAddress;
-        word instruction = ram.ReadWord(addr);
+        word encodedInstruction = ram.ReadWord(addr);
         bool bp = _computer->isBreakpoint(addr);
-        QString disassembly = InstructionFactory::getDecodedInstruction(instruction, _computer->cpu.getRAM(), _computer->cpu.getRegisters())->toString();
-        if (instruction == 0) {
+        Instruction *instruction = InstructionFactory::getDecodedInstruction(encodedInstruction, _computer->cpu.getRAM(), _computer->cpu.getRegisters());
+        QString disassembly;
+        if (encodedInstruction == 0 || instruction == nullptr) {
             disassembly = "";
         }
-        auto item = new QListWidgetItem(listItemText(addr, instruction, disassembly, bp), ui->listDisassembly);
+        else {
+            disassembly = instruction->toString();
+        }
+        auto item = new QListWidgetItem(listItemText(addr, encodedInstruction, disassembly, bp), ui->listDisassembly);
         if (offset == 0) item->setBackgroundColor(QColor(255, 100, 100));
         ui->listDisassembly->addItem(item);
     }

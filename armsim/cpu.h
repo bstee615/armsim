@@ -35,8 +35,8 @@ public:
     Memory *getRAM() { return _ram; }
     RegisterMemory *getRegisters() { return registers; }
 
-    address getProgramCounter() { return registers->ReadWord(PC_OFFSET); }
-    void setProgramCounter(address addr) { registers->WriteWord(PC_OFFSET, addr); }
+    address getProgramCounter() { return registers->getRegisterValue(15); }
+    void setProgramCounter(address addr) { registers->setRegisterValue(15, addr); }
     byte getNZCF();
     word getGeneralRegister(unsigned int index);
     void setNZCFFlag(NZCFFlag whichFlag, bool val);

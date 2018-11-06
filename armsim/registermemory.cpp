@@ -16,7 +16,7 @@ address RegisterMemory::SPSR_Index(ProcessorMode mode)
 
 RegisterMemory::RegisterMemory(): Memory(GPR_OFFSET + GPR_BYTES * 8)
 {
-    setCPSR((0xFFFFFFE0 & getCPSR()) | EncodedProcessorModes[ProcessorMode::User]); // TODO: Fix the bandaid fix.
+
 }
 
 word RegisterMemory::getRegisterValue(ProcessorMode mode, byte index)
@@ -88,13 +88,18 @@ ProcessorMode RegisterMemory::getProcessorMode()
     return Unknown;
 }
 
-void RegisterMemory::setProcessorMode(ProcessorMode nextMode, address jumpAddress)
+void RegisterMemory::processException(ProcessorMode nextMode, address jumpAddress)
 {
     setSPSR(nextMode, getCPSR()); // set SPSR_<nextmode> to CPSR
     setRegisterValue(nextMode, 14, getRegisterValue(15)); // Set PC to LR_<nextmode>
-    WriteWord(CPSR_OFFSET, (ReadWord(CPSR_OFFSET) & 0xFFFFFFE0) | EncodedProcessorModes[nextMode]); // Set mode bits in CPSR
+    setProcessorMode(nextMode);
     setIRQ(false); // Disable interrupts
     setRegisterValue(15, jumpAddress); // Jump to exception handler
+}
+
+void RegisterMemory::setProcessorMode(ProcessorMode nextMode)
+{
+    WriteWord(CPSR_OFFSET, (ReadWord(CPSR_OFFSET) & 0xFFFFFFE0) | EncodedProcessorModes[nextMode]); // Set mode bits in CPSR
 }
 
 word RegisterMemory::getCPSR()

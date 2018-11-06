@@ -45,6 +45,8 @@ void CPU::reset()
     for (int i = 28; i < 32; i ++) {
         registers->SetFlag(CPSR_OFFSET, i, false);
     }
+
+    registers->setProcessorMode(Supervisor);
 }
 
 byte CPU::getNZCF()

@@ -19,6 +19,6 @@ void SoftwareInterruptInstruction::execute()
     // Computer handles 0x11 quit, others handled by armos
     if (interruptCode != 0x11) {
         // Switch to SVC and perform exception processing.
-        registers->setProcessorMode(ProcessorMode::Supervisor, 0x8);
+        registers->processException(ProcessorMode::Supervisor, 0x8);
     }
 }

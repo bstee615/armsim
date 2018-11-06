@@ -26,7 +26,7 @@ void Computer::loadFile(QString path)
 
 void Computer::run(bool *shouldStop)
 {
-    while (!(*shouldStop) && step() > 0 && !breakpoints.contains(cpu.getProgramCounter()))
+    while (!(*shouldStop) && step() > 0)
     {
 
     }
@@ -40,19 +40,28 @@ int Computer::step()
     try {
         w = cpu.fetch();
         pc = cpu.getProgramCounter();
-
         i = cpu.decode(w);
+        if (i == nullptr) {
+            qCritical() << "Computer:" << "Tried to execute unrecognized instruction.";
+        }
         cpu.incrementPC();
         if (i->shouldExecute()) {
             cpu.execute(i);
         }
-        if (i != nullptr) qDebug() << "Computer:" << QString("trace step %1: %2 executing instruction %3: %4").arg(QString::number(instructionCounter), i->shouldExecute() ? "" : "not", QString::number(w), i->toString());
+        /*
+        if (i != nullptr) qDebug() << "Computer:" << QString("trace step %1: %2 executing instruction %3 at address %4: %5").arg(
+                                          QString::number(instructionCounter),
+                                          i->shouldExecute() ? "" : "not",
+                                          QString::number(w, 16).prepend("0x"),
+                                          QString::number(pc-8, 16).prepend("0x"),
+                                          i->toString());
+                                          */
     }
     catch (OutOfBoundsException ex) {
         return -1;
     }
 
-    logTrace(pc);
+    logTrace(pc-8);
     instructionCounter ++;
 
     if (ram.outputData != nullptr) {
@@ -62,13 +71,18 @@ int Computer::step()
     SoftwareInterruptInstruction *swi = dynamic_cast<SoftwareInterruptInstruction*>(i);
     if (swi != nullptr) {
         if (swi->interruptCode == 0x11) {
+            qDebug() << "Computer:" << "Encountered SWI 0x11. Stopping execution.";
             return 0;
         }
     }
 
-    if (IRQ) {
-        cpu.getRegisters()->setProcessorMode(ProcessorMode::IRQ, 0x18);
+    if (IRQ && cpu.getRegisters()->getIRQ()) {
+        cpu.getRegisters()->processException(ProcessorMode::IRQ, 0x18);
         IRQ = false;
+    }
+
+    if (isBreakpoint(cpu.getProgramCounter() - 8)) {
+        return 0;
     }
 
     return 1;
