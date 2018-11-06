@@ -34,33 +34,33 @@ enum ProcessorMode: unsigned char {
     Unknown = 8
 };
 
-static char const * ProcessorModeToString[] = {
-    "User", "System", "Supervisor", "Monitor", "Abort", "Undefined", "FIQ", "IRQ", "Unknown processor mode."
-};
-
 class RegisterMemory : public Memory
 {
     static word EncodedProcessorModes[8];
 
-    address SPSR_Index();
+    address SPSR_Index(ProcessorMode mode);
 
 public:
     RegisterMemory();
 
+    word getRegisterValue(ProcessorMode mode, byte index);
     word getRegisterValue(byte index);
+    void setRegisterValue(ProcessorMode mode, byte index, word value);
     void setRegisterValue(byte index, word value);
 
     word getRegisterAddress(ProcessorMode mode, word index);
     ProcessorMode getProcessorMode();
-    void setProcessorMode(ProcessorMode mode);
+    void setProcessorMode(ProcessorMode mode, address jumpAddress);
     word getCPSR();
     void setCPSR(word data);
     bool getNZCF(NZCFFlag whichFlag);
     void setNZCFFlag(NZCFFlag whichFlag, bool val);
     word getSPSR();
+    void setSPSR(ProcessorMode mode, word data);
     void setSPSR(word data);
 
     bool getIRQ();
+    void setIRQ(bool enabled);
 };
 
 #endif // REGISTERMEMORY_H

@@ -1,6 +1,10 @@
 #include "flagswidget.h"
 #include "ui_flagswidget.h"
 
+static char const * ProcessorModeToString[] = {
+    "User", "System", "Supervisor", "Monitor", "Abort", "Undefined", "FIQ", "IRQ", "Unknown processor mode."
+};
+
 FlagsWidget::FlagsWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FlagsWidget)

@@ -66,6 +66,11 @@ int Computer::step()
         }
     }
 
+    if (IRQ) {
+        cpu.getRegisters()->setProcessorMode(ProcessorMode::IRQ, 0x18);
+        IRQ = false;
+    }
+
     return 1;
 }
 
@@ -113,16 +118,10 @@ void Computer::toggleBreakpoint(address addr)
     }
 }
 
-void Computer::toggleBreakpointAtCurrentInstruction()
-{
-    toggleBreakpoint(cpu.getProgramCounter());
-}
-
 void Computer::handleInputCharacter(char data)
 {
-    *ram.inputData = data;
-    word cpsr = cpu.getRegisters()->getCPSR();
-    cpu.getRegisters()->setCPSR(cpsr | 0x80);
+    ram.inputData = new char(data);
+    IRQ = true;
 }
 
 char *Computer::getOutputCharacter()

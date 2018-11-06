@@ -6,7 +6,6 @@ TerminalWidget::TerminalWidget(QWidget *parent) :
     ui(new Ui::TerminalWidget)
 {
     ui->setupUi(this);
-    ui->terminalWindow->setComputer(_computer);
 }
 
 TerminalWidget::~TerminalWidget()
@@ -17,4 +16,10 @@ TerminalWidget::~TerminalWidget()
 void TerminalWidget::printCharacter(char c)
 {
     ui->terminalWindow->append(QString(c));
+}
+
+void TerminalWidget::init(Computer *computer)
+{
+    ComputerWidget::init(computer);
+    ui->terminalWindow->setComputer(_computer);
 }

@@ -10,7 +10,7 @@ namespace Ui {
 class TerminalWidget;
 }
 
-class TerminalTextBrowser: public QTextBrowser {
+class TerminalTextBrowser: public QTextBrowser, public ComputerWidget {
     Q_OBJECT
     Computer *_computer;
 
@@ -42,6 +42,7 @@ public:
     ~TerminalWidget();
 
     void printCharacter(char c);
+    void init(Computer *computer);
 
 private:
     Ui::TerminalWidget *ui;

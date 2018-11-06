@@ -28,7 +28,6 @@ bool ImmediateShiftedRegisterOperand::CarryFlag()
         else {
             return Memory::ExtractBits(rMValue, 32 - immediateShift, 32 - immediateShift) != 0;
         }
-        break;
     case lsr:
         if (immediateShift == 0) {
             return Memory::ExtractBits(rMValue, 31, 31) != 0;
@@ -36,7 +35,6 @@ bool ImmediateShiftedRegisterOperand::CarryFlag()
         else  {
             return Memory::ExtractBits(rMValue, immediateShift - 1, immediateShift - 1) != 0;
         }
-        break;
     case asr:
         if (immediateShift == 0) {
             return Memory::ExtractBits(rMValue, 31, 31) != 0;
@@ -44,7 +42,6 @@ bool ImmediateShiftedRegisterOperand::CarryFlag()
         else {
             return Memory::ExtractBits(rMValue, immediateShift - 1, immediateShift - 1) != 0;
         }
-        break;
     case ror:
         if (immediateShift == 0) {
             return Memory::ExtractBits(rMValue, 0, 0) != 0;
@@ -52,6 +49,7 @@ bool ImmediateShiftedRegisterOperand::CarryFlag()
         else {
             return Memory::ExtractBits(rMValue, immediateShift - 1, immediateShift - 1) != 0;
         }
-        break;
+    default:
+        return 0;
     }
 }

@@ -13,7 +13,7 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Regi
     word _23thru27 = Memory::ExtractBits(w, 23, 27) >> 23;
     word _20thru21 = Memory::ExtractBits(w, 20, 21) >> 20;
     if (((_23thru27 == 0b00110 || _23thru27 >> 23 == 0b00010) && _20thru21 == 0b10) ||
-        _23thru27 == 0b00010 && _20thru21 == 0b00) {
+         (_23thru27 == 0b00010 && _20thru21 == 0b00)) {
         return new StatusRegisterInstruction(w, registers);
     }
 
@@ -59,7 +59,7 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Regi
         break;
     case 0b111:
         if (Memory::ExtractBits(w, 24, 24) >> 24 == 1) {
-            return new SoftwareInterruptInstruction(w);
+            return new SoftwareInterruptInstruction(w, registers);
         }
         else {
             // Other instructions with an opcode of 0b111

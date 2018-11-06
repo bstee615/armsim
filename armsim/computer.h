@@ -22,11 +22,16 @@ struct ErrorLoadingFile : public std::exception
 class Computer: public FileWriter
 {
     std::queue<char> outputDevice;
+
+    void logTrace(word pc);
+
 public:
     CPU cpu;
     Memory ram;
     QSet<address> breakpoints;
     unsigned long long instructionCounter;
+
+    bool IRQ = false; // Flag for whether the CPU should enter interrupt handling at the end of the current fetch-decode-execute cycle.
 
     Computer(address numBytes);
     void loadFile(QString path);
@@ -36,11 +41,8 @@ public:
     // Call the CPU's fetch(), decode(), and execute() methods once.
     int step();
 
-    void logTrace(word pc);
-
-    bool isBreakpoint(address addr);
     void toggleBreakpoint(address addr);
-    void toggleBreakpointAtCurrentInstruction();
+    bool isBreakpoint(address addr);
 
     void handleInputCharacter(char data);
     char *getOutputCharacter();

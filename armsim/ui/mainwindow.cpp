@@ -75,6 +75,7 @@ void MainWindow::initComputerWidgets()
     ui->memoryWidget->init(computer);
     ui->registersWidget->init(computer);
     ui->stackWidget->init(computer);
+    ui->terminalWidget->init(computer);
     qDebug() << "UI:" << "Finished initializing panel info.";
 }
 

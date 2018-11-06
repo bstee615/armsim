@@ -33,7 +33,6 @@ bool RegisterShiftedRegisterOperand::CarryFlag()
         else {
             return false;
         }
-        break;
     case lsr:
         if (firstEightBits == 0) {
             return registers->getNZCF(Carry);
@@ -47,7 +46,6 @@ bool RegisterShiftedRegisterOperand::CarryFlag()
         else {
             return false;
         }
-        break;
     case asr:
         if (firstEightBits == 0) {
             return registers->getNZCF(Carry);
@@ -56,10 +54,8 @@ bool RegisterShiftedRegisterOperand::CarryFlag()
             return Memory::ExtractBits(rMValue, firstEightBits - 1, firstEightBits - 1) != 0;
         }
         else {
-            Memory::ExtractBits(rMValue, 31, 31) != 0;
-            return false;
+            return Memory::ExtractBits(rMValue, 31, 31) != 0;
         }
-        break;
     case ror:
         if (firstEightBits == 0) {
             return registers->getNZCF(Carry);
@@ -70,6 +66,7 @@ bool RegisterShiftedRegisterOperand::CarryFlag()
         else {
             return Memory::ExtractBits(rMValue, Memory::ExtractBits(rSValue, 0, 4) - 1, Memory::ExtractBits(rSValue, 0, 4) - 1) != 0;
         }
-        break;
+    default:
+        return 0;
     }
 }

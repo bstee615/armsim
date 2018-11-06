@@ -3,9 +3,8 @@
 
 word RegisterMemory::EncodedProcessorModes[8] = { 0x10, 0x11, 0x12, 0x00, 0x13, 0x17, 0x18, 0x1F };
 
-address RegisterMemory::SPSR_Index()
+address RegisterMemory::SPSR_Index(ProcessorMode mode)
 {
-    ProcessorMode mode = getProcessorMode();
     if (mode == User || mode == System) {
         qCritical() << "Registers: Undefined behavior: access SPSR in User or System mode.";
         return 0;
@@ -15,20 +14,19 @@ address RegisterMemory::SPSR_Index()
     }
 }
 
-RegisterMemory::RegisterMemory(): Memory(GPR_OFFSET + GPR_BYTES * 7)
+RegisterMemory::RegisterMemory(): Memory(GPR_OFFSET + GPR_BYTES * 8)
 {
-    setProcessorMode(User); // TODO: Fix the bandaid fix.
+    setCPSR((0xFFFFFFE0 & getCPSR()) | EncodedProcessorModes[ProcessorMode::User]); // TODO: Fix the bandaid fix.
 }
 
-word RegisterMemory::getRegisterValue(byte index)
+word RegisterMemory::getRegisterValue(ProcessorMode mode, byte index)
 {
     if (index > 15) {
         qCritical() << "Out of range.";
         return 0;
     }
 
-    ProcessorMode processorMode = getProcessorMode();
-    word value = ReadWord(getRegisterAddress(processorMode, index));
+    word value = ReadWord(getRegisterAddress(mode, index));
 
     if (index == 15) {
         value += 8;
@@ -36,15 +34,23 @@ word RegisterMemory::getRegisterValue(byte index)
     return value;
 }
 
-void RegisterMemory::setRegisterValue(byte index, word value)
+word RegisterMemory::getRegisterValue(byte index)
+{
+    return getRegisterValue(getProcessorMode(), index);
+}
+
+void RegisterMemory::setRegisterValue(ProcessorMode mode, byte index, word value)
 {
     if (index > 15) {
         qCritical() << "Out of range.";
         return;
     }
+    WriteWord(getRegisterAddress(mode, index), value);
+}
 
-    ProcessorMode processorMode = getProcessorMode();
-    WriteWord(getRegisterAddress(processorMode, index), value);
+void RegisterMemory::setRegisterValue(byte index, word value)
+{
+    setRegisterValue(getProcessorMode(), index, value);
 }
 
 word RegisterMemory::getRegisterAddress(ProcessorMode mode, word index)
@@ -82,10 +88,13 @@ ProcessorMode RegisterMemory::getProcessorMode()
     return Unknown;
 }
 
-void RegisterMemory::setProcessorMode(ProcessorMode mode)
+void RegisterMemory::setProcessorMode(ProcessorMode nextMode, address jumpAddress)
 {
-    word cpsr_contents = ReadWord(CPSR_OFFSET);
-    WriteWord(CPSR_OFFSET, (cpsr_contents & 0xFFFFFFE0) | EncodedProcessorModes[mode]);
+    setSPSR(nextMode, getCPSR()); // set SPSR_<nextmode> to CPSR
+    setRegisterValue(nextMode, 14, getRegisterValue(15)); // Set PC to LR_<nextmode>
+    WriteWord(CPSR_OFFSET, (ReadWord(CPSR_OFFSET) & 0xFFFFFFE0) | EncodedProcessorModes[nextMode]); // Set mode bits in CPSR
+    setIRQ(false); // Disable interrupts
+    setRegisterValue(15, jumpAddress); // Jump to exception handler
 }
 
 word RegisterMemory::getCPSR()
@@ -116,23 +125,39 @@ word RegisterMemory::getSPSR()
         return 0;
     }
     else {
-        return ReadWord(SPSR_Index());
+        return ReadWord(SPSR_Index(mode));
     }
 }
 
-void RegisterMemory::setSPSR(word data)
+void RegisterMemory::setSPSR(ProcessorMode mode, word data)
 {
-    ProcessorMode mode = getProcessorMode();
     if (mode == User || mode == System) {
         qCritical() << "Registers: Undefined behavior: access SPSR in User or System mode.";
         return;
     }
     else {
-        WriteWord(SPSR_Index(), data);
+        WriteWord(SPSR_Index(mode), data);
     }
+}
+
+void RegisterMemory::setSPSR(word data)
+{
+    setSPSR(getProcessorMode(), data);
 }
 
 bool RegisterMemory::getIRQ()
 {
     return Memory::ExtractBits(getCPSR(), 7, 7) != 0;
+}
+
+void RegisterMemory::setIRQ(bool enabled)
+{
+    word cpsr = getCPSR();
+    if (enabled) {
+        cpsr = cpsr & (~0x80);
+    }
+    else {
+        cpsr = cpsr | 0x80;
+    }
+    setCPSR(cpsr);
 }
