@@ -26,6 +26,9 @@ public:
             // handle ASCII char like keys
             _computer->handleInputCharacter(QChar(key).toLatin1());
         }
+        if (key == Qt::Key_Return) {
+            _computer->handleInputCharacter('\r');
+        }
     }
 
     void setComputer(Computer *computer) {
@@ -46,6 +49,9 @@ public:
 
 private:
     Ui::TerminalWidget *ui;
+
+public slots:
+    void updateText();
 };
 
 #endif // TERMINALWIDGET_H

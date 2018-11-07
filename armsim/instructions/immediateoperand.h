@@ -18,8 +18,6 @@ public:
 
     QString toString() override;
     int value() override;
-    byte registerIndex() override;
-    bool CarryFlag() override;
 };
 
 #endif // IMMEDIATEOPERAND_H

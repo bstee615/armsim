@@ -25,11 +25,6 @@ word ShiftedRegisterOperand::shiftTypeToMethod(word w, word numShifts, ShiftedRe
     return 0;
 }
 
-byte ShiftedRegisterOperand::registerIndex()
-{
-    return rMIndex;
-}
-
 const char* const ShiftedRegisterOperand::ShiftTypeToString [4] = {
     "lsl",
     "lsr",

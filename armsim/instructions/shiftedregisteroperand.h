@@ -32,8 +32,6 @@ public:
 
     virtual int value() = 0;
     virtual QString toString() = 0;
-    byte registerIndex() override;
-    virtual bool CarryFlag() override = 0;
 };
 
 #endif // SHIFTEDREGISTEROPERAND_H

@@ -24,11 +24,11 @@ StatusRegisterInstruction::StatusRegisterInstruction(word w, RegisterMemory *_re
 QString StatusRegisterInstruction::toString()
 {
     if (MRS) {
-        return QString("mrs %1, %2").arg(addressingMode->toString(),
-                                         R ? QString("SPSR") : QString("CPSR"));
+        return QString("mrs r%1, %2").arg(QString::number(rDIndex),
+                                          R ? QString("spsr") : QString("cpsr"));
     }
     else {
-        return QString("msr %1, %2").arg(R ? QString("SPSR") : QString("CPSR"),
+        return QString("msr %1, %2").arg(R ? QString("spsr") : QString("cpsr"),
                                          addressingMode->toString());
     }
 }

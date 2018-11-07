@@ -58,7 +58,8 @@ SOURCES += \
     instructions/branchinstruction.cpp \
     instructions/branchandexchangeinstruction.cpp \
     registermemory.cpp \
-    instructions/statusregisterinstruction.cpp
+    instructions/statusregisterinstruction.cpp \
+    outputdevice.cpp
 
 HEADERS += \
     options.h \
@@ -103,7 +104,9 @@ HEADERS += \
     instructions/branchinstruction.h \
     instructions/branchandexchangeinstruction.h \
     registermemory.h \
-    instructions/statusregisterinstruction.h
+    instructions/statusregisterinstruction.h \
+    ooutputdevice.h \
+    outputdevice.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

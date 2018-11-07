@@ -24,20 +24,16 @@ enum NZCFFlag {
 
 enum ProcessorMode: unsigned char {
     User = 0,
-    System = 1,
-    Supervisor = 2,
-    Monitor = 3,
+    FIQ = 1,
+    IRQ = 2,
+    Supervisor = 3,
     Abort = 4,
     Undefined = 5,
-    FIQ = 6,
-    IRQ = 7,
-    Unknown = 8
+    System = 6
 };
 
 class RegisterMemory : public Memory
 {
-    static word EncodedProcessorModes[8];
-
     address SPSR_Index(ProcessorMode mode);
 
 public:
@@ -62,6 +58,9 @@ public:
 
     bool getIRQ();
     void setIRQ(bool enabled);
+
+    word encodedProcessorMode(ProcessorMode mode);
+    const char *processorModeToString(ProcessorMode mode);
 };
 
 #endif // REGISTERMEMORY_H

@@ -17,39 +17,3 @@ int ImmediateShiftedRegisterOperand::value()
 {
     return shiftTypeToMethod(rMValue, immediateShift, shiftType);
 }
-
-bool ImmediateShiftedRegisterOperand::CarryFlag()
-{
-    switch (shiftType) {
-    case lsl:
-        if (immediateShift == 0) {
-            return registers->getNZCF(Carry);
-        }
-        else {
-            return Memory::ExtractBits(rMValue, 32 - immediateShift, 32 - immediateShift) != 0;
-        }
-    case lsr:
-        if (immediateShift == 0) {
-            return Memory::ExtractBits(rMValue, 31, 31) != 0;
-        }
-        else  {
-            return Memory::ExtractBits(rMValue, immediateShift - 1, immediateShift - 1) != 0;
-        }
-    case asr:
-        if (immediateShift == 0) {
-            return Memory::ExtractBits(rMValue, 31, 31) != 0;
-        }
-        else {
-            return Memory::ExtractBits(rMValue, immediateShift - 1, immediateShift - 1) != 0;
-        }
-    case ror:
-        if (immediateShift == 0) {
-            return Memory::ExtractBits(rMValue, 0, 0) != 0;
-        }
-        else {
-            return Memory::ExtractBits(rMValue, immediateShift - 1, immediateShift - 1) != 0;
-        }
-    default:
-        return 0;
-    }
-}

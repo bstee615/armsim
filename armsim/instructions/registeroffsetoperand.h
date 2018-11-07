@@ -13,8 +13,6 @@ public:
 
     virtual int value() override;
     virtual QString toString() override;
-    byte registerIndex() override;
-    bool CarryFlag() override;
 };
 
 #endif // REGISTEROFFSETOPERAND_H

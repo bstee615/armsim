@@ -32,12 +32,17 @@ void MemoryWidget::updateMemoryDisplay(address startingAddress)
 
         QStringList endOfLine;
         for (address address_i = 0; address_i < rowLength; address_i ++) {
-            byte b = _computer->cpu.getRAM()->ReadByte(rowAddress + address_i);
-            addressedBytes << QString("%1").arg(b, 2, 16, QChar('0')) << " ";
+            try {
+                byte b = _computer->cpu.getRAM()->ReadByte(rowAddress + address_i);
+                addressedBytes << QString("%1").arg(b, 2, 16, QChar('0')) << " ";
 
-            QChar toChar = QChar((char)b);
-            if (b == 0) toChar = QChar('.');
-            endOfLine << toChar;
+                QChar toChar = QChar((char)b);
+                if (b == 0) toChar = QChar('.');
+                endOfLine << toChar;
+            }
+            catch (OutOfBoundsException ex) {
+                continue;
+            }
         }
         QString endOfLineString = endOfLine.join("");
         endOfLineString.replace(' ', '.');

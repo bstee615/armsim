@@ -19,9 +19,6 @@ public:
     virtual int value() = 0;
     // Returns an assembly representation of the addressing mode, formatted to be used in Instruction::toString().
     virtual QString toString() = 0;
-
-    virtual byte registerIndex() = 0;
-    virtual bool CarryFlag() = 0;
 };
 
 #endif // INSTRUCTIONOPERAND_H

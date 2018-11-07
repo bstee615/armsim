@@ -22,6 +22,9 @@ void StackWidget::updateStackDisplay()
     QString str = "";
     for (address i = 0; i < numberOfWords; i ++) {
         address addr = topOfStack + i*4;
+        if (addr >= _computer->cpu.getRAM()->getSize()) {
+            continue;
+        }
         str += QString("%1").arg(addr, 8, 16, QChar('0')).toUpper().prepend("0x") +
                 QString("=") +
                 QString("%1").arg(_computer->cpu.getRAM()->ReadWord(addr), 8, 16, QChar('0')).prepend("0x") +

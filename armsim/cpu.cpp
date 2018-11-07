@@ -39,14 +39,13 @@ void CPU::execute(Instruction *instr)
 void CPU::reset()
 {
     _ram->clearMemory();
+    registers->setProcessorMode(Supervisor);
     for (int i = 0; i < 15; i ++) {
         registers->setRegisterValue(i, 0);
     }
     for (int i = 28; i < 32; i ++) {
         registers->SetFlag(CPSR_OFFSET, i, false);
     }
-
-    registers->setProcessorMode(Supervisor);
 }
 
 byte CPU::getNZCF()

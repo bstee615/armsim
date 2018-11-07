@@ -12,7 +12,8 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Regi
 {
     word _23thru27 = Memory::ExtractBits(w, 23, 27) >> 23;
     word _20thru21 = Memory::ExtractBits(w, 20, 21) >> 20;
-    if (((_23thru27 == 0b00110 || _23thru27 >> 23 == 0b00010) && _20thru21 == 0b10) ||
+    word _4thru7 = Memory::ExtractBits(w, 4, 7) >> 4;
+    if ((((_23thru27 == 0b00110 || _23thru27 == 0b00010) && _20thru21 == 0b10) && _4thru7 == 0) ||
          (_23thru27 == 0b00010 && _20thru21 == 0b00)) {
         return new StatusRegisterInstruction(w, registers);
     }
@@ -20,17 +21,17 @@ Instruction *InstructionFactory::getDecodedInstruction(word w, Memory *ram, Regi
     word instructionOpcode = Memory::ExtractBits(w, 25, 27) >> 25;
     word bit4;
     word bit7;
-    byte byte1;
-    byte byte5;
+    byte nybble1;
+    byte nybble5;
 
     switch (instructionOpcode) {
     case 0b000:
         bit4 = Memory::ExtractBits(w, 4, 4) >> 4;
         bit7 = Memory::ExtractBits(w, 7, 7) >> 7;
 
-        byte5 = Memory::ExtractBits(w, 20, 23) >> 20;
-        byte1 = Memory::ExtractBits(w, 4, 7) >> 4;
-        if (byte5 == 2 && byte1 == 1) {
+        nybble5 = Memory::ExtractBits(w, 20, 23) >> 20;
+        nybble1 = Memory::ExtractBits(w, 4, 7) >> 4;
+        if (nybble5 == 2 && nybble1 == 1) {
             return new BranchAndExchangeInstruction(w, registers);
         }
         else {

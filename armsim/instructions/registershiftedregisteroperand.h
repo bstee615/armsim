@@ -20,7 +20,6 @@ public:
 
     QString toString() override;
     int value() override;
-    bool CarryFlag() override;
 };
 
 #endif // REGISTERSHIFTEDREGISTEROPERAND_H

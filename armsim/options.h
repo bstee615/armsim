@@ -18,6 +18,7 @@ public:
     QString filename;
     numbytes memory;
     bool execFlag;
+    bool traceAll;
 
     Options() { }
 };

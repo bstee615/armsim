@@ -15,9 +15,6 @@ protected:
 
 public:
     void stopRunning() { shouldStop = true; }
-    char *getOutputCharacter() {
-        return _computer->getOutputCharacter();
-    }
 };
 
 class ComputerRunThread : public ComputerThread

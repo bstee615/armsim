@@ -1,8 +1,6 @@
 #include "registermemory.h"
 #include <QDebug>
 
-word RegisterMemory::EncodedProcessorModes[8] = { 0x10, 0x11, 0x12, 0x00, 0x13, 0x17, 0x18, 0x1F };
-
 address RegisterMemory::SPSR_Index(ProcessorMode mode)
 {
     if (mode == User || mode == System) {
@@ -79,19 +77,19 @@ ProcessorMode RegisterMemory::getProcessorMode()
     word cpsr_contents = ReadWord(CPSR_OFFSET);
     word rawMode = ExtractBits(cpsr_contents, 0, 4);
     for (int i = 0; i < 8; i ++) {
-        if (EncodedProcessorModes[i] == rawMode) {
+        if (encodedProcessorMode((ProcessorMode)i) == rawMode) {
             return (ProcessorMode)i;
         }
     }
 
     qCritical() << "Registers: Undefined processor mode.";
-    return Unknown;
+    exit(1);
 }
 
 void RegisterMemory::processException(ProcessorMode nextMode, address jumpAddress)
 {
     setSPSR(nextMode, getCPSR()); // set SPSR_<nextmode> to CPSR
-    setRegisterValue(nextMode, 14, getRegisterValue(15)); // Set PC to LR_<nextmode>
+    setRegisterValue(nextMode, 14, getRegisterValue(15) - 8); // Set PC to LR_<nextmode>
     setProcessorMode(nextMode);
     setIRQ(false); // Disable interrupts
     setRegisterValue(15, jumpAddress); // Jump to exception handler
@@ -99,7 +97,7 @@ void RegisterMemory::processException(ProcessorMode nextMode, address jumpAddres
 
 void RegisterMemory::setProcessorMode(ProcessorMode nextMode)
 {
-    WriteWord(CPSR_OFFSET, (ReadWord(CPSR_OFFSET) & 0xFFFFFFE0) | EncodedProcessorModes[nextMode]); // Set mode bits in CPSR
+    WriteWord(CPSR_OFFSET, (ReadWord(CPSR_OFFSET) & 0xFFFFFFE0) | encodedProcessorMode(nextMode)); // Set mode bits in CPSR
 }
 
 word RegisterMemory::getCPSR()
@@ -165,4 +163,48 @@ void RegisterMemory::setIRQ(bool enabled)
         cpsr = cpsr | 0x80;
     }
     setCPSR(cpsr);
+}
+
+word RegisterMemory::encodedProcessorMode(ProcessorMode mode)
+{
+    switch (mode) {
+    case User:
+        return 0b10000;
+    case FIQ:
+        return 0b10001;
+    case IRQ:
+        return 0b10010;
+    case Supervisor:
+        return 0b10011;
+    case Abort:
+        return 0b10111;
+    case Undefined:
+        return 0b11011;
+    case System:
+        return 0b11111;
+    }
+    qCritical() << "encodedProcessorMode:" << "Unrecognized processor mode" << QString::number((int)mode);
+    exit(1);
+}
+
+const char *RegisterMemory::processorModeToString(ProcessorMode mode)
+{
+    switch (mode) {
+    case User:
+        return "USR";
+    case FIQ:
+        return "FIQ";
+    case IRQ:
+        return "IRQ";
+    case Supervisor:
+        return "SVC";
+    case Abort:
+        return "ABT";
+    case Undefined:
+        return "UND";
+    case System:
+        return "SYS";
+    }
+    qCritical() << "processorModeToString:" << "Unrecognized processor mode" << QString::number((int)mode);
+    exit(1);
 }

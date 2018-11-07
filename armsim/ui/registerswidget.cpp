@@ -26,9 +26,9 @@ void RegistersWidget::updateRegisters()
     for (int i = 0; i <= 11; i ++) {
         str += formatRegisterValue(QString("r") + QString::number(i), regs->getRegisterValue(i));
     }
-    str += formatRegisterValue(QString("IP"), regs->ReadWord(IP_OFFSET));
-    str += formatRegisterValue(QString("SP"), regs->ReadWord(SP_OFFSET));
-    str += formatRegisterValue(QString("LR"), regs->ReadWord(LR_OFFSET));
-    str += formatRegisterValue(QString("PC"), regs->ReadWord(PC_OFFSET));
+    str += formatRegisterValue(QString("IP"), regs->getRegisterValue(12));
+    str += formatRegisterValue(QString("SP"), regs->getRegisterValue(13));
+    str += formatRegisterValue(QString("LR"), regs->getRegisterValue(14));
+    str += formatRegisterValue(QString("PC"), regs->getRegisterValue(15));
     ui->textareaRegisters->setText(str);
 }

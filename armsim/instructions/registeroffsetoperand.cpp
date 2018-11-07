@@ -16,13 +16,3 @@ QString RegisterOffsetOperand::toString()
 {
     return QString("r%1").arg(QString::number(rMIndex));
 }
-
-byte RegisterOffsetOperand::registerIndex()
-{
-    return rMIndex;
-}
-
-bool RegisterOffsetOperand::CarryFlag()
-{
-    return registers->getNZCF(Carry);
-}

@@ -17,7 +17,6 @@ public:
 
     QString toString() override;
     int value() override;
-    bool CarryFlag() override;
 };
 
 #endif // IMMEDIATESHIFTEDREGISTEROPERAND_H

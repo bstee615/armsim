@@ -6,8 +6,8 @@
 #include "filewriter.h"
 #include <QCoreApplication>
 #include <QSet>
-#include <queue>
 #include "instructions/softwareinterruptinstruction.h"
+#include "ooutputdevice.h"
 
 // To be thrown as a general error when loading a file
 // so that the UI can display "None" instead of the invalid filename.
@@ -21,8 +21,6 @@ struct ErrorLoadingFile : public std::exception
 
 class Computer: public FileWriter
 {
-    std::queue<char> outputDevice;
-
     void logTrace(word pc);
 
 public:
@@ -30,8 +28,11 @@ public:
     Memory ram;
     QSet<address> breakpoints;
     unsigned long long instructionCounter;
+    OOutputDevice *outputDevice;
 
     bool IRQ = false; // Flag for whether the CPU should enter interrupt handling at the end of the current fetch-decode-execute cycle.
+
+    bool traceAll = false;
 
     Computer(address numBytes);
     void loadFile(QString path);
@@ -45,7 +46,6 @@ public:
     bool isBreakpoint(address addr);
 
     void handleInputCharacter(char data);
-    char *getOutputCharacter();
 };
 
 #endif // COMPUTER_H

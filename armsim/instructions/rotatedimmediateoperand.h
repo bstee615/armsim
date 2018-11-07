@@ -18,10 +18,6 @@ public:
 
     int value() override;
     QString toString() override;
-    byte registerIndex() override{
-        return 16;
-    }
-    bool CarryFlag() override;
 };
 
 #endif // IMMEDIATEOPERAND_H

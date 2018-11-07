@@ -28,7 +28,6 @@ class DataProcessingInstruction : public Instruction
 
     void cmp(word uval1, word uval2);
     void cmn(word uval1, word uval2);
-    void movs();
 
     InstructionOperand *getAddressingMode(word w, RegisterMemory *registers);
 

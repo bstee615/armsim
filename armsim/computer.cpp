@@ -7,7 +7,6 @@ Computer::Computer(address numBytes)
     ram = Memory(numBytes);
     cpu = CPU(&ram);
     instructionCounter = 1;
-    outputDevice = std::queue<char>();
 }
 
 void Computer::loadFile(QString path)
@@ -38,6 +37,7 @@ int Computer::step()
     word w, pc;
 
     try {
+        ProcessorMode mode = cpu.getRegisters()->getProcessorMode();
         w = cpu.fetch();
         pc = cpu.getProgramCounter();
         i = cpu.decode(w);
@@ -48,24 +48,29 @@ int Computer::step()
         if (i->shouldExecute()) {
             cpu.execute(i);
         }
-        /*
+
+        if (mode == System || traceAll) {
+            logTrace(pc-8);
+        }
+/*
         if (i != nullptr) qDebug() << "Computer:" << QString("trace step %1: %2 executing instruction %3 at address %4: %5").arg(
                                           QString::number(instructionCounter),
                                           i->shouldExecute() ? "" : "not",
                                           QString::number(w, 16).prepend("0x"),
                                           QString::number(pc-8, 16).prepend("0x"),
                                           i->toString());
-                                          */
+*/
     }
     catch (OutOfBoundsException ex) {
         return -1;
     }
 
-    logTrace(pc-8);
     instructionCounter ++;
 
     if (ram.outputData != nullptr) {
-        outputDevice.push(*ram.outputData);
+        outputDevice->outputData = ram.outputData;
+        ram.outputData = nullptr;
+        outputDevice->notifyObservers();
     }
 
     SoftwareInterruptInstruction *swi = dynamic_cast<SoftwareInterruptInstruction*>(i);
@@ -76,7 +81,7 @@ int Computer::step()
         }
     }
 
-    if (IRQ && cpu.getRegisters()->getIRQ()) {
+    if (IRQ && !cpu.getRegisters()->getIRQ()) {
         cpu.getRegisters()->processException(ProcessorMode::IRQ, 0x18);
         IRQ = false;
     }
@@ -103,7 +108,7 @@ void Computer::logTrace(word pc)
            << formattedNumber(pc)
            << formattedNumber(cpu.getChecksum())
            << formattedNumber(cpu.getNZCF(), "%1", 4, 2)
-           << "SYS "; // TODO: Replace this when implementing CPU mode.
+           << cpu.getRegisters()->processorModeToString(cpu.getRegisters()->getProcessorMode()) << " ";
 
     for (unsigned int i = 0; i <= 14; i ++) {
         QString fmt("%1=~"); // This will end up in as "r<i>=<contents of ri>"
@@ -117,11 +122,6 @@ void Computer::logTrace(word pc)
     writer.flush();
 }
 
-bool Computer::isBreakpoint(address addr)
-{
-    return breakpoints.contains(addr);
-}
-
 void Computer::toggleBreakpoint(address addr)
 {
     if (isBreakpoint(addr)) {
@@ -132,20 +132,13 @@ void Computer::toggleBreakpoint(address addr)
     }
 }
 
+bool Computer::isBreakpoint(address addr)
+{
+    return breakpoints.contains(addr);
+}
+
 void Computer::handleInputCharacter(char data)
 {
     ram.inputData = new char(data);
     IRQ = true;
-}
-
-char *Computer::getOutputCharacter()
-{
-    if (outputDevice.empty()) {
-        return nullptr;
-    }
-    else {
-        char *ret = new char(outputDevice.front());
-        outputDevice.pop();
-        return ret;
-    }
 }

@@ -14,6 +14,7 @@
 const QString LOAD_OPTION_NAME = "load";
 const QString MEM_OPTION_NAME = "mem";
 const QString EXEC_OPTION_NAME = "exec";
+const QString TRACEALL_OPTION_NAME = "traceall";
 
 Options getValidatedOptions(QCommandLineParser &parser)
 {
@@ -33,10 +34,12 @@ Options getValidatedOptions(QCommandLineParser &parser)
         EXIT_APP;
     }
     bool execFlag = parser.isSet(EXEC_OPTION_NAME);
+    bool traceAll = parser.isSet(TRACEALL_OPTION_NAME);
     Options options;
     options.filename = loadValue;
     options.memory = memValue;
     options.execFlag = execFlag ? !loadValue.isEmpty() : execFlag;
+    options.traceAll = traceAll;
 
     return options;
 }
@@ -63,6 +66,10 @@ Options parseCommandLine(QCoreApplication &app)
     QCommandLineOption execOption(QStringList() << EXEC_OPTION_NAME,
             QString("A flag that directs the program to load and execute the file specified by --load. Ignored if --load is not present."));
     parser.addOption(execOption);
+
+    QCommandLineOption traceAllOption(QStringList() << TRACEALL_OPTION_NAME,
+            QString("A flag that directs the program to trace executing during exception processing."));
+    parser.addOption(traceAllOption);
 
     parser.process(app);
     return getValidatedOptions(parser);

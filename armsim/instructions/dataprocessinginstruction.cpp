@@ -61,21 +61,6 @@ void DataProcessingInstruction::cmn(word uval1, word uval2)
                        (sval1 < 0 && sval2 > 0 && sresult > 0)); // F
 }
 
-void DataProcessingInstruction::movs()
-{
-    if (addressingMode->registerIndex() != 15) {
-        word val = addressingMode->value();
-        registers->SetFlag(CPSR_OFFSET, 31, Memory::ExtractBits(val, 31, 31) != 0); // N
-        registers->SetFlag(CPSR_OFFSET, 30, val == 0); // Z
-        registers->SetFlag(CPSR_OFFSET, 29, addressingMode->CarryFlag()); // C
-    }
-    else {
-        // Set the CPSR to the current mode's SPSR.
-        word current_spsr = registers->getSPSR();
-        registers->setCPSR(current_spsr);
-    }
-}
-
 DataProcessingInstruction::~DataProcessingInstruction()
 {
     delete addressingMode;
@@ -88,7 +73,7 @@ QString DataProcessingInstruction::toString()
     switch (opcode) {
     case MOV:
     case MVN:
-        opcodeDependentPortion = QString("r%1%2, %3").arg(QString::number(rDIndex), S ? QString("s") : QString(""), addressingMode->toString());
+        opcodeDependentPortion = QString("r%1, %2").arg(addressingMode->toString());
         break;
     case ADD:
     case SUB:
@@ -108,7 +93,7 @@ QString DataProcessingInstruction::toString()
         break;
     }
 
-    return QString("%1%2 %3").arg(QString(DataProcessingOpcodeToString[opcode]), CC_STR, opcodeDependentPortion);
+    return QString("%1%2%3 %4").arg(QString(DataProcessingOpcodeToString[opcode]), QString::number(rDIndex), S ? QString("s") : QString(""), CC_STR, opcodeDependentPortion);
 }
 
 void DataProcessingInstruction::execute()
@@ -118,8 +103,8 @@ void DataProcessingInstruction::execute()
     switch (opcode) {
     case MOV:
         destinationValue = addressingMode->value();
-        if (S) {
-            movs();
+        if (S && rDIndex == 15) {
+            registers->setCPSR(registers->getSPSR());
         }
         break;
     case MVN:
