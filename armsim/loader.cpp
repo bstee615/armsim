@@ -163,6 +163,7 @@ bool loadELF(QString filename, CPU *cpu)
 
     if (cpu->getRAM()->ReadWord(0) == 0) { // No OS loaded.
         qDebug() << "Loader:" << "No operating system loaded. Loading to address" << QString::number(elfHeader.e_entry);
+        cpu->getRegisters()->setProcessorMode(System);
         cpu->setProgramCounter(elfHeader.e_entry);
         cpu->setGeneralRegister(13, 0x7000);
         cpu->getRegisters()->setIRQ(false);
