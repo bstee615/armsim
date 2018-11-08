@@ -76,7 +76,7 @@ ProcessorMode RegisterMemory::getProcessorMode()
 {
     word cpsr_contents = ReadWord(CPSR_OFFSET);
     word rawMode = ExtractBits(cpsr_contents, 0, 4);
-    for (int i = 0; i < 8; i ++) {
+    for (int i = 0; i < 7; i ++) {
         if (encodedProcessorMode((ProcessorMode)i) == rawMode) {
             return (ProcessorMode)i;
         }

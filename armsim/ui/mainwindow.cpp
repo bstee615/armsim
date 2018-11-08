@@ -14,6 +14,7 @@ MainWindow::MainWindow(Options &options, QWidget *parent):
     computer->outputDevice = outputDevice;
     connect(outputDevice, SIGNAL(dataReceived()), ui->terminalWidget, SLOT(updateText()));
     computer->traceAll = options.traceAll;
+    computer->cpu.reset();
 
     initComputerWidgets();
     ui->runControlsWidget->setRunningState(false);

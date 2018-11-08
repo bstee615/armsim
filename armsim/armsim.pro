@@ -124,3 +124,6 @@ FORMS += \
     ui/runcontrolswidget.ui \
     ui/stackwidget.ui \
     ui/terminalwidget.ui
+
+RESOURCES += \
+    resources.qrc

@@ -19,9 +19,11 @@ void errorHandler(QtMsgType type, const QMessageLogContext &context, const QStri
             fflush(stdout);
             break;
         case QtCriticalMsg:
-            fprintf(stderr, "Critical error: %s\n", msg.toStdString().c_str());
+            fprintf(stderr, "Critical error %s: %s\n", context.file, msg.toStdString().c_str());
             QCoreApplication::exit(1);
             exit(1);
+        default:
+            break;
     }
 }
 #endif // ERRORHANDLER_H

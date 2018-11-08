@@ -37,7 +37,7 @@ void RunControlsWidget::init(Computer *computer)
 
 void RunControlsWidget::startTrace()
 {
-    ui->checkTrace->setChecked(true);
+    _computer->startTrace("trace.log");
 }
 
 void RunControlsWidget::setRunningState(bool running)
@@ -72,16 +72,16 @@ void RunControlsWidget::onAddedBreakpoint()
     emit toggledBreakpoint();
 }
 
-void RunControlsWidget::on_checkTrace_stateChanged(int state)
-{
-    if (state == Qt::Checked) {
-        _computer->startTrace("trace.log");
-    } else {
-        _computer->stopTrace();
-    }
-}
-
 void RunControlsWidget::toggleTrace()
 {
     ui->checkTrace->toggle();
+}
+
+void RunControlsWidget::on_checkTrace_toggled(bool checked)
+{
+    if (checked) {
+        startTrace();
+    } else {
+        _computer->stopTrace();
+    }
 }

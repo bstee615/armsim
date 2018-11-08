@@ -8,9 +8,9 @@ class BranchInstruction : public Instruction
 {
     int offset;
     bool L;
-    word pcValue;
 
 public:
+    word pcValue;
     BranchInstruction(word w, RegisterMemory *_registers);
 
     QString toString() override;

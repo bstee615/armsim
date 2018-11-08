@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/bp.png</file>
+        <file>resources/load.png</file>
+        <file>resources/noun_bp.png</file>
+        <file>resources/noun_load.png</file>
+        <file>resources/noun_run.png</file>
+        <file>resources/noun_step.png</file>
+        <file>resources/noun_stop.png</file>
+        <file>resources/noun_undo.png</file>
+        <file>resources/run.png</file>
+        <file>resources/step.png</file>
+        <file>resources/stop.png</file>
+        <file>resources/undo.png</file>
+        <file>resources/logo.png</file>
+        <file>resources/noun_logo.png</file>
+        <file>resources/trace.png</file>
+    </qresource>
+</RCC>

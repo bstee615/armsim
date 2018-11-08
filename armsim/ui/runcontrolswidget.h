@@ -42,9 +42,9 @@ private slots:
 
     void onAddedBreakpoint();
 
-    void on_checkTrace_stateChanged(int state);
-
     void toggleTrace();
+
+    void on_checkTrace_toggled(bool checked);
 
 signals:
     void toggledBreakpoint();

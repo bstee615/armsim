@@ -2,6 +2,7 @@
 #include "ui_disassemblywidget.h"
 #include <QtMath>
 #include "instructions/instructionfactory.h"
+#include "instructions/branchinstruction.h"
 
 DisassemblyWidget::DisassemblyWidget(QWidget *parent) :
     QWidget(parent),
@@ -49,6 +50,9 @@ void DisassemblyWidget::updateDisassemblyText()
         word encodedInstruction = ram.ReadWord(addr);
         bool bp = _computer->isBreakpoint(addr);
         Instruction *instruction = InstructionFactory::getDecodedInstruction(encodedInstruction, _computer->cpu.getRAM(), _computer->cpu.getRegisters());
+        if (dynamic_cast<BranchInstruction*>(instruction) != nullptr) {
+            dynamic_cast<BranchInstruction*>(instruction)->pcValue = addr + 8;
+        }
         QString disassembly;
         if (encodedInstruction == 0 || instruction == nullptr) {
             disassembly = "";

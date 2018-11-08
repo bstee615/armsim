@@ -73,7 +73,7 @@ QString DataProcessingInstruction::toString()
     switch (opcode) {
     case MOV:
     case MVN:
-        opcodeDependentPortion = QString("r%1, %2").arg(addressingMode->toString());
+        opcodeDependentPortion = QString("r%1, r%2").arg(QString::number(rDIndex), addressingMode->toString());
         break;
     case ADD:
     case SUB:
@@ -93,12 +93,13 @@ QString DataProcessingInstruction::toString()
         break;
     }
 
-    return QString("%1%2%3 %4").arg(QString(DataProcessingOpcodeToString[opcode]), QString::number(rDIndex), S ? QString("s") : QString(""), CC_STR, opcodeDependentPortion);
+    QString SFlag = (S && opcode != CMP && opcode != CMN) ? QString("s") : QString("");
+    return QString("%1%2%3 %4").arg(QString(DataProcessingOpcodeToString[opcode]), SFlag, CC_STR, opcodeDependentPortion);
 }
 
 void DataProcessingInstruction::execute()
 {
-    word destinationValue;
+    word destinationValue = 0;
 
     switch (opcode) {
     case MOV:
@@ -138,7 +139,6 @@ void DataProcessingInstruction::execute()
         cmn(rNValue, -addressingMode->value());
         break;
     default:
-        destinationValue = 0;
         break;
     }
 

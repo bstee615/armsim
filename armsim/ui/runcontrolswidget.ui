@@ -45,6 +45,10 @@
        <property name="text">
         <string>Run</string>
        </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/resources/run.png</normaloff>:/resources/run.png</iconset>
+       </property>
       </widget>
      </item>
      <item>
@@ -57,6 +61,16 @@
        </property>
        <property name="text">
         <string>Step</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/resources/step.png</normaloff>:/resources/step.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -71,6 +85,10 @@
        <property name="text">
         <string>Stop</string>
        </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/resources/stop.png</normaloff>:/resources/stop.png</iconset>
+       </property>
       </widget>
      </item>
      <item>
@@ -84,10 +102,14 @@
        <property name="text">
         <string>Breakpoint</string>
        </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/resources/bp.png</normaloff>:/resources/bp.png</iconset>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkTrace">
+      <widget class="QPushButton" name="checkTrace">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -97,12 +119,24 @@
        <property name="text">
         <string>Trace</string>
        </property>
+       <property name="icon">
+        <iconset resource="../resources.qrc">
+         <normaloff>:/resources/trace.png</normaloff>:/resources/trace.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

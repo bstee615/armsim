@@ -58,6 +58,10 @@
      <property name="text">
       <string>Load File</string>
      </property>
+     <property name="icon">
+      <iconset resource="../resources.qrc">
+       <normaloff>:/resources/load.png</normaloff>:/resources/load.png</iconset>
+     </property>
     </widget>
    </item>
    <item>
@@ -97,6 +101,10 @@
     <widget class="QPushButton" name="initRAMButton">
      <property name="text">
       <string>Reset</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources.qrc">
+       <normaloff>:/resources/undo.png</normaloff>:/resources/undo.png</iconset>
      </property>
     </widget>
    </item>
@@ -146,6 +154,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
