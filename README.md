@@ -216,8 +216,7 @@ memory. Figure [2](#fig:runcontrols) shows the ArmSim Run Controls.
 4.  `Add Breakpoint`: Displays the Add Breakpoint window (Section
     [2](#features)).
 
-5.  `Trace`: toggles tracing (Section [7.7](#tracing){reference-type="ref"
-    reference="tracing"}) on the currently loaded program.
+5.  `Trace`: toggles tracing (Section [7.7](#tracing)) on the currently loaded program.
 
 ![Screenshot of the home page for the GNU GCC toolchain for
 ARM.[]{label="fig:gcc"}](gcc.PNG)
@@ -237,8 +236,7 @@ ArmSim:
     ARM](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm) and
     make them accessible to the path.
 
-2.  Download and unzip ArmOS (Section [7.6](#os){reference-type="ref"
-    reference="os"}) and the make script from the [CPS 310 Github
+2.  Download and unzip ArmOS (Section [7.6](#os)) and the make script from the [CPS 310 Github
     repository](https://github.com/sschaub/cps310/tree/master/tests/sim2/sim2tests).
 
 3.  Run this command: (Replace with the name of your test program).
@@ -251,7 +249,7 @@ ArmSim:
     .
 
 Figure [4](#fig:makec) shows
-the successful output after running on .
+the successful output after running on `test.c`.
 
 ![Screenshot after running makec.cmd on program
 test.c[]{label="fig:makec"}](makec.PNG)
@@ -347,13 +345,7 @@ provided: .
 
 For quicksort.exe and mersenne.exe, ArmSim provided the expected output:
 
--   : Output all the constant numbers in in the correct order.
+-   `quicksort.exe`: Output all the constant numbers in in the correct order.
 
--   : Output prompt, took user input correctly, and printed five random
+-   `mersenne$.exe`: Output prompt, took user input correctly, and printed five random
     numbers generated via the seed.
-
-Appendices
-==========
-
-The following appendices are appended to the report: project journal,
-git log, and source code listings.
