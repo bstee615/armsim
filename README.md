@@ -346,5 +346,5 @@ For quicksort.exe and mersenne.exe, ArmSim provided the expected output:
 
 -   `quicksort.exe`: Output all the constant numbers in in the correct order.
 
--   `mersenne$.exe`: Output prompt, took user input correctly, and printed five random
+-   `mersenne.exe`: Output prompt, took user input correctly, and printed five random
     numbers generated via the seed.
