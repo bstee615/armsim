@@ -276,13 +276,12 @@ ArmSim follows Model-View Separation because no classes in the Model
 contain any references to any classes in the View. Three suspicious
 areas come to mind, but are not violations of the principle:
 
--   : holds a reference to OOutputDevice(an Observer) rather than
-    OutputDevice in order to preserve Model-View Separation.
+-   `OOutputDevice`: `Computer` holds a reference to OOutputDevice(an Observer) rather than the concrete class `OutputDevice` in order to preserve Model-View Separation.
 
--   : UI classes hold references to , but does not hold any references
+-   `ComputerThread`: UI classes hold references to `Computer`, but `Computer` does not hold any references
     to any UI classes. is prematurely quit via a boolean pointer.
 
--   : Computer s QSet, but this data structure is implemented in many
+-   `Computer`: Computer #includes QSet, but this data structure is implemented in many
     C++ general purpose libraries and can easily be replaced if Qt would
     be replaced with another framework.
 
