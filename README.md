@@ -18,16 +18,16 @@ What is ArmSim?
 
 ArmSim is a simulator of an ARM microprocessor. It can run programs that
 use a subset of the ARM instruction set. Section
-[2](#features){reference-type="ref" reference="features"} details a full
+[2](#features) details a full
 list of instructions and addressing modes. ArmSim can run user programs
 via an operating system called ArmOS (Section
-[7.6](#os){reference-type="ref" reference="os"}).
+[7.6](#os)).
 
 Features
 ========
 
 ![Screenshot of ArmSim running a
-program.[]{label="fig:gui"}](gui.PNG){#fig:gui width="\textwidth"}
+program.[]{label="fig:gui"}](gui.PNG)
 
 GUI Overview
 ------------
@@ -38,7 +38,7 @@ GUI Overview
 
 -   Console - Input/Output panel to interact with the program's
     simulated memory-mapped I/O devices. (further described in Section
-    [7.5](#io){reference-type="ref" reference="io"})
+    [7.5](#io))
 
 -   Loader - Offers inputs to load files and reset simulated memory.
 
@@ -53,7 +53,7 @@ GUI Overview
     reference="guiguide"}).
 
 -   Breakpoint window - Allows the user to add a breakpoint (Section
-    [6.3](#guiguide){reference-type="ref" reference="guiguide"}).
+    [6.3](#guiguide)).
 
 List of Features
 ----------------
@@ -78,20 +78,18 @@ project, respectively.
 
 -   Trace and Reset Memory
 
--   Shortcuts (Section [6.2](#shortcuts){reference-type="ref"
-    reference="shortcuts"})
+-   Shortcuts (Section [6.2](#shortcuts)
 
 -   Simulated memory-mapped I/O devices (Section
-    [7.5](#io){reference-type="ref" reference="io"})
+    [7.5](#io))
 
 ### C-Level Features
 
 -   Run/Stop Functionality
 
--   Command-Line Options (Section [6.1](#cmd){reference-type="ref"
-    reference="cmd"})
+-   Command-Line Options (Section [6.1](#cmd)
 
-Software Prerequisites {#prereq}
+Software Prerequisites 
 ======================
 
 This project was built for 64-bit Windows 10, using Qt 5.11 and the
@@ -105,7 +103,7 @@ Build and Test
 To build ArmSim:
 
 1.  Install the prerequisites (specified in Section
-    [3](#prereq){reference-type="ref" reference="prereq"}).
+    [3](#prereq)).
 
 2.  Open armsim.pro in the project root directory with Qt Creator.
 
@@ -116,7 +114,7 @@ To build ArmSim:
 To run ArmSim's unit tests:
 
 1.  Install the prerequisites (specified in Section
-    [3](#prereq){reference-type="ref" reference="prereq"}).
+    [3](#prereq)).
 
 2.  Open armsim.pro in the project root directory with Qt Creator.
 
@@ -138,7 +136,7 @@ To run ArmSim's unit tests:
 
 5.  Click Run.
 
-Configuration {#config}
+Configuration 
 =============
 
 ArmSim prints log messages during the course of the simulator's runtime.
@@ -148,7 +146,7 @@ To **disable** log output, comment out lines 18-19 in (Figure
 reference="fig:configfig"}). To **redirect** log output to a file, use
 file redirection when running ArmSim like so: .
 
-``` {language="c++"}
+``` 
         case QtDebugMsg:
             fprintf(stdout, "%s\n", msg.toStdString().c_str());
             fflush(stdout);
@@ -161,70 +159,68 @@ User Guide
 Use ArmSim by running the executable . The pre-built executable
 (compiled for 64-bit Windows 10) is included here: .
 
-Command-Line Options {#cmd}
+Command-Line Options 
 --------------------
 
 Usage:
 
--   : Specifies the size of the simulated RAM. If this option is not
+-   `--mem <bytes>`: Specifies the size of the simulated RAM. If this option is not
     specified, the default is .
 
--   : Specifies the file to load into simulated RAM.
+-   `--load <filepath>`: Specifies the file to load into simulated RAM.
 
--   : Requires a file to be specified with . Runs the specified file and
+-   `--exec`: Requires a file to be specified with . Runs the specified file and
     shuts down ArmSim after execution has finished. If no file was
-    specified with , then ArmSim runs normally.
+    specified with `--load`, then ArmSim runs normally.
 
--   : ArmSim does not trace program execution during exception
-    processing by default. If is set, then ArmSim will trace program
+-   `--traceall`: ArmSim does not trace program execution during exception
+    processing by default. If `--traceall` is set, then ArmSim will trace program
     execution during exception processing.
 
 Shortcuts
 ---------
 
--   : Open a file to be loaded into simulated RAM.
+-   `Ctrl+O`: Open a file to be loaded into simulated RAM.
 
--   : Run the simulator in its current state.
+-   `F5`: Run the simulator in its current state.
 
--   : Step forward once in the simulator.
+-   `F10`: Step forward once in the simulator.
 
--   : Stop the simulator if it is currently running.
+-   `Ctrl+Q`: Stop the simulator if it is currently running.
 
--   : Toggle trace on/off.
+-   `Ctrl+T`: Toggle trace on/off.
 
--   : Reset the currently loaded program to its initial state.
+-   `Ctrl+R`: Reset the currently loaded program to its initial state.
 
--   : Raise the Toggle Breakpoint window (Section
-    [2](#features){reference-type="ref" reference="features"}).
+-   `Ctrl+B`: Raise the Toggle Breakpoint window (Section
+    [2](#features)).
 
 ![Screenshot of the ArmSim Run
-Controls.[]{label="fig:runcontrols"}](runcontrols.PNG){#fig:runcontrols
-width="\textwidth"}
+Controls.[]{label="fig:runcontrols"}](runcontrols.PNG)
 
-Run Controls {#guiguide}
+Run Controls 
 ------------
 
 ArmSim allows the user to run an ARM executable in the ELF format and
 displays information about the program's current state in simulated
-memory. Figure [2](#fig:runcontrols){reference-type="ref"
-reference="fig:runcontrols"} shows the ArmSim Run Controls.
+memory. Figure [2](#fig:runcontrols) shows the ArmSim Run Controls.
 
-1.  : Steps through the program until it reaches a halt instruction
-    (Section [7.8](#halt){reference-type="ref" reference="halt"}).
+1.  `Run`: Steps through the program until it reaches a halt instruction
+    (Section [7.8](#halt)).
 
-2.  : Performs one fetch-decode-execute loop, where the instruction
+2.  `Step`: Performs one fetch-decode-execute loop, where the instruction
     executed is the one currently highlighted in the Disassembly Window.
 
-3.  : Stops execution after the current instruction is done executing.
+3.  `Stop`: Stops execution after the current instruction is done executing.
 
-4.  : Displays the Add Breakpoint window (Section
-    [2](#features){reference-type="ref" reference="features"}).
+4.  `Add Breakpoint`: Displays the Add Breakpoint window (Section
+    [2](#features)).
 
-5.  : toggles tracing (Section [7.7](#tracing){reference-type="ref"
+5.  `Trace`: toggles tracing (Section [7.7](#tracing){reference-type="ref"
     reference="tracing"}) on the currently loaded program.
 
 ![Screenshot of the home page for the GNU GCC toolchain for
-ARM.[]{label="fig:gcc"}](gcc.PNG){#fig:gcc width="\textwidth"}
+ARM.[]{label="fig:gcc"}](gcc.PNG)
 
 Testing Files
 -------------
@@ -233,7 +229,7 @@ ArmSim requires files to contain ARM instructions and to be in the ELF
 format. These files can be built using the [GNU GCC toolchain for
 ARM](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm). The
 download page for the GCC toolchain is shown in Figure
-[3](#fig:gcc){reference-type="ref" reference="fig:gcc"} There is also a
+[3](#fig:gcc) There is also a
 special build script for convenience. To build a file for testing in
 ArmSim:
 
@@ -254,11 +250,11 @@ ArmSim:
 5.  Note: To build test programs without linking ArmOS, use rather than
     .
 
-Figure [4](#fig:makec){reference-type="ref" reference="fig:makec"} shows
+Figure [4](#fig:makec) shows
 the successful output after running on .
 
 ![Screenshot after running makec.cmd on program
-test.c[]{label="fig:makec"}](makec.PNG){#fig:makec width="\textwidth"}
+test.c[]{label="fig:makec"}](makec.PNG)
 
 Software Architecture
 =====================
@@ -270,16 +266,13 @@ The ArmSim GUI runs in a main UI thread, and when the program is or ped
 through, a separate thread is created for the computer to run until
 completion. The button must quit this thread prematurely by setting a to
 which holds a reference (denoted in Figure
-[5](#fig:architecture){reference-type="ref"
-reference="fig:architecture"}). Section [7.2](#mvc){reference-type="ref"
-reference="mvc"} explains why this design aligns with Model-View
+[5](#fig:architecture)). Section [7.2](#mvc) explains why this design aligns with Model-View
 Separation.
 
-Model-View Separation {#mvc}
+Model-View Separation 
 ---------------------
 
-In Figure [5](#fig:architecture){reference-type="ref"
-reference="fig:architecture"}, any objects below the dotted line are
+In Figure [5](#fig:architecture), any objects below the dotted line are
 part of the Model and any objects above the line are part of the view.
 ArmSim follows Model-View Separation because no classes in the Model
 contain any references to any classes in the View. Three suspicious
@@ -311,20 +304,19 @@ signal is a convenient, thread-safe way to notify the UI immediately of
 an update in the Model.
 
 ![UML diagram of ArmSim's
-architecture.[]{label="fig:architecture"}](uml.png){#fig:architecture
-width="\textwidth"}
+architecture.[]{label="fig:architecture"}](uml.png)
 
-Memory-Mapped I/O Devices {#io}
+Memory-Mapped I/O Devices 
 -------------------------
 
 ArmSim simulates a memory-mapped input/output device. If a byte is
 written to address 0x100000, ArmSim does not store the byte in memory
 and rather writes it to the Console through the (Section
-[2](#features){reference-type="ref" reference="features"}). If a byte is
+[2](#features)). If a byte is
 read from address 0x100001, ArmSim instead returns a character from an
 internal queue maintained by ArmOS.
 
-ArmOS {#os}
+ArmOS 
 -----
 
 ArmOS is the name for an operating system written in ARM assembly and
@@ -335,8 +327,7 @@ from the simulator's GUI.
 Tracing
 -------
 
-When Trace (Section [6.3](#guiguide){reference-type="ref"
-reference="guiguide"}) is toggled on, ArmSim traces program output in
+When Trace (Section [6.3](#guiguide)) is toggled on, ArmSim traces program output in
 this format:
 
 This trace is written to a file named for use in testing.
